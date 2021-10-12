@@ -4,8 +4,8 @@
   "description": "A DiscordJS bot without all the complicated bells and whistles",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
-    "start": "node index.js"
+    "test": "node index.mjs",
+    "start": "node index.mjs"
   },
   "keywords": [
     "DiscordJS",
