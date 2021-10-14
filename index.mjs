@@ -31,8 +31,16 @@ client.on("messageCreate", async msg => {
                 msg.channel.send("Pong!");
             break;
             case "kauser":
+                if(!args[0]) {
+                    msg.channel.send("Use `=help kauser` to learn how to use this command");
+                    return;
+                }
                 var endpoint = `${KAAPI}/user/profile?${/kaid/.test(args[0]) ? "kaid" : "username"}=${args[0]}&format=pretty`;
                 var data = await getJSON(endpoint);
+                if(!data) {
+                    msg.channel.send("The KA user could not be found. Please double check your query");
+                    return;
+                }
                 var joinedObj = dateToObj(data.dateJoined ? new Date(data.dateJoined) : new Date());
                 var sinceJoined = timeSince(joinedObj) || "Secret";
                 var embed = new MessageEmbed()
@@ -51,8 +59,16 @@ client.on("messageCreate", async msg => {
                 msg.channel.send({ "embeds": [embed] });
             break;
             case "kaprogram":
+                if(!args[0]) {
+                    msg.channel.send("Use `=help kaporgram` to learn how to use this command");
+                    return;
+                }
                 var endpoint = `${KAAPI}/scratchpads/${args[0]}?format=pretty`;
                 var data = await fetch(endpoint).then(response => response.json()).then(data => { return data; });
+                if(!data) {
+                    msg.channel.send("The KA program could not be found. Please double check your query");
+                    return;
+                }
                 var authorEndpoint = `${api}/user/profile?kaid=${data.kaid}&format=pretty`;
                 var authorData = await fetch(authorEndpoint).then(response => response.json()).then(data => { return data; });
                 var createdObj = dateToObj(data.created ? new Date(data.created) : new Date());
@@ -77,8 +93,16 @@ client.on("messageCreate", async msg => {
                 msg.channel.send({ "embeds": [embed] });
             break;
             case "define":
+                if(!args[0]) {
+                    msg.channel.send("Use `=help define` to learn how to use this command");
+                    return;
+                }
                 var endpoint = `${DictAPI}/${args[0]}`;
                 var data = await fetch(endpoint).then(response => response.json()).then(data => { return data; });
+                if(!data[0].meanings) {
+                    msg.channel.send("The word definition could not be found. Please double check your query");
+                    return;
+                }
                 var message = ``;
                 for(let i = 0; i < data[0].meanings.length; i++) {
                     let index = data[0].meanings[i];
@@ -100,14 +124,27 @@ client.on("messageCreate", async msg => {
                 msg.channel.send({ embeds: [embed]});
             break;
             case "pronounce":
+                if(!args[0]) {
+                    msg.channel.send("Use `=help pronounce` to learn how to use this command");
+                    return;
+                }
                 var results = await ytsr(`Pronounce ${args[0]}`, { limit:  1 });
-
+                if(!results.items) {
+                    msg.channel.send("That word's pronunciation could not be found. Please double check your query");
+                    return;
+                }
                 msg.channel.send(results.items[0].url);
             break;
             case "translate":
                 var argsL = args.length,
                     text,
                     from;
+                
+                if(!argsL) {
+                    msg.channel.send("Use `=help translate` to learn how to use this command");
+                    return;
+                }
+                
                 if(argsL - 1) {
                     from = args[0];
                     text = args[1].substring(1, args[1].length - 1);
@@ -121,6 +158,54 @@ client.on("messageCreate", async msg => {
                 }).catch(err => {
                     console.error(err);
                 });
+            break;
+            case "help":
+                var message = "";
+                if(args.length) {
+                    switch(args[0]) {
+                        case "ping":
+                            // tell how =ping works
+                            message = `\`=ping\` makes me respond with \`Pong!\``;
+                        break;
+                        case "kauser":
+                            // tell how =kauser works
+                            message = `\`=kauser [username or kaid]\` makes me respond with the corresponding Khan Academy user information`;
+                        break;
+                        case "kaprogram":
+                            // tell how =kaprogram works
+                            message = `\`=kauser [program ID]\` makes me respond with the corresponding Khan Academy program information`;
+                        break;
+                        case "define":
+                            // tell how =define works
+                            message = `\`=define [word]\` makes me give a definition or set of definitions for a word`;
+                        break;
+                        case "pronounce":
+                            // tell how =pronounce works
+                            message = `\`=pronounce [word]\` makes me link a YoutTube video of how to pronounce your word`;
+                        break;
+                        case "translate":
+                            // tell how =translate works
+                            message = `\`=translate [langauge]* [word(s)]\` makes me translate your word(s) into English. You can optionally specify a language`
+                        break;
+                    }
+                } else {
+                    // send list of all commands with basic description
+                    message = `
+                        Ask for help with any of my commands!\n
+                        \`ping\`\n
+                        \`kauser\`\n
+                        \`kaprogram\`\n
+                        \`define\`\n
+                        \`pronounce\`\n
+                        \`translate\`\n`;
+                }
+
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**" + (args[0] || "My commands") + "**")
+                    .setDescription(message);
+
+                msg.channel.send({ "embeds": [embed] });
             break;
             default:
                 msg.channel.send("You can check my commands using =help");
