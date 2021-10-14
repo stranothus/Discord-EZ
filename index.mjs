@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import fetch from "node-fetch";
 import ytsr from "ytsr";
 import translatte from "translatte";
+import getJSON from "./getJSON.mjs";
 import dateToObj from "./dateToObj.js";
 import timeSince from "./timeSince.js";
 
@@ -23,7 +24,7 @@ client.once("ready", () => {
 client.on("messageCreate", async msg => {
     if(msg.content.startsWith("=")) {
         var command = msg.content.split(" ")[0].replace(/^=/, "");
-        var args = msg.content.split(/("[^"]*")|\h+/).slice(1).filter(v => v);
+        var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v);
 
         switch(command.toLowerCase()) {
             case "ping":
@@ -31,14 +32,21 @@ client.on("messageCreate", async msg => {
             break;
             case "kauser":
                 var endpoint = `${KAAPI}/user/profile?${/kaid/.test(args[0]) ? "kaid" : "username"}=${args[0]}&format=pretty`;
-                var data = await fetch(endpoint).then(response => response.json()).then(data => { return data; });
+                var data = await getJSON(endpoint);
                 var joinedObj = dateToObj(data.dateJoined ? new Date(data.dateJoined) : new Date());
                 var sinceJoined = timeSince(joinedObj) || "Secret";
                 var embed = new MessageEmbed()
                     .setColor("#FAC000")
                     .setTitle("**" + data.nickname + "**")
                     .setURL("https://www.khanacademy.org/profile/" + data.kaid)
-                    .setDescription("**@" + data.username + "** - " + data.bio + "\n\n**Joined:** " + sinceJoined + "\n**Energy Points:** " + Number(data.points).toLocaleString() + "\n**Videos Compvared:** " + Number(data.countVideosCompvared).toLocaleString() + "\n**KAID:** " + data.kaid + "\n**Full data:** " + endpoint);
+                    .setDescription(`
+                        **@${data.username}** - ${data.bio}\n
+                        \n
+                        **Joined:** ${sinceJoined}\n
+                        **Energy Points:** ${Number(data.points).toLocaleString()}\n
+                        **Videos Completed:** ${Number(data.countVideosCompvared).toLocaleString()}\n
+                        **KAID:** ${data.kaid}\n
+                        **Full data:** ${endpoint}`);
 
                 msg.channel.send({ "embeds": [embed] });
             break;
@@ -53,7 +61,17 @@ client.on("messageCreate", async msg => {
                     .setColor("#FAC000")
                     .setTitle("**" + data.title + "** (" + data.userAuthoredContentType.toUpperCase() + ")")
                     .setURL("https://www.khanacademy.org/profile/" + data.kaid)
-                    .setDescription("**[" + authorData.nickname + "](https://www.khanacademy.org/profile/" + authorData.username + ") - @" + authorData.username + "**\n\n**Created:** " + sinceCreated + "\n**Votes:** " + Number(data.sumVotesIncremented || 1).toLocaleString() + "\n**Spin-offs:** " + Number(data.spinoffCount || 0).toLocaleString() + "\n**Flags:** " + JSON.stringify(data.flags) + "\n**Hidden from HotList:** " + JSON.stringify(data.hideFromHotlist) + "\n**Guardian approved:** " + JSON.stringify(data.definitelyNotSpam) + "\n**Child program:** " + JSON.stringify(data.byChild) + "\n**Full data:** " + endpoint)
+                    .setDescription(`
+                        **[${authorData.nickname}](https://www.khanacademy.org/profile/${authorData.username}) - @${authorData.username}**\n
+                        \n
+                        **Created:** ${sinceCreated}\n
+                        **Votes:** ${Number(data.sumVotesIncremented || 1).toLocaleString()}\n
+                        **Spin-offs:** ${Number(data.spinoffCount || 0).toLocaleString()}\n
+                        **Flags:** ${JSON.stringify(data.flags)}\n
+                        **Hidden from HotList:** ${data.hideFromHotlist}\n
+                        **Guardian approved:** ${data.definitelyNotSpam}\n
+                        **Child program:** ${data.byChild}\n
+                        **Full data:** ${endpoint}`)
                     .setThumbnail(data.imageUrl)
 
                 msg.channel.send({ "embeds": [embed] });
