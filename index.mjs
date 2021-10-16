@@ -1,16 +1,37 @@
 import { Client, Intents, MessageEmbed, MessageAttachment } from "discord.js";
-import imageToBase64 from "image-to-base64";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
+import { MongoClient } from "mongodb";
+import imageToBase64 from "image-to-base64";
 import ytsr from "ytsr";
 import translatte from "translatte";
 import getJSON from "./getJSON.mjs";
 import dateToObj from "./dateToObj.js";
 import timeSince from "./timeSince.js";
+import deQuote from "./deQuote.mjs";
 
 dotenv.config();
 
-const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"] });
+var DB = {};
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.omeul.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
+MongoClient.connect(uri,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    },
+    (err, db) => {
+        if(err) console.error(err);
+
+        DB = {
+            DB: db,
+            Guilds: db.db("Guilds")
+        };
+    }
+);
+
+const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"] });
 
 const token = process.env.TOKEN;
 
@@ -19,12 +40,42 @@ const DictAPI = "https://api.dictionaryapi.dev/api/v2/entries/en"
 
 client.once("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`);
+
+    const guilds = client.guilds.cache.map(guild => guild.id);
 });
+
+client.on("guildCreate", async guild => {
+    // handle DB creation
+    let members = await guild.members.fetch();
+
+    DB.Guilds.collection("Info").insertOne({
+        id: guild.id,
+        name: guild.name,
+        members: members.map(v => !v.user.bot ? {
+            id: v.user.id,
+            muted: false
+        } : false).filter(v => v),
+        reactroles: [],
+        bannedwords: [],
+        moderation: {
+            spamcap: false,
+            ignorespam: [],
+            mutes: [],
+            infractions: []
+        }
+    }, function(err, result) {
+        if(err) console.error(err);
+    });
+});
+
+client.on("guildDelete", async guild => {
+    DB.Guilds.collection("Info").deleteOne({ id: guild.id });
+})
 
 client.on("messageCreate", async msg => {
     if(msg.content.startsWith("=")) {
         var command = msg.content.split(" ")[0].replace(/^=/, "");
-        var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v);
+        var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v).map(v => deQuote(v));
 
         switch(command.toLowerCase()) {
             case "ping":
@@ -49,11 +100,10 @@ client.on("messageCreate", async msg => {
                     .setURL("https://www.khanacademy.org/profile/" + data.kaid)
                     .setDescription(`
                         **@${data.username}** - ${data.bio}\n
-                        \n
-                        **Joined:** ${sinceJoined}\n
-                        **Energy Points:** ${Number(data.points).toLocaleString()}\n
-                        **Videos Completed:** ${Number(data.countVideosCompvared).toLocaleString()}\n
-                        **KAID:** ${data.kaid}\n
+                        **Joined:** ${sinceJoined}
+                        **Energy Points:** ${Number(data.points).toLocaleString()}
+                        **Videos Completed:** ${Number(data.countVideosCompvared).toLocaleString()}
+                        **KAID:** ${data.kaid}
                         **Full data:** ${endpoint}`);
 
                 msg.channel.send({ "embeds": [embed] });
@@ -79,14 +129,13 @@ client.on("messageCreate", async msg => {
                     .setURL("https://www.khanacademy.org/profile/" + data.kaid)
                     .setDescription(`
                         **[${authorData.nickname}](https://www.khanacademy.org/profile/${authorData.username}) - @${authorData.username}**\n
-                        \n
-                        **Created:** ${sinceCreated}\n
-                        **Votes:** ${Number(data.sumVotesIncremented || 1).toLocaleString()}\n
-                        **Spin-offs:** ${Number(data.spinoffCount || 0).toLocaleString()}\n
-                        **Flags:** ${JSON.stringify(data.flags)}\n
-                        **Hidden from HotList:** ${data.hideFromHotlist}\n
-                        **Guardian approved:** ${data.definitelyNotSpam}\n
-                        **Child program:** ${data.byChild}\n
+                        **Created:** ${sinceCreated}
+                        **Votes:** ${Number(data.sumVotesIncremented || 1).toLocaleString()}
+                        **Spin-offs:** ${Number(data.spinoffCount || 0).toLocaleString()}
+                        **Flags:** ${JSON.stringify(data.flags)}
+                        **Hidden from HotList:** ${data.hideFromHotlist}
+                        **Guardian approved:** ${data.definitelyNotSpam}
+                        **Child program:** ${data.byChild}
                         **Full data:** ${endpoint}`)
                     .setThumbnail(data.imageUrl)
 
@@ -147,16 +196,53 @@ client.on("messageCreate", async msg => {
                 
                 if(argsL - 1) {
                     from = args[0];
-                    text = args[1].substring(1, args[1].length - 1);
+                    text = args[1];
                 } else {
                     from = "";
-                    text = args[0].substring(1, args[0].length - 1);
+                    text = args[0];
                 }
 
                 translatte(text, { to: 'en' }).then(res => {
                     msg.channel.send(res.text + (from ? "" : ` (translated from ${res.from.language.iso})`));
                 }).catch(err => {
                     console.error(err);
+                });
+            break;
+            case "reactrole":
+                let msgs = args
+                    .map((v, i, a) => ((i % 2) ? undefined : {
+                        content: `To get @${v}, ` + `react with ${a[i + 1]}`,
+                        emoji: a[i + 1],
+                        role: v
+                    }))
+                    .filter(v => v);
+
+                let content = msgs.map(v => v.content);
+                let emojis = msgs.map(v => v.emoji);
+                let roles = msgs.map(v => v.role);
+                
+                let stuff = await Promise.all(roles.map(async (v, i) => {
+                    let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
+
+                    content[i] = `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
+                    roles[i] = role;
+
+                    return role;
+                }));
+
+                msg = await msg.channel.send(content.join("\n"));
+                
+                emojis.forEach(v => msg.react(v));
+
+                let collect = msg.createReactionCollector();
+
+                collect.on("collect", (reaction, user) => {
+                    if(!user.bot) {
+                        // figure out which role to add based on deconstructing the message or storing the message information in a database
+                        // most likely, we should store the information in a database
+                        // so that means we need to create a MongoDB Atlas Cluster for this project
+                        console.log(reaction, user);
+                    }
                 });
             break;
             case "help":

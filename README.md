@@ -28,5 +28,6 @@ Links a video of how to pronounce the word
 
 Translates the word(s) from a variety of languages
 
+## Invite
 
 This bot is still in development, so it is not recommended to implement it into any servers :)
