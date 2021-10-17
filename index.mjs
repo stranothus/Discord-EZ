@@ -303,7 +303,11 @@ client.on("messageCreate", async msg => {
                         break;
                         case "translate":
                             // tell how =translate works
-                            message = `\`=translate [langauge]* [word(s)]\` makes me translate your word(s) into English. You can optionally specify a language`
+                            message = `\`=translate [langauge]* [word(s)]\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word`
+                        break;
+                        case "reactrole":
+                            // tell how =reactrole works
+                            message = `\`=reactrole [role name] [emoji]...\` makes me a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
                         break;
                     }
                 } else {
@@ -315,7 +319,8 @@ client.on("messageCreate", async msg => {
                         \`kaprogram\`\n
                         \`define\`\n
                         \`pronounce\`\n
-                        \`translate\`\n`;
+                        \`translate\`\n
+                        \`reactrole\`\n`;
                 }
 
                 var embed = new MessageEmbed()
