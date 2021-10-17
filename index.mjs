@@ -1,4 +1,4 @@
-import { Client, Intents, MessageEmbed, MessageAttachment } from "discord.js";
+import { Client, Intents, MessageEmbed, MessageAttachment, Permissions } from "discord.js";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
 import { MongoClient } from "mongodb";
@@ -36,7 +36,7 @@ const DBConnected = new Promise((resolve, reject) => {
     );
 });
 
-const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"] });
+const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"]});
 
 const token = process.env.TOKEN;
 
@@ -58,12 +58,14 @@ client.once("ready", () => {
                         let index = result.reactroles[i];
                         let guild = client.guilds.cache.get(guildID);
                         let channel = guild.channels.cache.get(index.channelID);
-                        let message = await channel.messages.fetch(index.messageID);
+                        let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
-                        let roles = index.reacttorole.map(v => v.role);
-                        let reactions = index.reacttorole.map(v => v.emoji);
+                        if(message) {
+                            let roles = index.reacttorole.map(v => v.role);
+                            let reactions = index.reacttorole.map(v => v.emoji);
 
-                        reactRole(message, roles, reactions);
+                            reactRole(message, roles, reactions);
+                        }
                     }
                 }
             });
@@ -236,6 +238,15 @@ client.on("messageCreate", async msg => {
                 });
             break;
             case "reactrole":
+                if(!msg.member.permissons.has(Permissions.FLAGS.MANAGE_ROLES)) {
+                    msg.channel.send("You do not have the permissions to use this command");
+                    return;
+                }
+
+                if(args.length % 2) {
+                    msg.channel.send("Use `=help reactrole` to learn how to use this command");
+                }
+
                 let msgs = args
                     .map((v, i, a) => ((i % 2) ? undefined : {
                         content: `To get @${v}, ` + `react with ${a[i + 1]}`,
@@ -270,12 +281,69 @@ client.on("messageCreate", async msg => {
                     if(err) console.error(err);
                 });
                 
-                emojis.forEach(v => msg.react(v));
+                emojis.forEach(v => (msg ? msg.react(v).catch(err => {
+                    let channel = msg.channel;
+                    msg.delete();
+
+                    channel.send("Something went wrong. Please make sure you are using valid emojis");
+                }) : ""));
 
                 roles = msgs.map(v => v.role);
                 let reactions = msgs.map(v => v.emoji);
 
                 reactRole(msg, roles, emojis);
+            break;
+            case "diebot":
+                if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+                    msg.channel.send("You do not have the permissions to use this command");
+                }
+
+                msg.channel.messages.fetch().then(async messages => {
+                    let myMessages = messages.filter(msg => msg.author.id === client.user.id);
+
+                    await Promise.all(myMessages.map(async myMessage => await myMessage.delete()));
+
+                    let messagesDeleted = myMessages.size; // number of messages deleted
+            
+                    // Logging the number of messages deleted on both the channel and console.
+                    if(messagesDeleted) {
+                        msg.channel.send("Deletion of messages successful. Total messages deleted: " + messagesDeleted).then(msg => {
+                            setTimeout(() => msg.delete(), 5000);
+                        });
+                    } else {
+                        msg = await msg.channel.send("Deletion of messages unsuccessful");
+                    }
+                });
+            break;
+            case "clear":
+                if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+                    msg.channel.send("You do not have the permissions to use this command");
+                }
+
+                let channel = msg.channel;
+
+                channel.bulkDelete(args[0] || 99, true).then(messages => {
+                    let messagesDeleted = messages.size; // number of messages deleted
+            
+                    // Logging the number of messages deleted on both the channel and console.
+                    if(messagesDeleted) {
+                        channel.send("Deletion of messages successful. Total messages deleted: " + messagesDeleted).then(msg => {
+                            setTimeout(() => msg.delete(), 5000);
+                        });
+                    } else {
+                        channel.send("Deletion of messages unsuccessful");
+                    }
+                }).catch(err => {
+                    channel.send("Deletion of messages unsuccessful");
+                });
+            break;
+            case "clearall":
+                if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+                    msg.channel.send("You do not have the permissions to use this command");
+                }
+
+                msg.channel.clone();
+                msg.channel.delete();
             break;
             case "help":
                 var message = "";
@@ -309,6 +377,15 @@ client.on("messageCreate", async msg => {
                             // tell how =reactrole works
                             message = `\`=reactrole [role name] [emoji]...\` makes me a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
                         break;
+                        case "":
+                            message = `\`=diebot\` makes me delete my messages`;
+                        break;
+                        case "":
+                            message = `\`=clear [number]*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
+                        break;
+                        case "":
+                            message = `\`=clearall\` makes me delete *every single message in the channel*. Use this command with caution!`;
+                        break;
                     }
                 } else {
                     // send list of all commands with basic description
@@ -320,7 +397,10 @@ client.on("messageCreate", async msg => {
                         \`define\`\n
                         \`pronounce\`\n
                         \`translate\`\n
-                        \`reactrole\`\n`;
+                        \`reactrole\`\n
+                        \`diebot\`
+                        \`clear\`
+                        \`clearall\``;
                 }
 
                 var embed = new MessageEmbed()
