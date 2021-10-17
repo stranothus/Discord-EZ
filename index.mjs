@@ -9,6 +9,7 @@ import getJSON from "./getJSON.mjs";
 import dateToObj from "./dateToObj.js";
 import timeSince from "./timeSince.js";
 import deQuote from "./deQuote.mjs";
+import reactRole from "./reactRole.mjs";
 
 dotenv.config();
 
@@ -16,20 +17,24 @@ var DB = {};
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.omeul.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
-MongoClient.connect(uri,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    },
-    (err, db) => {
-        if(err) console.error(err);
+const DBConnected = new Promise((resolve, reject) => {
+    MongoClient.connect(uri,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        },
+        (err, db) => {
+            if(err) console.error(err);
 
-        DB = {
-            DB: db,
-            Guilds: db.db("Guilds")
-        };
-    }
-);
+            DB = {
+                DB: db,
+                Guilds: db.db("Guilds")
+            };
+
+            resolve(db);
+        }
+    );
+});
 
 const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"] });
 
@@ -42,6 +47,28 @@ client.once("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 
     const guilds = client.guilds.cache.map(guild => guild.id);
+
+    DBConnected.then(() => {
+        guilds.forEach(guildID => {
+            DB.Guilds.collection("Info").findOne({ "id": guildID }, async function(err, result) {
+                if(err) console.error(err);
+
+                if(result) {
+                    for(let i = 0; i < result.reactroles.length; i++) {
+                        let index = result.reactroles[i];
+                        let guild = client.guilds.cache.get(guildID);
+                        let channel = guild.channels.cache.get(index.channelID);
+                        let message = await channel.messages.fetch(index.messageID);
+
+                        let roles = index.reacttorole.map(v => v.role);
+                        let reactions = index.reacttorole.map(v => v.emoji);
+
+                        reactRole(message, roles, reactions);
+                    }
+                }
+            });
+        });
+    });
 });
 
 client.on("guildCreate", async guild => {
@@ -231,19 +258,24 @@ client.on("messageCreate", async msg => {
                 }));
 
                 msg = await msg.channel.send(content.join("\n"));
+
+                DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$push": { "reactroles": {
+                    messageID: msg.id,
+                    channelID: msg.channel.id,
+                    reacttorole: msgs.map(v => ({
+                        role: v.role,
+                        emoji: v.emoji
+                    }))
+                }}}, function(err, result) {
+                    if(err) console.error(err);
+                });
                 
                 emojis.forEach(v => msg.react(v));
 
-                let collect = msg.createReactionCollector();
+                roles = msgs.map(v => v.role);
+                let reactions = msgs.map(v => v.emoji);
 
-                collect.on("collect", (reaction, user) => {
-                    if(!user.bot) {
-                        // figure out which role to add based on deconstructing the message or storing the message information in a database
-                        // most likely, we should store the information in a database
-                        // so that means we need to create a MongoDB Atlas Cluster for this project
-                        console.log(reaction, user);
-                    }
-                });
+                reactRole(msg, roles, emojis);
             break;
             case "help":
                 var message = "";
