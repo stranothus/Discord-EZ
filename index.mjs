@@ -9,26 +9,26 @@ import ytsr         from "ytsr";
 import translatte   from "translatte";
 
 // import utils
-import getJSON      from "./getJSON.mjs";
-import dateToObj    from "./dateToObj.js";
-import timeSince    from "./timeSince.js";
-import deQuote      from "./deQuote.mjs";
-import reactRole    from "./reactRole.mjs";
-import pollCollect    from "./pollCollect.mjs";
+import getJSON      from "./utils/getJSON.mjs";
+import dateToObj    from "./utils/dateToObj.js";
+import timeSince    from "./utils/timeSince.js";
+import deQuote      from "./utils/deQuote.mjs";
+import reactRole    from "./commands/reactrole/collect.mjs";
+import pollCollect    from "./commands/poll/collect.mjs";
 
 // import commands
-import clear        from "./commands/clear.mjs";
-import clearall     from "./commands/clearall.mjs";
-import define       from "./commands/define.mjs";
-import diebot       from "./commands/diebot.mjs";
+import clear        from "./commands/clear/clear.mjs";
+import clearall     from "./commands/clear/clearall.mjs";
+import define       from "./commands/lignuistic/define.mjs";
+import diebot       from "./commands/clear/diebot.mjs";
 import help         from "./commands/help.mjs";
-import kaprogram    from "./commands/kaprogram.mjs";
-import kauser       from "./commands/kauser.mjs";
+import kaprogram    from "./commands/ka/kaprogram.mjs";
+import kauser       from "./commands/ka/kauser.mjs";
 import ping         from "./commands/ping.mjs";
-import pronounce    from "./commands/pronounce.mjs";
-import reactrole    from "./commands/reactrole.mjs";
-import translate    from "./commands/translate.mjs";
-import poll         from "./commands/poll.mjs";
+import pronounce    from "./commands/lignuistic/pronounce.mjs";
+import reactrole    from "./commands/reactrole/index.mjs";
+import translate    from "./commands/lignuistic/translate.mjs";
+import poll         from "./commands/poll/index.mjs";
 
 // initiate packages
 dotenv.config();
