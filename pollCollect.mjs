@@ -8,20 +8,20 @@ function pollCollect(msg, reactions) {
             if(reactions[user.id]) {
                 reaction.users.remove(user);
             } else {
-                reactions[user.id] = 0;
+                reactions[user.id] = 1;
             }
-
-            reactions[user.id]++;
-
-            DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "polls.messageID": msg.id }, { "$set": { "polls.$.reactions": reactions }}, () => {});
         }
     });
 
     collect.on("remove", async (reaction, user) => {
-        reactions[user.id]--;
-
-        DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "polls.messageID": msg.id }, { "$set": { "polls.$.reactions": reactions }}, () => {});
+        if(!reactions[user.id] - 1) {
+            reactions[user.id]--;
+        }
     });
+
+    setInterval(() => {
+        DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "polls.messageID": msg.id }, { "$set": { "polls.$.reactions": reactions }}, () => {});
+    }, 1000);
 }
 
 export default pollCollect;
