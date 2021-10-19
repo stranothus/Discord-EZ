@@ -1,4 +1,5 @@
 import { Permissions } from "discord.js";
+import reactRole    from "./reactRole.mjs";
 
 async function reactrole(msg, args) {
     if(!msg.member.permissons.has(Permissions.FLAGS.MANAGE_ROLES)) {
@@ -12,7 +13,7 @@ async function reactrole(msg, args) {
 
     let msgs = args
         .map((v, i, a) => ((i % 2) ? undefined : {
-            content: `To get @${v}, ` + `react with ${a[i + 1]}`,
+            content: `To get @${v}, react with ${a[i + 1]}`,
             emoji: a[i + 1],
             role: v
         }))

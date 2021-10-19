@@ -14,6 +14,7 @@ import dateToObj    from "./dateToObj.js";
 import timeSince    from "./timeSince.js";
 import deQuote      from "./deQuote.mjs";
 import reactRole    from "./reactRole.mjs";
+import pollCollect    from "./pollCollect.mjs";
 
 // import commands
 import clear        from "./commands/clear.mjs";
@@ -27,6 +28,7 @@ import ping         from "./commands/ping.mjs";
 import pronounce    from "./commands/pronounce.mjs";
 import reactrole    from "./commands/reactrole.mjs";
 import translate    from "./commands/translate.mjs";
+import poll         from "./commands/poll.mjs";
 
 // initiate packages
 dotenv.config();
@@ -91,6 +93,16 @@ client.once("ready", () => {
                             reactRole(message, roles, reactions);
                         }
                     }
+                    for(let i = 0; i < result.polls.length; i++) {
+                        let index = result.polls[i];
+                        let guild = client.guilds.cache.get(guildID);
+                        let channel = guild.channels.cache.get(index.channelID);
+                        let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
+
+                        if(message) {
+                            pollCollect(message, index.reactions);
+                        }
+                    }
                 }
             });
         });
@@ -110,6 +122,7 @@ client.on("guildCreate", async guild => {
             muted: false
         } : false).filter(v => v),
         reactroles: [],
+        polls: [],
         bannedwords: [],
         moderation: {
             spamcap: false,
@@ -154,6 +167,9 @@ client.on("messageCreate", async msg => {
             break;
             case "reactrole":
                 reactrole(msg, args);
+            break;
+            case "poll":
+                poll(msg, args);
             break;
             case "diebot":
                 diebot(msg, args);
