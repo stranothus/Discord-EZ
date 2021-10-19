@@ -30,15 +30,22 @@ function help(msg, args) {
             break;
             case "reactrole":
                 // tell how =reactrole works
-                message = `\`=reactrole [role name] [emoji]...\` makes me a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
+                message = `\`=reactrole [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
             break;
-            case "":
+            case "poll":
+                // tell how =poll works
+                message = `\`=poll [option] [emoji]...\` makes me hold a poll. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`, but they can only react once, so voting is fair. Options must be contained in quotation marks if spaces are present`
+            break;
+            case "diebot":
+                // tell how =diebot works
                 message = `\`=diebot\` makes me delete my messages`;
             break;
-            case "":
+            case "clear":
+                // tell how =clear works
                 message = `\`=clear [number]*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
             break;
-            case "":
+            case "clearall":
+                // tell how =clearall works
                 message = `\`=clearall\` makes me delete *every single message in the channel*. Use this command with caution!`;
             break;
         }
@@ -53,6 +60,7 @@ function help(msg, args) {
             \`pronounce\`\n
             \`translate\`\n
             \`reactrole\`\n
+            \`poll\`\n
             \`diebot\`
             \`clear\`
             \`clearall\``;
