@@ -50,8 +50,11 @@ function help(msg, args) {
             break;
             case "mute":
                 // tell how =mute works
-                message = "\`=mute [user] [time]\\* [reason]\\*\` makes me mute a user for \`[time]\` of format \`[number][unit of time]\` or a default of one week.";
+                message = `\`=mute [user] [time]\\* [reason]\\*\` makes me mute a user for \`[time]\` of format \`[number][unit of time]\` or a default of one week`;
             break;
+            case "unmute":
+                // tell how =unmute works
+                message = `\`=unmute [user]\` make me unmute a muted user early`;
         }
     } else {
         // send list of all commands with basic description
@@ -68,7 +71,8 @@ function help(msg, args) {
             \`diebot\`\n
             \`clear\`\n
             \`clearall\`\n
-            \`mute\``;
+            \`mute\`\n
+            \`unmute\``;
     }
 
     var embed = new MessageEmbed()

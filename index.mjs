@@ -31,6 +31,7 @@ import reactrole    from "./commands/reactrole/index.mjs";
 import translate    from "./commands/lignuistic/translate.mjs";
 import poll         from "./commands/poll/index.mjs";
 import mute         from "./commands/mute/mute.mjs";
+import earlyunmute from "./commands/unmute.mjs";
 
 // initiate packages
 dotenv.config();
@@ -206,6 +207,9 @@ client.on("messageCreate", async msg => {
             break;
             case "mute":
                 mute(msg, args);
+            break;
+            case "unmute":
+                earlyunmute(msg, args);
             break;
             case "help":
                 help(msg, args);
