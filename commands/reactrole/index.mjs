@@ -1,5 +1,5 @@
 import { Permissions } from "discord.js";
-import reactRole    from "./index.mjs";
+import reactRole    from "./collect.mjs";
 
 async function reactrole(msg, args) {
     if(!msg.member.permissons.has(Permissions.FLAGS.MANAGE_ROLES)) {

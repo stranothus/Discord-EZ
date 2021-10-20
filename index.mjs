@@ -14,7 +14,8 @@ import dateToObj    from "./utils/dateToObj.js";
 import timeSince    from "./utils/timeSince.js";
 import deQuote      from "./utils/deQuote.mjs";
 import reactRole    from "./commands/reactrole/collect.mjs";
-import pollCollect    from "./commands/poll/collect.mjs";
+import pollCollect  from "./commands/poll/collect.mjs";
+import unmute       from "./commands/mute/unmute.mjs";
 
 // import commands
 import clear        from "./commands/clear/clear.mjs";
@@ -29,6 +30,7 @@ import pronounce    from "./commands/lignuistic/pronounce.mjs";
 import reactrole    from "./commands/reactrole/index.mjs";
 import translate    from "./commands/lignuistic/translate.mjs";
 import poll         from "./commands/poll/index.mjs";
+import mute         from "./commands/mute/mute.mjs";
 
 // initiate packages
 dotenv.config();
@@ -103,6 +105,19 @@ client.once("ready", () => {
                             pollCollect(message, index.reactions);
                         }
                     }
+
+                    let mutedRole = result.moderation.muteRole;
+
+                    for(let i = 0; i < result.members.length; i++) {
+                        let index = result.members[i];
+                        if(index.muted) {
+                            let guild = client.guilds.cache.get(guildID);
+                            let mutedUser = await guild.members.fetch(index.id);
+                            let timeMuted = index.muted - new Date().getTime();
+
+                            unmute(mutedUser, mutedRole, timeMuted, guild);
+                        }
+                    }
                 }
             });
         });
@@ -113,22 +128,31 @@ client.once("ready", () => {
 client.on("guildCreate", async guild => {
     // handle DB creation
     let members = await guild.members.fetch();
+    let muteRole = await guild.roles.cache.find(x => /muted/i.test(x.name)) || await guild.roles.create({ name: "Muted", permissions: [] });
+
+    guild.channels.cache.forEach(channel => {
+        channel.permissionOverwrites.create(muteRole, {
+            "SEND_MESSAGES": false,
+            "ADD_REACTIONS": false
+        });
+    })
 
     DB.Guilds.collection("Info").insertOne({
-        id: guild.id,
-        name: guild.name,
-        members: members.map(v => !v.user.bot ? {
-            id: v.user.id,
-            muted: false
+        "id": guild.id,
+        "name": guild.name,
+        "members": members.map(v => !v.user.bot ? {
+            "id": v.user.id,
+            "muted": false
         } : false).filter(v => v),
-        reactroles: [],
-        polls: [],
-        bannedwords: [],
-        moderation: {
-            spamcap: false,
-            ignorespam: [],
-            mutes: [],
-            infractions: []
+        "reactroles": [],
+        "polls": [],
+        "bannedwords": [],
+        "moderation": {
+            "spamcap": false,
+            "ignorespam": [],
+            "mutes": [],
+            "infractions": [],
+            "muteRole": muteRole.id
         }
     }, function(err, result) {
         if(err) console.error(err);
@@ -179,6 +203,9 @@ client.on("messageCreate", async msg => {
             break;
             case "clearall":
                 clearall(msg, args);
+            break;
+            case "mute":
+                mute(msg, args);
             break;
             case "help":
                 help(msg, args);

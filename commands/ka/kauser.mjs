@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
-import getJSON from "../getJSON.mjs";
-import dateToObj from "../dateToObj.js";
-import timeSince from "../timeSince.js";
+import getJSON from "./../../utils/getJSON.mjs";
+import dateToObj from "./../../utils/dateToObj.js";
+import timeSince from "./../../utils/timeSince.js";
 
 async function kauser(msg, args) {
     if(!args[0]) {

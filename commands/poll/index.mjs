@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import Collection from "@discordjs/collection";
-import pollCollect from "../pollCollect.mjs";
+import pollCollect from "./collect.mjs";
 
 async function poll(msg, args) {
     if(args.length % 2) {

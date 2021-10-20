@@ -42,11 +42,15 @@ function help(msg, args) {
             break;
             case "clear":
                 // tell how =clear works
-                message = `\`=clear [number]*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
+                message = `\`=clear [number]\\*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
             break;
             case "clearall":
                 // tell how =clearall works
                 message = `\`=clearall\` makes me delete *every single message in the channel*. Use this command with caution!`;
+            break;
+            case "mute":
+                // tell how =mute works
+                message = "\`=mute [user] [time]\\* [reason]\\*\` makes me mute a user for \`[time]\` of format \`[number][unit of time]\` or a default of one week.";
             break;
         }
     } else {
@@ -61,9 +65,10 @@ function help(msg, args) {
             \`translate\`\n
             \`reactrole\`\n
             \`poll\`\n
-            \`diebot\`
-            \`clear\`
-            \`clearall\``;
+            \`diebot\`\n
+            \`clear\`\n
+            \`clearall\`\n
+            \`mute\``;
     }
 
     var embed = new MessageEmbed()

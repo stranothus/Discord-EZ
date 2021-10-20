@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import getJSON from "../getJSON.mjs";
+import getJSON from "./../../utils/getJSON.mjs";
 
 async function define(msg, args) {
     if(!args[0]) {
