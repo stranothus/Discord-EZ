@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import Collection from "@discordjs/collection";
 import pollCollect from "./collect.mjs";
 
 async function poll(msg, args) {

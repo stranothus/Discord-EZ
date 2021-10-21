@@ -1,6 +1,12 @@
+import { Permissions } from "discord.js";
 import unmute from "./unmute.mjs";
 
 async function mute(msg, args) {
+    if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        msg.channel.send("You do not have the permissions to use this command");
+        return;
+    }
+
     let user = args[0];
     if(!user) {
         msg.channel.send("Use `=help mute` to learn how to use this command");

@@ -9,6 +9,7 @@ async function reactrole(msg, args) {
 
     if(args.length % 2) {
         msg.channel.send("Use `=help reactrole` to learn how to use this command");
+        return;
     }
 
     let msgs = args

@@ -55,6 +55,15 @@ function help(msg, args) {
             case "unmute":
                 // tell how =unmute works
                 message = `\`=unmute [user]\` make me unmute a muted user early`;
+            break;
+            case "addword":
+                // tell how =unmute works
+                message = `\`=addword [word]\` make me add a word to a list of censored words`;
+            break;
+            case "removeword":
+                // tell how =unmute works
+                message = `\`=removeword [word]\` make me remove a word from a list of censored words`;
+            break;
         }
     } else {
         // send list of all commands with basic description
@@ -72,7 +81,9 @@ function help(msg, args) {
             \`clear\`\n
             \`clearall\`\n
             \`mute\`\n
-            \`unmute\``;
+            \`unmute\`\n
+            \`addword\`\n
+            \`removeword\``;
     }
 
     var embed = new MessageEmbed()

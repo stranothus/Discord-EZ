@@ -32,6 +32,9 @@ import translate    from "./commands/lignuistic/translate.mjs";
 import poll         from "./commands/poll/index.mjs";
 import mute         from "./commands/mute/mute.mjs";
 import earlyunmute from "./commands/unmute.mjs";
+import modwords from "./commands/pottymouth/modwords.mjs";
+import addword from "./commands/pottymouth/addword.mjs";
+import removeword from "./commands/pottymouth/removeword.mjs";
 
 // initiate packages
 dotenv.config();
@@ -211,12 +214,20 @@ client.on("messageCreate", async msg => {
             case "unmute":
                 earlyunmute(msg, args);
             break;
+            case "addword":
+                addword(msg, args);
+            break;
+            case "removeword":
+                removeword(msg, args);
+            break;
             case "help":
                 help(msg, args);
             break;
             default:
                 msg.channel.send("You can check my commands using =help");
         }
+    } else {
+        modwords(msg);
     }
 });
 
