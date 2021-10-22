@@ -166,7 +166,25 @@ client.on("guildCreate", async guild => {
 // guild remove
 client.on("guildDelete", async guild => {
     DB.Guilds.collection("Info").deleteOne({ id: guild.id });
-})
+});
+
+client.on("messageDelete", async msg => {
+    let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
+
+    if(new Date().getTime() - msg.createdTimestamp < 100000 && (msg.mentions.everyone || msg.mentions.users.first() || msg.mentions.roles.first()) && !new RegExp(bannedwords.join("|"), "i").test(msg.content)) {
+        console.log(msg);
+        let webhook = (await msg.channel.fetchWebhooks()).filter(webhook => webhook.name === msg.author.username).first() || await msg.channel.createWebhook(msg.author.username);
+
+        webhook.send({
+            "content": msg.content,
+            "allowedMentions": {
+                "roles": [],
+                "users": [],
+                "parse": []
+            }
+        });
+    }
+});
 
 // commands
 client.on("messageCreate", async msg => {

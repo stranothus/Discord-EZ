@@ -9,7 +9,14 @@ async function modwords(msg) {
 
             bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
 
-            webhook.send(censored);
+            webhook.send({
+                "content": censored,
+                "allowedMentions": {
+                    "roles": [],
+                    "users": [],
+                    "parse": []
+                }
+            });
             msg.delete();
         }
     }
