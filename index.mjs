@@ -1,5 +1,6 @@
 // import general packages
 import { Client, Intents, MessageEmbed, MessageAttachment, Permissions } from "discord.js";
+import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
 import { MongoClient } from "mongodb";
 import dotenv       from "dotenv";
 import fetch        from "node-fetch";
@@ -171,18 +172,28 @@ client.on("guildDelete", async guild => {
 client.on("messageDelete", async msg => {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
 
-    if(new Date().getTime() - msg.createdTimestamp < 100000 && (msg.mentions.everyone || msg.mentions.users.first() || msg.mentions.roles.first()) && !new RegExp(bannedwords.join("|"), "i").test(msg.content)) {
-        console.log(msg);
+    if(new Date().getTime() - msg.createdTimestamp < 100000 && (msg.mentions.everyone || msg.mentions.users.first() || msg.mentions.roles.first() || msg.type === "REPLY") && !new RegExp(bannedwords.join("|"), "i").test(msg.content)) {
         let webhook = (await msg.channel.fetchWebhooks()).filter(webhook => webhook.name === msg.author.username).first() || await msg.channel.createWebhook(msg.author.username);
 
-        webhook.send({
-            "content": msg.content,
-            "allowedMentions": {
-                "roles": [],
-                "users": [],
-                "parse": []
-            }
-        });
+        if(msg.type === "REPLY") {
+            webhook.send({
+                "content": `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${msg.content}`,
+                "allowedMentions": {
+                    "roles": [],
+                    "users": [],
+                    "parse": []
+                }
+            });
+        } else {
+            webhook.send({
+                "content": msg.content,
+                "allowedMentions": {
+                    "roles": [],
+                    "users": [],
+                    "parse": []
+                }
+            });
+        }
     }
 });
 

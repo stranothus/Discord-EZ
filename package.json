@@ -15,6 +15,7 @@
   "author": "Quinn Gibson",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^0.7.0",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
     "mongodb": "^4.1.3",
