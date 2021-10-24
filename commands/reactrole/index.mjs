@@ -2,7 +2,7 @@ import { Permissions } from "discord.js";
 import reactRole    from "./collect.mjs";
 
 async function reactrole(msg, args) {
-    if(!msg.member.permissons.has(Permissions.FLAGS.MANAGE_ROLES)) {
+    if(!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
         msg.channel.send("You do not have the permissions to use this command");
         return;
     }

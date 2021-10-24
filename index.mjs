@@ -55,6 +55,8 @@ const DBConnected = new Promise((resolve, reject) => {
                 Guilds: db.db("Guilds")
             };
 
+            console.log("DB connected");
+
             resolve(db);
         }
     );
