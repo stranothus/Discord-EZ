@@ -169,6 +169,26 @@ client.on("guildDelete", async guild => {
     DB.Guilds.collection("Info").deleteOne({ id: guild.id });
 });
 
+// handle member joining
+client.on("guildMemberAdd", async user => {
+    let guild = user.guild;
+    let welcome = await guild.channels.cache.find(v => /welcome/i.test(v.name));
+    let rules = await guild.channels.cache.find(v => /rules/i.test(v.name));
+    let roles = await guild.channels.cache.find(v => /roles/i.test(v.name));
+
+    welcome.send(`Welcome, <@!${user.user.id}>!${rules ? ` Make sure to read the rules in <#${rules.id}>` : ""}${rules && roles ? " and" : rules ? "!" : ""}${roles ? ` and grab some roles  <#${roles.id}>!` : ""}`);
+
+    if(!(await DB.Guilds.collection("Info").findOne({ "id": guild.id, "members.id": user.user.id })) && !user.user.bot) {
+        DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$push": { "members": {
+            "id": user.user.id,
+            "muted": false
+        }}}, (err, result) => {
+            console.log(result);
+        });
+    }
+});
+
+// handle ghost pings
 client.on("messageDelete", async msg => {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
 
