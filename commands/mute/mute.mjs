@@ -8,7 +8,7 @@ async function mute(msg, args) {
     }
 
     let user = args[0];
-    if(!user) {
+    if(!user || !/<@!(\d{17,19})>/.test(user)) {
         msg.channel.send("Use `=help mute` to learn how to use this command");
         return;
     }
@@ -17,6 +17,10 @@ async function mute(msg, args) {
     let reason = args[2] || "Because I can";
 
     let muted = msg.guild.members.cache.find(v => v.user.id == userId);
+    if(!muted) {
+        msg.channel.send("This command only works on current server members");
+        return;
+    }
     let guild = await DB.Guilds.collection("Info").findOne({ id: msg.guild.id });
     let mutedRole = guild.moderation.muteRole;
     muted.roles.add(mutedRole);
@@ -43,9 +47,9 @@ async function mute(msg, args) {
         "w": 60 * 60 * 24 * 7,
         "week": 60 * 60 * 24 * 7,
         "weeks": 60 * 60 * 24 * 7
-    }[time.replace(/\d/g, "")];
+    }[time.replace(/\d/g, "")] || 60 * 60 * 24 * 7;
 
-    let timeTotal = timeUnit * 1000 * Number(time.replace(/\D/g, ""));
+    let timeTotal = timeUnit * 1000 * (Number(time.replace(/\D/g, "")) || 1);
     let timeNow = new Date().getTime();
 
     let unmuteTime = timeTotal + timeNow;

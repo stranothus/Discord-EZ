@@ -120,7 +120,12 @@ client.once("ready", () => {
                         let index = result.members[i];
                         if(index.muted) {
                             let guild = client.guilds.cache.get(guildID);
-                            let mutedUser = await guild.members.fetch(index.id);
+                            let mutedUser = guild.members.resolve(index.id);
+                            
+                            if(!mutedUser) {
+                                continue;
+                            }
+
                             let timeMuted = index.muted - new Date().getTime();
 
                             unmute(mutedUser, mutedRole, timeMuted, guild);
@@ -136,7 +141,7 @@ client.once("ready", () => {
 client.on("guildCreate", async guild => {
     // handle DB creation
     let members = await guild.members.fetch();
-    let muteRole = await guild.roles.cache.find(x => /muted/i.test(x.name)) || await guild.roles.create({ name: "Muted", permissions: [] });
+    let muteRole = guild.roles.cache.find(x => /muted/i.test(x.name)) || await guild.roles.create({ name: "Muted", permissions: [] });
 
     guild.channels.cache.forEach(channel => {
         channel.permissionOverwrites.create(muteRole, {
@@ -202,6 +207,14 @@ client.on("guildMemberAdd", async user => {
             if(role) {
                 user.roles.add(role);
             }
+        }
+
+        if(DBUser.muted) {
+            let mutedRole = guild.roles.cache.find(x => /muted/i.test(x.name)) || await guild.roles.create({ name: "Muted", permissions: [] });
+            let mutedUser = await guild.members.fetch(user.user.id);
+            let timeMuted = DBUser.muted - new Date().getTime();
+
+            unmute(mutedUser, mutedRole, timeMuted, guild);
         }
     }
 });
