@@ -68,7 +68,8 @@ const client = new Client({
         "GUILD_MESSAGES",
         "GUILD_MESSAGE_REACTIONS",
         "GUILD_MEMBERS",
-        "DIRECT_MESSAGES"
+        "DIRECT_MESSAGES",
+        "GUILD_PRESENCES"
     ]
 });
 
@@ -149,7 +150,8 @@ client.on("guildCreate", async guild => {
         "name": guild.name,
         "members": members.map(v => !v.user.bot ? {
             "id": v.user.id,
-            "muted": false
+            "muted": false,
+            "roles": v.member.roles
         } : false).filter(v => v),
         "reactroles": [],
         "polls": [],
@@ -174,20 +176,39 @@ client.on("guildDelete", async guild => {
 // handle member joining
 client.on("guildMemberAdd", async user => {
     let guild = user.guild;
-    let welcome = await guild.channels.cache.find(v => /welcome/i.test(v.name));
-    let rules = await guild.channels.cache.find(v => /rules/i.test(v.name));
-    let roles = await guild.channels.cache.find(v => /roles/i.test(v.name));
+    let welcome = guild.channels.cache.find(v => /welcome/i.test(v.name));
+    let rules = guild.channels.cache.find(v => /rules/i.test(v.name));
+    let roles = guild.channels.cache.find(v => /roles/i.test(v.name));
 
     welcome.send(`Welcome, <@!${user.user.id}>!${rules ? ` Make sure to read the rules in <#${rules.id}>` : ""}${rules && roles ? " and" : rules ? "!" : ""}${roles ? ` and grab some roles  <#${roles.id}>!` : ""}`);
 
-    if(!(await DB.Guilds.collection("Info").findOne({ "id": guild.id, "members.id": user.user.id })) && !user.user.bot) {
+    let wasMember = await DB.Guilds.collection("Info").findOne({ "id": guild.id, "members.id": user.user.id });
+
+    if(!wasMember && !user.user.bot) {
         DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$push": { "members": {
             "id": user.user.id,
-            "muted": false
+            "muted": false,
+            "roles": user.member.roles
         }}}, (err, result) => {
             console.log(result);
         });
+    } else {
+        let DBUser = wasMember.members.filter(e => e.id === user.user.id)[0];
+        let roles = DBUser.roles;
+
+        for(let i = 0; i < roles.length; i++) {
+            let role = await guild.roles.fetch(roles[i]);
+
+            if(role) {
+                user.roles.add(role);
+            }
+        }
     }
+});
+
+// handle user updates
+client.on("guildMemberUpdate", async (old, current) => {
+    DB.Guilds.collection("Info").updateOne({ "id": current.guild.id, "members.id": current.user.id }, { "$set": { "members.$.roles": current._roles }}, () => {});
 });
 
 // handle ghost pings
