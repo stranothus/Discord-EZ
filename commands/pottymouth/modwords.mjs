@@ -22,7 +22,7 @@ async function modwords(msg) {
                 });
             } else {
                 webhook.send({
-                    "content": msg.content,
+                    "content": censored,
                     "allowedMentions": {
                         "roles": [],
                         "users": [],

@@ -13,7 +13,11 @@ function clear(msg, args) {
         // Logging the number of messages deleted on both the channel and console.
         if(messagesDeleted) {
             channel.send("Deletion of messages successful. Total messages deleted: " + messagesDeleted).then(msg => {
-                setTimeout(() => msg.delete(), 5000);
+                setTimeout(() => {
+                    if(msg) {
+                        msg.delete();
+                    }
+                }, 5000);
             });
         } else {
             channel.send("Deletion of messages unsuccessful");
