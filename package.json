@@ -12,6 +12,9 @@
     "Bot",
     "Node"
   ],
+  "engines": {
+    "node": "16.9.1"
+  },
   "author": "Quinn Gibson",
   "license": "ISC",
   "dependencies": {
