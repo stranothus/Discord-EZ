@@ -4,63 +4,63 @@ Discord-EZ is my fourth attemption at a Discord bot. This time, I'm using a more
 
 ## Current commands:
 
-### ping
+### `ping`
 
 Replies with "Pong!"
 
-### kauser [username/kaid]
+### `kauser [username/kaid]`
 
 Gives information about a KA user
 
-### kapogram [id]
+### `kapogram [id]`
 
 Gives information about a KA program
 
-### define [word]
+### `define [word]`
 
 Provides a defintions list for the word
 
-### pronounce [word]
+### `pronounce [word]`
 
 Links a video of how to pronounce the word
 
-### translate [language]\* [word(s)]
+### `translate [language]\* [word(s)]`
 
 Translates the word(s) from a variety of languages
 
-### reactrole [role name] [emoji]...
+### `reactrole [role name] [emoji]...`
 
 Creates a react role wjere users can recat with [emoji] for [role name]. Multiple roles and reaction can be included in one react role message by continuing the pattern
 
-### poll [option] [emoji]...
+### `poll [option] [emoji]...`
 
 Creates a poll where users can vote for [option] with [emoji]. Mutliple options and emojis can be included in one poll by contuing the pattern. Each user can only vote with one emoji
 
-### diebot
+### `diebot`
 
 Clears bot messages
 
-### clear [number]\*
+### `clear [number]\*`
 
 Clears [number] messages from the channel or 99 by default
 
-### clearall
+### `clearall`
 
 Completely resets the channel messages
 
-### mute [user] [time]\* [reason]\*
+### `mute [user] [time]\* [reason]\*`
 
 Mutes [user] for [time] or a week by default
 
-### unmute [user]
+### `unmute [user]`
 
 Unmutes a muted user early
 
-### addword
+### `addword`
 
 Adds a word to a list of banned words
 
-### removeword
+### `removeword`
 
 Removes a word from a list of banned wordss
 
@@ -68,7 +68,7 @@ Removes a word from a list of banned wordss
 
 ### Censoring
 
-Words added with `=addword` become censored words. These words are searched for in each message. If one is found, the message is deleted. Here's the exciting part: the message is reposted through a wewbhook which looks like the original poster, except all banned words are replaced with asterisks to censor
+Words added with `addword` become censored words. These words are searched for in each message. If one is found, the message is deleted. Here's the exciting part: the message is reposted through a wewbhook which looks like the original poster, except all banned words are replaced with asterisks to censor
 
 ### Ghost pings
 
