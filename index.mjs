@@ -255,8 +255,8 @@ client.on("messageDelete", async msg => {
 
 // commands
 client.on("messageCreate", async msg => {
-    if(msg.content.startsWith("=")) {
-        var command = msg.content.split(" ")[0].replace(/^=/, "");
+    if(msg.content.startsWith("=") || msg.content.startsWith("<@!886933964537880617> ")) {
+        var command = msg.content.replace(/^(=|<@!886933964537880617> )/, "").split(" ")[0];
         var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v).map(v => deQuote(v));
 
         switch(command.toLowerCase()) {
