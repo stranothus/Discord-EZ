@@ -37,6 +37,8 @@ import modwords     from "./commands/pottymouth/modwords.mjs";
 import addword      from "./commands/pottymouth/addword.mjs";
 import removeword   from "./commands/pottymouth/removeword.mjs";
 import prefix       from "./commands/prefix.mjs";
+import warn         from "./commands/warn.mjs";
+import infractions from "./commands/infraction.mjs";
 
 // initiate packages
 dotenv.config();
@@ -158,7 +160,8 @@ client.on("guildCreate", async guild => {
         "members": members.map(v => !v.user.bot ? {
             "id": v.user.id,
             "muted": false,
-            "roles": v.member.roles
+            "roles": v.member.roles,
+            "infractions": []
         } : false).filter(v => v),
         "reactroles": [],
         "polls": [],
@@ -312,6 +315,12 @@ client.on("messageCreate", async msg => {
             break;
             case "prefix":
                 prefix(msg, args);
+            break;
+            case "warn":
+                warn(msg, args);
+            break;
+            case "infractions":
+                infractions(msg, args);
             break;
             default:
                 msg.channel.send("You can check my commands using =help");
