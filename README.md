@@ -64,6 +64,24 @@ Adds a word to a list of banned words
 
 Removes a word from a list of banned wordss
 
+## Additional features:
+
+### Censoring
+
+Words added with `=addword` become censored words. These words are searched for in each message. If one is found, the message is deleted. Here's the exciting part: the message is reposted through a wewbhook which looks like the original poster, except all banned words are replaced with asterisks to censor
+
+### Ghost pings
+
+Ghost pings are detected and reposted (Without a second ping) in the same way as censored messages
+
+### Welcome messages
+
+New users are welcomed automatically. If roles and rules channels can be found, they will be mentioned in the welcome channel as places to check out
+
+### Persistant roles
+
+Roles are saved and reassigned if an old member rejoins so they don't have to go through the hassle of reaction roles, or, even worse, an admin has to manually reassign roles
+
 ## Invite
 
 This bot is still in development, so it is not recommended to implement it into any servers :)
