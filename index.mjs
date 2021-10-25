@@ -32,10 +32,11 @@ import reactrole    from "./commands/reactrole/index.mjs";
 import translate    from "./commands/lignuistic/translate.mjs";
 import poll         from "./commands/poll/index.mjs";
 import mute         from "./commands/mute/mute.mjs";
-import earlyunmute from "./commands/unmute.mjs";
-import modwords from "./commands/pottymouth/modwords.mjs";
-import addword from "./commands/pottymouth/addword.mjs";
-import removeword from "./commands/pottymouth/removeword.mjs";
+import earlyunmute  from "./commands/unmute.mjs";
+import modwords     from "./commands/pottymouth/modwords.mjs";
+import addword      from "./commands/pottymouth/addword.mjs";
+import removeword   from "./commands/pottymouth/removeword.mjs";
+import prefix       from "./commands/prefix.mjs";
 
 // initiate packages
 dotenv.config();
@@ -153,6 +154,7 @@ client.on("guildCreate", async guild => {
     DB.Guilds.collection("Info").insertOne({
         "id": guild.id,
         "name": guild.name,
+        "perfix": "=",
         "members": members.map(v => !v.user.bot ? {
             "id": v.user.id,
             "muted": false,
@@ -255,8 +257,8 @@ client.on("messageDelete", async msg => {
 
 // commands
 client.on("messageCreate", async msg => {
-    if(msg.content.startsWith("=") || msg.content.startsWith("<@!886933964537880617> ")) {
-        var command = msg.content.replace(/^(=|<@!886933964537880617> )/, "").split(" ")[0];
+    if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith("<@!886933964537880617> ")) {
+        var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\])/, "\\$1") + ")|(<@!886933964537880617> )", ""), "").split(" ")[0];
         var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v).map(v => deQuote(v));
 
         switch(command.toLowerCase()) {
@@ -307,6 +309,9 @@ client.on("messageCreate", async msg => {
             break;
             case "help":
                 help(msg, args);
+            break;
+            case "prefix":
+                prefix(msg, args);
             break;
             default:
                 msg.channel.send("You can check my commands using =help");
