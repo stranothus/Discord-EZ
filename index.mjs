@@ -1,3 +1,9 @@
+// import express for Heroku
+import express from "express";
+const app = express();
+app.get("/", (req, res) => res.send("Bot is running"));
+app.listen(process.env.port);
+
 // import general packages
 import { Client, Intents, MessageEmbed, MessageAttachment, Permissions } from "discord.js";
 import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
