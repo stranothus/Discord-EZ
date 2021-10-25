@@ -153,7 +153,7 @@ client.once("ready", () => {
                         "members": members.map(v => !v.user.bot ? {
                             "id": v.user.id,
                             "muted": false,
-                            "roles": v.member ? v.member.roles : [],
+                            "roles": v.member ? v.member.roles : [], 
                             "infractions": []
                         } : false).filter(v => v),
                         "reactroles": [],
