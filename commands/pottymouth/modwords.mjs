@@ -14,6 +14,7 @@ async function modwords(msg) {
             if(msg.type === "REPLY") {
                 webhook.send({
                     "content": `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}`,
+                    "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
                     "allowedMentions": {
                         "roles": [],
                         "users": [],
@@ -23,6 +24,7 @@ async function modwords(msg) {
             } else {
                 webhook.send({
                     "content": censored,
+                    "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
                     "allowedMentions": {
                         "roles": [],
                         "users": [],
