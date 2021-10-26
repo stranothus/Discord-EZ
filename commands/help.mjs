@@ -64,6 +64,18 @@ function help(msg, args) {
                 // tell how =unmute works
                 message = `\`=removeword [word]\` make me remove a word from a list of censored words`;
             break;
+            case "prefix":
+                // tell how =prefix works
+                message = `\`=prefix [new prefix]*\` I'll state my prefix or set it to a new one!`;
+            break;
+            case "warn":
+                // tell how =warn works
+                message = `\`=warn [user] [reason]\` makes me store a warning for [user] about [reason] to review for various purposes`;
+            break;
+            case "infractions":
+                // tell how =infractions works
+                message = `\`=infractions [user]\` makes me list stored warnings/infractions of [user]`;
+            break;
         }
     } else {
         // send list of all commands with basic description

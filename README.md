@@ -62,7 +62,19 @@ Adds a word to a list of banned words
 
 ### `removeword`
 
-Removes a word from a list of banned wordss
+Removes a word from a list of banned words
+
+### `prefix [new prefix]*`
+
+States prefix or sets a new one
+
+### `warn [user] [reason]`
+
+Stores a warning for `[user]` about `[reason]`
+
+### `infractions [user]`
+
+Shows stored warnings/infractions for `[user]`
 
 ## Additional features:
 

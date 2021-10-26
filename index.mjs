@@ -353,9 +353,6 @@ client.on("messageCreate", async msg => {
             case "removeword":
                 removeword(msg, args);
             break;
-            case "help":
-                help(msg, args);
-            break;
             case "prefix":
                 prefix(msg, args);
             break;
@@ -364,6 +361,9 @@ client.on("messageCreate", async msg => {
             break;
             case "infractions":
                 infractions(msg, args);
+            break;
+            case "help":
+                help(msg, args);
             break;
             default:
                 msg.channel.send("You can check my commands using =help");
