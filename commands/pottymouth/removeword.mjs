@@ -9,7 +9,7 @@ function removeword(msg, args) {
         msg.channel.send("Use `=help removeword` to learn how to use this command");
         return;
     }
-    DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$pull": { "bannedwords": args[0] }}, function(err, result) {
+    DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$pull": { "bannedwords": args[0].toLowerCase() }}, function(err, result) {
         if(err) console.error(err);
 
         if(result) {
