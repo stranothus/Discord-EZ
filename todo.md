@@ -1,6 +1,5 @@
 # Todo:
 
-1. Warn command which stores to DB
-2. Kick command
-3. Logs which can be enabled or disabled
-4. Presist mute
+1. Kick command
+2. Logs which can be enabled or disabled
+3. Show help commands with proper guild prefix
