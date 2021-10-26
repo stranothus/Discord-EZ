@@ -24,7 +24,7 @@ Provides a defintions list for the word
 
 Links a video of how to pronounce the word
 
-### `translate [language]\* [word(s)]`
+### `translate [word(s)] [to]\* [from]\*`
 
 Translates the word(s) from a variety of languages
 
