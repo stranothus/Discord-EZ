@@ -38,13 +38,13 @@ import reactrole    from "./commands/reactrole/index.mjs";
 import translate    from "./commands/lignuistic/translate.mjs";
 import poll         from "./commands/poll/index.mjs";
 import mute         from "./commands/mute/mute.mjs";
-import earlyunmute  from "./commands/unmute.mjs";
+import earlyunmute  from "./commands/mod/unmute.mjs";
 import modwords     from "./commands/pottymouth/modwords.mjs";
 import addword      from "./commands/pottymouth/addword.mjs";
 import removeword   from "./commands/pottymouth/removeword.mjs";
 import prefix       from "./commands/prefix.mjs";
-import warn         from "./commands/warn.mjs";
-import infractions from "./commands/infraction.mjs";
+import warn         from "./commands/mod/warn.mjs";
+import infractions from "./commands/mod/infraction.mjs";
 
 // initiate packages
 dotenv.config();

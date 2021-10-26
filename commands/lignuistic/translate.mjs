@@ -3,6 +3,7 @@ import translatte from "translatte";
 function translate(msg, args) {
     let argsL = args.length,
         text,
+        to,
         from;
 
     if(!argsL) {
@@ -10,15 +11,11 @@ function translate(msg, args) {
         return;
     }
 
-    if(argsL - 1) {
-        from = args[0];
-        text = args[1];
-    } else {
-        from = "";
-        text = args[0];
-    }
+    text = args[0];
+    to = args[1] || "en";
+    from = args[2];
 
-    translatte(text, { to: 'en' }).then(res => {
+    translatte(text, from ? { to: to, from: from } : { to: to }).then(res => {
         msg.channel.send(res.text + (from ? "" : ` (translated from ${res.from.language.iso})`));
     }).catch(err => {
         console.error(err);
