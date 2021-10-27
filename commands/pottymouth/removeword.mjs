@@ -1,6 +1,6 @@
 import { Permissions } from "discord.js";
 
-function removeword(msg, args) {
+async function removeword(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
     if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {

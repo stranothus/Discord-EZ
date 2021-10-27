@@ -1,6 +1,6 @@
 import translatte from "translatte";
 
-function translate(msg, args) {
+async function translate(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
     let argsL = args.length,

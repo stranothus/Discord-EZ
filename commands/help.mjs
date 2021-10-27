@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 
-function help(msg, args) {
+async function help(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
     let message = "";
     if(args.length) {
