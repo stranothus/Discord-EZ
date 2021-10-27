@@ -9,16 +9,8 @@ import { Client, Intents, MessageEmbed, MessageAttachment, Permissions } from "d
 import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
 import { MongoClient } from "mongodb";
 import dotenv       from "dotenv";
-import fetch        from "node-fetch";
-
-// import command packages
-import ytsr         from "ytsr";
-import translatte   from "translatte";
 
 // import utils
-import getJSON      from "./utils/getJSON.mjs";
-import dateToObj    from "./utils/dateToObj.js";
-import timeSince    from "./utils/timeSince.js";
 import deQuote      from "./utils/deQuote.mjs";
 import reactRole    from "./commands/reactrole/collect.mjs";
 import pollCollect  from "./commands/poll/collect.mjs";
