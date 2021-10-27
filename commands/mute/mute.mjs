@@ -2,6 +2,8 @@ import { Permissions } from "discord.js";
 import unmute from "./unmute.mjs";
 
 async function mute(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
         msg.channel.send("You do not have the permissions to use this command");
         return;
@@ -9,7 +11,7 @@ async function mute(msg, args) {
 
     let user = args[0];
     if(!user || !/<@!(\d{17,19})>/.test(user)) {
-        msg.channel.send("Use `=help mute` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help mute` to learn how to use this command");
         return;
     }
     let userId = user.replace(/\D/g, "");

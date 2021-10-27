@@ -1,13 +1,15 @@
 import { Permissions } from "discord.js";
 
 async function warn(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
         msg.channel.send("You do not have the permissions to use this command");
         return;
     }
     
     if(!args[0] || !args[1]) {
-        msg.channel.send("Use `=help warn` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help warn` to learn how to use this command");
         return;
     }
 

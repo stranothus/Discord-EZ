@@ -1,9 +1,10 @@
-import { MessageEmbed } from "discord.js";
 import pollCollect from "./collect.mjs";
 
 async function poll(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     if(args.length % 2) {
-        msg.channel.send("Use `=help poll` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help poll` to learn how to use this command");
     }
 
     let msgs = args

@@ -1,13 +1,15 @@
 import translatte from "translatte";
 
 function translate(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     let argsL = args.length,
         text,
         to,
         from;
 
     if(!argsL) {
-        msg.channel.send("Use `=help translate` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help translate` to learn how to use this command");
         return;
     }
 

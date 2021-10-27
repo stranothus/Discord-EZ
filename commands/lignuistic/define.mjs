@@ -2,8 +2,10 @@ import { MessageEmbed } from "discord.js";
 import getJSON from "./../../utils/getJSON.mjs";
 
 async function define(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     if(!args[0]) {
-        msg.channel.send("Use `=help define` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help define` to learn how to use this command");
         return;
     }
 

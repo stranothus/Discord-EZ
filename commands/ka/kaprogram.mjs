@@ -4,8 +4,10 @@ import dateToObj from "./../../utils/dateToObj.js";
 import timeSince from "./../../utils/timeSince.js";
 
 async function kaprogram(msg, args) {
+    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+
     if(!args[0]) {
-        msg.channel.send("Use `=help kaporgram` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help kaporgram` to learn how to use this command");
         return;
     }
 
