@@ -4,7 +4,7 @@ function status(msg, args) {
         return;
     }
 
-    client.user.setPresence({ activities: [{ name: args[0] || "Doing lots of nothing", type: args[2] || "playing" }], status: args[1] || "online" });
+    client.user.setPresence({ activities: [{ name: args[0] || "Doing lots of nothing", type: args[2] || "PLAYING" }], status: args[1] || "online" });
 }
 
 export default status;
