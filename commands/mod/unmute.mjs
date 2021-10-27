@@ -1,12 +1,9 @@
-import { Permissions } from "discord.js";
+import isAdmin from "../../utils/isAdmin.mjs";
 
 async function earlyunmute(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-        msg.channel.send("You do not have the permissions to use this command");
-        return;
-    }
+    if(isAdmin(msg)) return;
     
     let user = args[0];
     if(!user) {

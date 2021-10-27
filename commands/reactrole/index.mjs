@@ -1,13 +1,10 @@
-import { Permissions } from "discord.js";
+import isAdmin from "../../utils/isAdmin.mjs";
 import reactRole    from "./collect.mjs";
 
 async function reactrole(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
-        msg.channel.send("You do not have the permissions to use this command");
-        return;
-    }
+    if(isAdmin(msg)) return;
 
     if(args.length % 2) {
         msg.channel.send("Use `" + prefix + "help reactrole` to learn how to use this command");

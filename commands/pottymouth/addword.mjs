@@ -1,12 +1,10 @@
-import { Permissions } from "discord.js";
+import isAdmin from "../../utils/isAdmin.mjs";
 
 async function addword(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-        msg.channel.send("You do not have the permissions to use this command");
-        return;
-    }
+    if(isAdmin(msg)) return;
+    
     if(!args[0]) {
         msg.channel.send("Use `" + prefix + "help addword` to learn how to use this command");
         return;

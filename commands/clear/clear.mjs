@@ -1,10 +1,7 @@
-import { Permissions } from "discord.js";
+import isAdmin from "../../utils/isAdmin.mjs";
 
 function clear(msg, args) {
-    if(!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-        msg.channel.send("You do not have the permissions to use this command");
-        return;
-    }
+    if(isAdmin(msg)) return;
 
     let channel = msg.channel;
 
