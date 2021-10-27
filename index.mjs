@@ -45,6 +45,7 @@ import removeword   from "./commands/pottymouth/removeword.mjs";
 import prefix       from "./commands/prefix.mjs";
 import warn         from "./commands/mod/warn.mjs";
 import infractions from "./commands/mod/infraction.mjs";
+import status from "./commands/status.mjs";
 
 // initiate packages
 dotenv.config();
@@ -71,7 +72,7 @@ const DBConnected = new Promise((resolve, reject) => {
     );
 });
 
-const client = new Client({
+global.client = new Client({
     intents: [
         "GUILDS",
         "GUILD_MESSAGES",
@@ -361,6 +362,9 @@ client.on("messageCreate", async msg => {
             break;
             case "infractions":
                 infractions(msg, args);
+            break;
+            case "status":
+                status(msg, args);
             break;
             case "help":
                 help(msg, args);
