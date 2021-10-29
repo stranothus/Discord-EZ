@@ -9,6 +9,7 @@ async function gettext(msg, args) {
         if(e.contentType === 'image/png') {
             console.log("Converting...");
             request.get(e.proxyUrl, function (error, response, body) {
+                console.log(error, response);
                 if (!error && response.statusCode == 200) {
                     data = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(body).toString('base64');
                     console.log(data);
