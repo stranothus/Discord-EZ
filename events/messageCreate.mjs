@@ -20,10 +20,10 @@ import prefix from "../commands/prefix.mjs";
 import warn from "../commands/mod/warn.mjs";
 import infractions from "../commands/mod/infraction.mjs";
 import status from "../commands/status.mjs";
+import gettext from "../commands/gettext.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
-
 
 async function messageCreate(msg) {
     if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith("<@!886933964537880617> ")) {
@@ -87,6 +87,9 @@ async function messageCreate(msg) {
             break;
             case "status":
                 status(msg, args);
+            break;
+            case "gettext":
+                gettext(msg, args);
             break;
             case "help":
                 help(msg, args);
