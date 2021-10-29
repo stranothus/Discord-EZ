@@ -1,28 +1,28 @@
 // import commands
-import clear        from "../commands/clear/clear.mjs";
-import clearall     from "../commands/clear/clearall.mjs";
-import define       from "../commands/lignuistic/define.mjs";
-import diebot       from "../commands/clear/diebot.mjs";
-import help         from "../commands/help.mjs";
-import kaprogram    from "../commands/ka/kaprogram.mjs";
-import kauser       from "../commands/ka/kauser.mjs";
-import ping         from "../commands/ping.mjs";
-import pronounce    from "../commands/lignuistic/pronounce.mjs";
-import reactrole    from "../commands/reactrole/index.mjs";
-import translate    from "../commands/lignuistic/translate.mjs";
-import poll         from "../commands/poll/index.mjs";
-import mute         from "../commands/mute/mute.mjs";
-import earlyunmute  from "../commands/mod/unmute.mjs";
-import modwords     from "../commands/pottymouth/modwords.mjs";
-import addword      from "../commands/pottymouth/addword.mjs";
-import removeword   from "../commands/pottymouth/removeword.mjs";
-import prefix       from "../commands/prefix.mjs";
-import warn         from "../commands/mod/warn.mjs";
-import infractions  from "../commands/mod/infraction.mjs";
-import status       from "../commands/status.mjs";
+import clear from "../commands/clear/clear.mjs";
+import clearall from "../commands/clear/clearall.mjs";
+import define from "../commands/lignuistic/define.mjs";
+import diebot from "../commands/clear/diebot.mjs";
+import help from "../commands/help.mjs";
+import kaprogram from "../commands/ka/kaprogram.mjs";
+import kauser from "../commands/ka/kauser.mjs";
+import ping from "../commands/ping.mjs";
+import pronounce from "../commands/lignuistic/pronounce.mjs";
+import reactrole from "../commands/reactrole/index.mjs";
+import translate from "../commands/lignuistic/translate.mjs";
+import poll from "../commands/poll/index.mjs";
+import mute from "../commands/mute/mute.mjs";
+import earlyunmute from "../commands/mod/unmute.mjs";
+import modwords from "../commands/pottymouth/modwords.mjs";
+import addword from "../commands/pottymouth/addword.mjs";
+import removeword from "../commands/pottymouth/removeword.mjs";
+import prefix from "../commands/prefix.mjs";
+import warn from "../commands/mod/warn.mjs";
+import infractions from "../commands/mod/infraction.mjs";
+import status from "../commands/status.mjs";
 
 // import utils
-import deQuote      from "../utils/deQuote.mjs";
+import deQuote from "../utils/deQuote.mjs";
 
 
 async function messageCreate(msg) {

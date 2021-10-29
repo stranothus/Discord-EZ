@@ -5,18 +5,18 @@ app.get("/", (req, res) => res.send("Bot is running"));
 app.listen(process.env.PORT);
 
 // import general packages
-import { Client }           from "discord.js";
-import { MongoClient }      from "mongodb";
-import dotenv               from "dotenv";
+import { Client } from "discord.js";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
 // import events
-import guildCreate          from "./events/guildCreate.mjs";
-import ready                from "./events/ready.mjs";
-import guildMemberAdd       from "./events/guildMemberAdd.mjs";
-import guildDelete          from "./events/guildDelete.mjs";
-import guildMemberUpdate    from "./events/guildMemberUpdate.mjs";
-import messageDelete        from "./events/messageDelete.mjs";
-import messageCreate        from "./events/messageCreate.mjs";
+import guildCreate from "./events/guildCreate.mjs";
+import ready from "./events/ready.mjs";
+import guildMemberAdd from "./events/guildMemberAdd.mjs";
+import guildDelete from "./events/guildDelete.mjs";
+import guildMemberUpdate from "./events/guildMemberUpdate.mjs";
+import messageDelete from "./events/messageDelete.mjs";
+import messageCreate from "./events/messageCreate.mjs";
 
 // initiate process.env
 dotenv.config();
