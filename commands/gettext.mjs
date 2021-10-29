@@ -1,12 +1,20 @@
-import Tesseract from 'tesseract.js';
+import { createWorker } from 'tesseract.js';
 import fetch from 'node-fetch';
 
+const worker = createWorker();
+
+(async () => {
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+});
+
 async function gettext(msg, args) {
-    console.log(msg.attachments);
     msg.attachments.forEach(async e => {
         if(e.contentType === 'image/png') {
-            console.log("Converting " + e.proxyURL);
-            console.log(await fetch(e.proxyURL).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64')));
+            let base64 = await fetch(e.proxyURL).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64'));
+            let { data: { text } } = await worker.recognize(base64);
+            console.log(text);
         } else {
             console.log(e.contentType + " is not supported");
         }
