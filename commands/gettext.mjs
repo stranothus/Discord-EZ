@@ -6,7 +6,7 @@ async function gettext(msg, args) {
     msg.attachments.forEach(e => {
         if(e.contentType === 'image/png') {
             console.log("Converting...");
-            await fetch(e.proxyUrl).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64'));
+            console.log(await fetch(e.proxyUrl).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64')));
         } else {
             console.log(e.contentType);
         }
