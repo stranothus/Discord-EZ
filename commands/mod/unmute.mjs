@@ -3,7 +3,7 @@ import isAdmin from "../../utils/isAdmin.mjs";
 async function earlyunmute(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
     
     let user = args[0];
     if(!user) {

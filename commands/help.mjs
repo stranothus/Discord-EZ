@@ -23,7 +23,7 @@ async function help(msg, args) {
             break;
             case "pronounce":
                 // tell how =pronounce works
-                message = `\`${prefix}pronounce [word]\` makes me link a YoutTube video of how to pronounce your word`;
+                message = `\`${prefix}pronounce [word]\` makes me link a YouTube video of how to pronounce your word`;
             break;
             case "translate":
                 // tell how =translate works

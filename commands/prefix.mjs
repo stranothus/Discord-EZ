@@ -7,7 +7,7 @@ async function prefix(msg, args) {
         return;
     }
 
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
 
     DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$set": { "prefix": args[0] }}, () => {});
     msg.channel.send("My prefix is now `" + args[0] + "`");

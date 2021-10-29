@@ -3,7 +3,7 @@ import isAdmin from "../../utils/isAdmin.mjs";
 async function warn(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
     
     if(!args[0] || !args[1]) {
         msg.channel.send("Use `" + prefix + "help warn` to learn how to use this command");

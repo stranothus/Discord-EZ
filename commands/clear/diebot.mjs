@@ -1,7 +1,7 @@
 import isAdmin from "../../utils/isAdmin.mjs";
 
 function diebot(msg, args) {
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
     
     msg.channel.messages.fetch().then(async messages => {
         let myMessages = messages.filter(msg => msg.author.id === client.user.id);

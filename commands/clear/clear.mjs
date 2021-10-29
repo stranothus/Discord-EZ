@@ -1,7 +1,7 @@
 import isAdmin from "../../utils/isAdmin.mjs";
 
 function clear(msg, args) {
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
 
     let channel = msg.channel;
 

@@ -4,7 +4,7 @@ import reactRole    from "./collect.mjs";
 async function reactrole(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
 
     if(args.length % 2) {
         msg.channel.send("Use `" + prefix + "help reactrole` to learn how to use this command");

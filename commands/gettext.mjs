@@ -1,23 +1,27 @@
 import { createWorker } from 'tesseract.js';
 import fetch from 'node-fetch';
 
-const worker = createWorker();
+var worker = false;
+const resolved = new Promise(async (resolve, reject) => {
+    let w = createWorker();
+    await w.load();
+    await w.loadLanguage('eng');
+    await w.initialize('eng');
 
-(async () => {
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
+    worker = w;
+    resolve(true);
 });
 
 async function gettext(msg, args) {
     msg.attachments.forEach(async e => {
         if(e.contentType === 'image/png') {
             let base64 = await fetch(e.proxyURL).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64'));
-            console.log(base64);
+            if(!worker) await resolved;
             let data = await worker.recognize(base64);
-            console.log(data);
+            
+            msg.channel.send(data.data.text);
         } else {
-            console.log(e.contentType + " is not supported");
+            msg.channel.send(e.contentType + " is not supported");
         }
     });
 }

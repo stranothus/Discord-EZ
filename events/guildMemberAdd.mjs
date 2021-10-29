@@ -14,10 +14,8 @@ async function guildMemberAdd(user) {
         DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$push": { "members": {
             "id": user.user.id,
             "muted": false,
-            "roles": user.member.roles
-        }}}, (err, result) => {
-            console.log(result);
-        });
+            "roles": user.member ? user.member.roles || [] : []
+        }}}, () => {});
     } else {
         let DBUser = wasMember.members.filter(e => e.id === user.user.id)[0];
         let roles = DBUser.roles;

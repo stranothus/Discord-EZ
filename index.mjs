@@ -61,15 +61,8 @@ const token = process.env.TOKEN;
 global.KAAPI = "https://www.khanacademy.org/api/internal";
 global.DictAPI = "https://api.dictionaryapi.dev/api/v2/entries/en";
 
-// bot startup
-client.once("ready", async () => {
-    // once the database has connected, loop through each guild and find it in the database
-    await DBConnected;
 
-    // get all guild ids
-    ready();
-});
-
+client.once("ready", ready); // bot startup
 client.on("guildCreate", guildCreate); // guild startup
 client.on("guildDelete", guildDelete); // guild remove
 client.on("guildMemberAdd", guildMemberAdd); // handle member joining
@@ -77,5 +70,7 @@ client.on("guildMemberUpdate", guildMemberUpdate); // handle user updates
 client.on("messageDelete", messageDelete); // handle ghost pings
 client.on("messageCreate", messageCreate); // commands
 
-// start bot
-client.login(token);
+DBConnected.then(() => {
+    // start bot
+    client.login(token);
+});

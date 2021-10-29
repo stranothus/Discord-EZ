@@ -4,7 +4,7 @@ import unmute from "./unmute.mjs";
 async function mute(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(isAdmin(msg)) return;
+    if(!isAdmin(msg)) return;
 
     let user = args[0];
     if(!user || !/<@!(\d{17,19})>/.test(user)) {
