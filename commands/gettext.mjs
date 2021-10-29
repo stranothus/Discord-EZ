@@ -1,5 +1,5 @@
 import Tesseract from 'tesseract.js';
-import request from 'request';
+import http from 'http';
 
 const r = request.defaults({ encoding: null });
 
@@ -8,12 +8,15 @@ async function gettext(msg, args) {
     msg.attachments.forEach(e => {
         if(e.contentType === 'image/png') {
             console.log("Converting...");
-            request.get(e.proxyUrl, function (error, response, body) {
-                console.log(error, response);
-                if (!error && response.statusCode == 200) {
-                    data = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(body).toString('base64');
-                    console.log(data);
-                }
+            http.get(e.proxyUrl, (resp) => {
+                resp.setEncoding('base64');
+                body = "data:" + resp.headers["content-type"] + ";base64,";
+                resp.on('data', (data) => { body += data});
+                resp.on('end', () => {
+                    console.log(body);
+                });
+            }).on('error', (e) => {
+                console.log(`Got error: ${e.message}`);
             });
         } else {
             console.log(e.contentType);
