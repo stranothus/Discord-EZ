@@ -1,8 +1,6 @@
 import Tesseract from 'tesseract.js';
 import http from 'http';
 
-const r = request.defaults({ encoding: null });
-
 async function gettext(msg, args) {
     console.log(msg.attachments);
     msg.attachments.forEach(e => {
