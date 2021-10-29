@@ -12,6 +12,8 @@ async function gettext(msg, args) {
                     console.log(data);
                 }
             });
+        } else {
+            console.log(e.contentType);
         }
     });
 }
