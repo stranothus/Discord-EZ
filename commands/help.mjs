@@ -77,6 +77,10 @@ async function help(msg, args) {
                 // tell how =infractions works
                 message = `\`${prefix}infractions [user]\` makes me list stored warnings/infractions of [user]`;
             break;
+            case "gettext":
+                // tell how =gettext works
+                message = `\`${prefix}gettext\` makes me list the text from any PNG files attached`
+            break;
         }
     } else {
         // send list of all commands with basic description

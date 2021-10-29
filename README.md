@@ -76,6 +76,10 @@ Stores a warning for `[user]` about `[reason]`
 
 Shows stored warnings/infractions for `[user]`
 
+### `gettext`
+
+Lists the text from any PNG files attached
+
 ## Additional features:
 
 ### Censoring
