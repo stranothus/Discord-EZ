@@ -8,7 +8,7 @@ async function gettext(msg, args) {
             console.log("Converting...");
             console.log(await fetch(e.proxyUrl).then(r => r.buffer()).then(buf => `data:image/png;base64,` + buf.toString('base64')));
         } else {
-            console.log(e.contentType);
+            console.log(e.contentType + " is not supported");
         }
     });
 }
