@@ -9,12 +9,12 @@ function pollCollect(msg, reactions) {
                 if(reactions[user.id]) {
                     reaction.users.remove(user);
                 }
-                records[user.id] = records[user.id] ? records[user.id] + 1 : 1; // otherwise, set reactions to 1
+                reactions[user.id] = reactions[user.id] ? reactions[user.id] + 1 : 1; // otherwise, set reactions to 1
             }
         });
 
         collect.on("remove", async (reaction, user) => {
-            records[user.id]--;
+            reactions[user.id]--;
         });
 
         setInterval(() => {
