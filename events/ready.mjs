@@ -2,6 +2,7 @@ import guildCreate  from "./guildCreate.mjs";
 import reactRole    from "../commands/reactrole/collect.mjs";
 import pollCollect  from "../commands/poll/collect.mjs";
 import unmute       from "../commands/mute/unmute.mjs";
+import reactRoleOne from "../commands/reactroleone/collect.mjs";
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
@@ -26,6 +27,20 @@ async function ready() {
                         let reactions = index.reacttorole.map(v => v.emoji);
 
                         reactRole(message, roles, reactions);
+                    }
+                }
+                // reinitiate reactroles
+                for(let i = 0; i < result.reactroleones.length; i++) {
+                    let index = result.reactroleones[i];
+                    let guild = client.guilds.cache.get(guildID);
+                    let channel = guild.channels.cache.get(index.channelID);
+                    let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
+
+                    if(message) {
+                        let roles = index.reacttorole.map(v => v.role);
+                        let reactions = index.reacttorole.map(v => v.emoji);
+
+                        reactRoleOne(message, roles, reactions);
                     }
                 }
                 // reinitiate polls

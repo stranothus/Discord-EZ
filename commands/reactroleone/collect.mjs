@@ -1,10 +1,11 @@
 import Collection from "@discordjs/collection";
 
-function reactRole(msg, roles, reactions) {
+function reactRoleOne(msg, roles, reactions) {
     if(msg.guild) {
         let collect = msg.createReactionCollector({ "dispose": true });
 
         collect.on("collect", async (reaction, user) => {
+            console.log(reactions[user.id]);
             if(!user.bot) {
                 if(reactions[user.id]) {
                     reaction.users.remove(user);
@@ -19,6 +20,7 @@ function reactRole(msg, roles, reactions) {
         });
 
         collect.on("remove", async (reaction, user) => {
+            console.log(reactions[user.id]);
             if(!user.bot) {
                 let member = await msg.guild.members.fetch(user.id);
                 let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
@@ -37,4 +39,4 @@ function reactRole(msg, roles, reactions) {
     }
 }
 
-export default reactRole;
+export default reactRoleOne;
