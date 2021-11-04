@@ -33,6 +33,10 @@ async function help(msg, args) {
                 // tell how =reactrole works
                 message = `\`${prefix}reactrole [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
             break;
+            case "reactroleone":
+                // tell how =reactrole works
+                message = `\`${prefix}reactroleone [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format, but users can only react to have one of the roles. Roles must be contained in quotation marks if spaces are present`
+            break;
             case "poll":
                 // tell how =poll works
                 message = `\`${prefix}poll [option] [emoji]...\` makes me hold a poll. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`, but they can only react once, so voting is fair. Options must be contained in quotation marks if spaces are present`
