@@ -8,16 +8,13 @@ function pollCollect(msg, reactions) {
             if(user.id !== msg.author.id) {
                 if(reactions[user.id]) {
                     reaction.users.remove(user);
-                } else {
-                    reactions[user.id] = 1;
                 }
+                records[user.id] = records[user.id] ? records[user.id] + 1 : 1; // otherwise, set reactions to 1
             }
         });
 
         collect.on("remove", async (reaction, user) => {
-            if(!reactions[user.id] - 1) {
-                reactions[user.id]--;
-            }
+            records[user.id]--;
         });
 
         setInterval(() => {

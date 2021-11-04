@@ -14,7 +14,6 @@ function reactRoleOne(msg, roles, reactions, records) {
                     let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
     
                     member.roles.add(role);
-                    console.log(records[user.id]);
                 }
                 records[user.id] = records[user.id] ? records[user.id] + 1 : 1; // otherwise, set reactions to 1
             }
@@ -29,7 +28,6 @@ function reactRoleOne(msg, roles, reactions, records) {
                 member.roles.remove(role);
 
                 records[user.id]--;
-                console.log(records[user.id]);
             }
         });
 
