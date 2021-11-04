@@ -1,5 +1,5 @@
 import isAdmin from "../../utils/isAdmin.mjs";
-import reactRole    from "./collect.mjs";
+import reactRoleOne    from "./collect.mjs";
 
 async function reactroleone(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
