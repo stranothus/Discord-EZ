@@ -21,6 +21,7 @@ import warn from "../commands/mod/warn.mjs";
 import infractions from "../commands/mod/infraction.mjs";
 import status from "../commands/status.mjs";
 import gettext from "../commands/gettext.mjs";
+import reactroleone from "../commands/reactroleone/index.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
@@ -51,6 +52,9 @@ async function messageCreate(msg) {
             break;
             case "reactrole":
                 reactrole(msg, args);
+            break;
+            case "reactroleone":
+                reactroleone(msg, args);
             break;
             case "poll":
                 poll(msg, args);

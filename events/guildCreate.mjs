@@ -21,6 +21,7 @@ async function guildCreate(guild) {
             "infractions": []
         } : false).filter(v => v),
         "reactroles": [],
+        "reactroleones": [],
         "polls": [],
         "bannedwords": [],
         "moderation": {
