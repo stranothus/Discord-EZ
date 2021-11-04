@@ -7,7 +7,7 @@ async function reactroleone(msg, args) {
     if(!isAdmin(msg)) return;
 
     if(args.length % 2) {
-        msg.channel.send("Use `" + prefix + "help reactrole` to learn how to use this command");
+        msg.channel.send("Use `" + prefix + "help reactroleone` to learn how to use this command");
         return;
     }
 
