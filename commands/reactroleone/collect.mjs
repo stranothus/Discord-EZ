@@ -27,7 +27,7 @@ function reactRoleOne(msg, roles, reactions) {
 
                 member.roles.remove(role);
 
-                if(!reactions[user.id] - 1) {
+                if(reactions[user.id]) {
                     reactions[user.id]--;
                 }
             }
