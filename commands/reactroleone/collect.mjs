@@ -7,10 +7,11 @@ function reactRoleOne(msg, roles, reactions, records) {
         collect.on("collect", async (reaction, user) => {
             console.log(records[user.id]);
             if(!user.bot) {
+                // if there has already been a reaction
                 if(records[user.id]) {
                     reaction.users.remove(user);
                 } else {
-                    records[user.id] = 1;
+                    records[user.id] = 1; // otherwise, set reactions to 1
                     let member = await msg.guild.members.fetch(user.id);
                     let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
     
@@ -21,15 +22,14 @@ function reactRoleOne(msg, roles, reactions, records) {
 
         collect.on("remove", async (reaction, user) => {
             console.log(records[user.id]);
-            if(!user.bot) {
+            // if there are any reaction
+            if(!user.bot && records[user.id]) {
                 let member = await msg.guild.members.fetch(user.id);
                 let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
 
                 member.roles.remove(role);
 
-                if(records[user.id]) {
-                    records[user.id]--;
-                }
+                records[user.id]--;
             }
         });
 
