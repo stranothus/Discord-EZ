@@ -41,7 +41,8 @@ async function reactroleone(msg, args) {
             role: v.role,
             emoji: v.emoji
         })),
-        reactions: {}
+        reactions: {},
+        records: {}
     }}}, function(err, result) {
         if(err) console.error(err);
     });
@@ -56,7 +57,7 @@ async function reactroleone(msg, args) {
     roles = msgs.map(v => v.role);
     let reactions = msgs.map(v => v.emoji);
 
-    reactRoleOne(msg, roles, emojis);
+    reactRoleOne(msg, roles, emojis, {});
 }
 
 export default reactroleone;

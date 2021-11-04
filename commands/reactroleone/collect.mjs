@@ -1,16 +1,16 @@
 import Collection from "@discordjs/collection";
 
-function reactRoleOne(msg, roles, reactions) {
+function reactRoleOne(msg, roles, reactions, records) {
     if(msg.guild) {
         let collect = msg.createReactionCollector({ "dispose": true });
 
         collect.on("collect", async (reaction, user) => {
-            console.log(reactions[user.id]);
+            console.log(records[user.id]);
             if(!user.bot) {
-                if(reactions[user.id]) {
+                if(records[user.id]) {
                     reaction.users.remove(user);
                 } else {
-                    reactions[user.id] = 1;
+                    records[user.id] = 1;
                     let member = await msg.guild.members.fetch(user.id);
                     let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
     
@@ -20,21 +20,21 @@ function reactRoleOne(msg, roles, reactions) {
         });
 
         collect.on("remove", async (reaction, user) => {
-            console.log(reactions[user.id]);
+            console.log(records[user.id]);
             if(!user.bot) {
                 let member = await msg.guild.members.fetch(user.id);
                 let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
 
                 member.roles.remove(role);
 
-                if(reactions[user.id]) {
-                    reactions[user.id]--;
+                if(records[user.id]) {
+                    records[user.id]--;
                 }
             }
         });
 
         setInterval(() => {
-            DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "reactroleones.messageID": msg.id }, { "$set": { "reactroleones.$.reactions": reactions }}, () => {});
+            DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "reactroleones.messageID": msg.id }, { "$set": { "reactroleones.$.records": records }}, () => {});
         }, 1000);
     }
 }

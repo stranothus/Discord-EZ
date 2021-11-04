@@ -39,8 +39,8 @@ async function ready() {
                     if(message) {
                         let roles = index.reacttorole.map(v => v.role);
                         let reactions = index.reacttorole.map(v => v.emoji);
-
-                        reactRoleOne(message, roles, reactions);
+                        
+                        reactRoleOne(message, roles, reactions, index.records || []);
                     }
                 }
                 // reinitiate polls
