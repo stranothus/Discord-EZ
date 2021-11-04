@@ -30,7 +30,11 @@ Translates the word(s) from a variety of languages
 
 ### `reactrole [role name] [emoji]...`
 
-Creates a react role wjere users can recat with [emoji] for [role name]. Multiple roles and reaction can be included in one react role message by continuing the pattern
+Creates a react role where users can react with [emoji] for [role name]. Multiple roles and reaction can be included in one react role message by continuing the pattern
+
+### `reactroleone [role name] [emoji]...`
+
+Creates a react role where users can react with [emoji] for [role name]. Multiple roles can be included, but user can only react to get one. Ideal for either or roles
 
 ### `poll [option] [emoji]...`
 
