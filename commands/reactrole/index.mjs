@@ -33,7 +33,6 @@ async function reactrole(msg, args) {
         let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
 
         content[i] = format ? format.replace(/{role}/g, `<@&${role.id}>`).replace(/{emoji}/g, emojis[i]) : `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
-        console.log(content[i]);
         roles[i] = role;
 
         return role;
