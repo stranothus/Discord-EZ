@@ -6,14 +6,16 @@ async function reactrole(msg, args) {
 
     if(!isAdmin(msg)) return;
 
-    if(args.length % 2) {
+    if(args.length < 2) {
         msg.channel.send("Use `" + prefix + "help reactrole` to learn how to use this command");
         return;
     }
 
-    let msgs = args
+    let format = args.length % 2 ? args.reverse()[0] : false;
+
+    let msgs = (format ? args.slice(-1) : args)
         .map((v, i, a) => ((i % 2) ? undefined : {
-            content: `To get @${v}, react with ${a[i + 1]}`,
+            content: format ? format.replace(/{role}/g, "<@&" + v + ">").replace(/{emoji}/g, a[i]) : `To get <@&${v}>, react with ${a[i + 1]}`,
             emoji: a[i + 1],
             role: v
         }))
@@ -26,7 +28,7 @@ async function reactrole(msg, args) {
     let stuff = await Promise.all(roles.map(async (v, i) => {
         let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
 
-        content[i] = `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
+        content[i] = format ? format.replace(/{role}/g, `<@&${role.id}>`).replace(/{emoji}/g, emojis[i]) : `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
         roles[i] = role;
 
         return role;
