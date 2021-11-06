@@ -11,7 +11,7 @@ async function reactrole(msg, args) {
         return;
     }
 
-    let format = args.length % 2 ? args.reverse()[0] : false;
+    let format = args.length % 2 ? args[args.length - 1] : false;
 
     let msgs = (format ? args.slice(-1) : args)
         .map((v, i, a) => ((i % 2) ? undefined : {
@@ -29,7 +29,6 @@ async function reactrole(msg, args) {
         let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
 
         content[i] = format ? format.replace(/{role}/g, `<@&${role.id}>`).replace(/{emoji}/g, emojis[i]) : `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
-        console.log(content);
         roles[i] = role;
 
         return role;
