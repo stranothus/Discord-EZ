@@ -7,7 +7,7 @@ async function mute(msg, args) {
     if(!isAdmin(msg)) return;
 
     let user = args[0];
-    if(!user || !/<@!(\d{17,19})>/.test(user)) {
+    if(!user || !/\d{17,19}/.test(user)) {
         msg.channel.send("Use `" + prefix + "help mute` to learn how to use this command");
         return;
     }
