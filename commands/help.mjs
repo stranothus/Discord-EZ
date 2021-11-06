@@ -90,20 +90,21 @@ async function help(msg, args) {
         // send list of all commands with basic description
         message = `
             Ask for help with any of my commands!\n
-            \`ping\`\n
-            \`kauser\`\n
-            \`kaprogram\`\n
-            \`define\`\n
-            \`pronounce\`\n
-            \`translate\`\n
-            \`reactrole\`\n
-            \`poll\`\n
-            \`diebot\`\n
-            \`clear\`\n
-            \`clearall\`\n
-            \`mute\`\n
-            \`unmute\`\n
-            \`addword\`\n
+            \`ping\`
+            \`kauser\`
+            \`kaprogram\`
+            \`define\`
+            \`pronounce\`
+            \`translate\`
+            \`reactrole\`
+            \`reactroleone\`
+            \`poll\`
+            \`diebot\`
+            \`clear\`
+            \`clearall\`
+            \`mute\`
+            \`unmute\`
+            \`addword\`
             \`removeword\``;
     }
 
