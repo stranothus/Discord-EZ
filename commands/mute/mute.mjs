@@ -24,7 +24,7 @@ async function mute(msg, args) {
     let mutedRole = guild.moderation.muteRole;
     muted.roles.add(mutedRole);
 
-    msg.channel.send(`${user} has been muted for ${time} (${reason})`);
+    msg.channel.send(`<@!${userId}> has been muted for ${time} (${reason})`);
 
     let timeUnit = {
         "s": 1,
