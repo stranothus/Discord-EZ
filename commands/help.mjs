@@ -5,6 +5,38 @@ async function help(msg, args) {
     let message = "";
     if(args.length) {
         switch(args[0]) {
+            case "commands":
+                message = `You can use my commands to do powerful things. Read up about each one below!\n
+                    \`${prefix}help ping\`
+                    \`${prefix}help kauser\`
+                    \`${prefix}help kaprogram\`
+                    \`${prefix}help define\`
+                    \`${prefix}help pronounce\`
+                    \`${prefix}help translate\`
+                    \`${prefix}help reactrole\`
+                    \`${prefix}help reactroleone\`
+                    \`${prefix}help poll\`
+                    \`${prefix}help diebot\`
+                    \`${prefix}help clear\`
+                    \`${prefix}help clearall\`
+                    \`${prefix}help mute\`
+                    \`${prefix}help unmute\`
+                    \`${prefix}help addword\`
+                    \`${prefix}help removeword\`
+                    \`${prefix}help prefix\`
+                    \`${prefix}help warn\`
+                    \`${prefix}help infractions\`
+                    \`${prefix}help gettext\``;
+            break;
+            case "syntax":
+                message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
+                    [user] - Ping a user or use their ID.
+                    [role] - Ping a role or use its ID. If it says [role name], you can use the name of the role instead.
+                    [number] - You need to use a number.
+                    [emoji] - You need to use an emoji.
+                    [time] - You need to use a number followed by a time unit like seconds or minutes.
+                    other - Arguments are separated by spaces. If you need an argument with spaces, surround it in quotations marks like "argument with spaces".`;
+            break;
             case "ping":
                 // tell how =ping works
                 message = `\`${prefix}ping\` makes me respond with \`Pong!\`.`;
@@ -27,7 +59,7 @@ async function help(msg, args) {
             break;
             case "translate":
                 // tell how =translate works
-                message = `\`${prefix}translate [word(s)] [to]\\* [from]\\*\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word.`
+                message = `\`${prefix}translate [word(s)] [to]\* [from]\*\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word.`
             break;
             case "reactrole":
                 // tell how =reactrole works
@@ -52,7 +84,7 @@ async function help(msg, args) {
             break;
             case "clear":
                 // tell how =clear works
-                message = `\`${prefix}clear [number]\\*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
+                message = `\`${prefix}clear [number]\*\` makes me delete \`[number]\` messages. If number is not specified, I will delete 99 messages. Older messages might not be deleteable`;
             break;
             case "clearall":
                 // tell how =clearall works
@@ -60,7 +92,7 @@ async function help(msg, args) {
             break;
             case "mute":
                 // tell how =mute works
-                message = `\`${prefix}mute [user] [time]\\* [reason]\\*\` makes me mute a user for \`[time]\` of format \`[number][unit of time]\` or a default of one week`;
+                message = `\`${prefix}mute [user] [time]\* [reason]\*\` makes me mute a user for \`[time]\` of format \`[number][unit of time]\` or a default of one week`;
             break;
             case "unmute":
                 // tell how =unmute works
@@ -76,7 +108,7 @@ async function help(msg, args) {
             break;
             case "prefix":
                 // tell how =prefix works
-                message = `\`${prefix}prefix [new prefix]*\` I'll state my prefix or set it to a new one!`;
+                message = `\`${prefix}prefix [new prefix]\*\` I'll state my prefix or set it to a new one!`;
             break;
             case "warn":
                 // tell how =warn works
@@ -92,25 +124,9 @@ async function help(msg, args) {
             break;
         }
     } else {
-        // send list of all commands with basic description
-        message = `
-            Ask for help with any of my commands!\n
-            \`ping\`
-            \`kauser\`
-            \`kaprogram\`
-            \`define\`
-            \`pronounce\`
-            \`translate\`
-            \`reactrole\`
-            \`reactroleone\`
-            \`poll\`
-            \`diebot\`
-            \`clear\`
-            \`clearall\`
-            \`mute\`
-            \`unmute\`
-            \`addword\`
-            \`removeword\``;
+        message = `Hey there, Discord user! I'm Discord-EZ, a general purpose bot to help with moderation, basic tasks, and fun! Use a command below to learn more about me!
+            \`${prefix}help commands\`
+            \`${prefix}help syntax\``;
     }
 
     var embed = new MessageEmbed()
