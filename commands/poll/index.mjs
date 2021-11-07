@@ -5,6 +5,11 @@ async function poll(msg, args) {
 
     let format = args.length % 2 ? args[args.length - 1] : false;
 
+    if(args.length < 2) {
+        msg.channel.send("Use `" + prefix + "help poll` to learn how to use this command");
+        return;
+    }
+    
     if(format) {
         args.pop();
     }
