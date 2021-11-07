@@ -7,39 +7,44 @@ async function help(msg, args) {
         switch(args[0]) {
             case "ping":
                 // tell how =ping works
-                message = `\`${prefix}ping\` makes me respond with \`Pong!\``;
+                message = `\`${prefix}ping\` makes me respond with \`Pong!\`.`;
             break;
             case "kauser":
                 // tell how =kauser works
-                message = `\`${prefix}kauser [username or kaid]\` makes me respond with the corresponding Khan Academy user information`;
+                message = `\`${prefix}kauser [username or kaid]\` makes me respond with the corresponding Khan Academy user information.`;
             break;
             case "kaprogram":
                 // tell how =kaprogram works
-                message = `\`${prefix}kauser [program ID]\` makes me respond with the corresponding Khan Academy program information`;
+                message = `\`${prefix}kauser [program ID]\` makes me respond with the corresponding Khan Academy program information.`;
             break;
             case "define":
                 // tell how =define works
-                message = `\`${prefix}define [word]\` makes me give a definition or set of definitions for a word`;
+                message = `\`${prefix}define [word]\` makes me give a definition or set of definitions for a word.`;
             break;
             case "pronounce":
                 // tell how =pronounce works
-                message = `\`${prefix}pronounce [word]\` makes me link a YouTube video of how to pronounce your word`;
+                message = `\`${prefix}pronounce [word]\` makes me link a YouTube video of how to pronounce your word.`;
             break;
             case "translate":
                 // tell how =translate works
-                message = `\`${prefix}translate [word(s)] [to]\\* [from]\\*\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word`
+                message = `\`${prefix}translate [word(s)] [to]\\* [from]\\*\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word.`
             break;
             case "reactrole":
                 // tell how =reactrole works
-                message = `\`${prefix}reactrole [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present`
+                message = `\`${prefix}reactrole [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`.
+                Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format. Roles must be contained in quotation marks if spaces are present.
+                Optionally, add a final argument at the end. This should be a string of text to format each option off of. Use {role} and {emoji} in the text to be replaced with each role and emoji.`
             break;
             case "reactroleone":
                 // tell how =reactrole works
-                message = `\`${prefix}reactroleone [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`. Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format, but users can only react to have one of the roles. Roles must be contained in quotation marks if spaces are present`
+                message = `\`${prefix}reactroleone [role name] [emoji]...\` makes me make a reaction role. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`.
+                Don't worry if the role doesn't exist, I'll make it for you! Multiple reaction roles can be included in one message by repeating the format, but users can only react to have one of the roles. Roles must be contained in quotation marks if spaces are present.
+                Optionally, add a final argument at the end. This should be a string of text to format each option off of. Use {role} and {emoji} in the text to be replaced with each role and emoji.`
             break;
             case "poll":
                 // tell how =poll works
-                message = `\`${prefix}poll [option] [emoji]...\` makes me hold a poll. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`, but they can only react once, so voting is fair. Options must be contained in quotation marks if spaces are present`
+                message = `\`${prefix}poll [option] [emoji]...\` makes me hold a poll. Users can react with \`[emoji]\` on the message to make me give them \`[role name]\`, but they can only react once, so voting is fair. Options must be contained in quotation marks if spaces are present.
+                Optionally, add a final argument at the end. This should be a string of text to format each option off of. Use {option} and {emoji} in the text to be replaced with each option and emoji.`
             break;
             case "diebot":
                 // tell how =diebot works
