@@ -7,9 +7,15 @@ async function poll(msg, args) {
         msg.channel.send("Use `" + prefix + "help poll` to learn how to use this command");
     }
 
+    let format = args.length % 2 ? args[args.length - 1] : false;
+
+    if(format) {
+        args.pop();
+    }
+
     let msgs = args
         .map((v, i, a) => ((i % 2) ? undefined : {
-            content: `${v} ${a[i + 1]}`,
+            content: format ? format.replace(/{option}/g, "<@&" + v + ">").replace(/{emoji}/g, a[i]) : `${v} ${a[i + 1]}`,
             emoji: a[i + 1],
             option: v
         }))
