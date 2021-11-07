@@ -16,7 +16,7 @@ async function poll(msg, args) {
 
     let msgs = args
         .map((v, i, a) => ((i % 2) ? undefined : {
-            content: format ? format.replace(/{option}/g, v).replace(/{emoji}/g, a[i]) : `${v} ${a[i + 1]}`,
+            content: format ? format.replace(/{option}/g, v).replace(/{emoji}/g, a[i + 1]) : `${v} ${a[i + 1]}`,
             emoji: a[i + 1],
             option: v
         }))

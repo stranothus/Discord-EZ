@@ -19,7 +19,7 @@ async function reactrole(msg, args) {
 
     let msgs = args
         .map((v, i, a) => ((i % 2) ? undefined : {
-            content: format ? format.replace(/{role}/g, "<@&" + v + ">").replace(/{emoji}/g, a[i]) : `To get <@&${v}>, react with ${a[i + 1]}`,
+            content: format ? format.replace(/{role}/g, "<@&" + v + ">").replace(/{emoji}/g, a[i + 1]) : `To get <@&${v}>, react with ${a[i + 1]}`,
             emoji: a[i + 1],
             role: v
         }))
