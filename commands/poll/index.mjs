@@ -3,11 +3,6 @@ import pollCollect from "./collect.mjs";
 async function poll(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
 
-    if(args.length % 2) {
-        msg.channel.send("Use `" + prefix + "help poll` to learn how to use this command");
-        return;
-    }
-
     let format = args.length % 2 ? args[args.length - 1] : false;
 
     if(format) {
