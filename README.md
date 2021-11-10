@@ -84,13 +84,9 @@ Shows stored warnings/infractions for `[user]`
 
 Lists the text from any PNG files attached
 
-### `uwu [message]`
+### `funnytext [filters]...\* [message]`
 
-Makes a message mowore uwu and owo
-
-### `blarb [message]`
-
-BLARbs A mEssAGe
+Posts a message through a webhook as the user put through one or more filters (uwu, owo, blarb, or reverse)
 
 ## Additional features:
 

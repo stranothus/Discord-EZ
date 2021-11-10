@@ -27,8 +27,7 @@ async function help(msg, args) {
                     \`${prefix}help warn\`
                     \`${prefix}help infractions\`
                     \`${prefix}help gettext\`
-                    \`${prefix}help uwu\`
-                    \`${prefix}help blarb\``;
+                    \`${prefix}help funnytext\``;
             break;
             case "syntax":
                 message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
@@ -124,13 +123,9 @@ async function help(msg, args) {
                 // tell how =gettext works
                 message = `\`${prefix}gettext\` makes me list the text from any PNG files attached`;
             break;
-            case "uwu":
+            case "funnytext":
                 // tell how =gettext works
-                message = `\`${prefix}uwu [message]\` makes me change a message to have a little more uwu and owo from you and by you`;
-            break;
-            case "blarb":
-                // tell how =gettext works
-                message = `\`${prefix}blarb [message]\` makes me mix up capitalization to "blarb" from you and by you`;
+                message = `\`${prefix}funnytext [filters]...\* [message]\` makes me post a message from you made a little more fun. Use \`uwu\`, \`owo\`, \`blarb\`, or \`reverse\` or you can use multiple! Find out what each one does and use several for your own combination`;
             break;
         }
     } else {
