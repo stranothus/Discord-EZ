@@ -12,7 +12,7 @@ Replies with "Pong!"
 
 Gives information about a KA user
 
-### `kapogram [id]`
+### `kaprogram [id]`
 
 Gives information about a KA program
 
