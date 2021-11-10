@@ -6,7 +6,7 @@ async function uwu(msg, args) {
 
     text = text.replace(/(owo)|(ow)|(wo)|(o)/gi, "owo").replace(/(uwu)|(uw)|(wu)|(u)/gi, "uwu");
 
-    asUser(msg.channel, msg.author, await censor(text));
+    asUser(msg.channel, msg.author, await censor(text, msg.guild));
     
     msg.delete();
 }
