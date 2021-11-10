@@ -1,7 +1,7 @@
 import censor from "../../utils/censor.mjs";
 
-async function reverse(text) {
-    text = (await censor(text, msg.guild)).split("").reverse().join("");
+async function reverse(text, guild) {
+    text = (await censor(text, guild)).split("").reverse().join("");
 
     return text;
 }
