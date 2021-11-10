@@ -24,9 +24,11 @@ import gettext from "../commands/gettext.mjs";
 import reactroleone from "../commands/reactroleone/index.mjs";
 import uwu from "../commands/funnytext/uwu.mjs";
 import blarb from "../commands/funnytext/blarb.mjs";
+import reverse from "../commands/funnytext/reverse.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
+import { assertReturnOfBuilder } from "@discordjs/builders/dist/interactions/slashCommands/Assertions";
 
 async function messageCreate(msg) {
     if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith("<@!886933964537880617> ")) {
@@ -97,14 +99,33 @@ async function messageCreate(msg) {
             case "gettext":
                 gettext(msg, args);
             break;
-            case "uwu":
-                uwu(msg, args);
-            break;
-            case "owo":
-                uwu(msg, args);
-            break;
-            case "blarb":
-                blarb(msg, args);
+            case "funnytext":
+                let funnytexts = {
+                    "uwu": uwu,
+                    "owo": owo,
+                    "blarb": blarb,
+                    "reverse": reverse
+                };
+
+                let commands = [];
+
+                if(!funnytexts[args[0]]) {
+                    let keys = Object.keys(funnytexts);
+
+                    commands.push(funnytexts[keys[Math.floor(Math.random(0, keys.length))]]);
+                }
+                while(funnytexts[args[0]]) {
+                    commands.push(funnytexts[args[0]]);
+                    args.shift();
+                }
+
+                let text = args.join(" ");
+                for(let i = 0; i < commands.length; i++) {
+                    text = await commands[i](text);
+                }
+
+                asUser(msg.channel, msg.author, text);
+                msg.delete();
             break;
             case "help":
                 help(msg, args);
