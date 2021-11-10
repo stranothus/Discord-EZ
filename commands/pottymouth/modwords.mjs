@@ -6,6 +6,10 @@ async function modwords(msg) {
 
     if(bannedwords.length) {
         if(new RegExp(bannedwords.join("|"), "i").test(msg.content) && !msg.author.bot) {
+            let censored = msg.content;
+
+            bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
+            
             webhookSend(msg.channel, {
                 "content": msg.type === "REPLY" ? `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored,
                 "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
