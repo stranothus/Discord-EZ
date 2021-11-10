@@ -26,6 +26,7 @@ import uwu from "../commands/funnytext/uwu.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
+import blarb from "../commands/funnytext/blarb.mjs";
 
 async function messageCreate(msg) {
     if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith("<@!886933964537880617> ")) {
@@ -101,6 +102,9 @@ async function messageCreate(msg) {
             break;
             case "owo":
                 uwu(msg, args);
+            break;
+            case "blarb":
+                blarb(msg, args);
             break;
             case "help":
                 help(msg, args);
