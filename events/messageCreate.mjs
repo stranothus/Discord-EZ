@@ -22,10 +22,7 @@ import infractions from "../commands/mod/infraction.mjs";
 import status from "../commands/status.mjs";
 import gettext from "../commands/gettext.mjs";
 import reactroleone from "../commands/reactroleone/index.mjs";
-import uwu from "../commands/funnytext/uwu.mjs";
-import blarb from "../commands/funnytext/blarb.mjs";
-import reverse from "../commands/funnytext/reverse.mjs";
-import asUser from "../utils/asUser.mjs";
+import funnytext from "../commands/funnytext/funnntext.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
@@ -100,32 +97,7 @@ async function messageCreate(msg) {
                 gettext(msg, args);
             break;
             case "funnytext":
-                let funnytexts = {
-                    "uwu": uwu,
-                    "owo": uwu,
-                    "blarb": blarb,
-                    "reverse": reverse
-                };
-
-                let commands = [];
-
-                if(!funnytexts[args[0]]) {
-                    let keys = Object.keys(funnytexts);
-
-                    commands.push(funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
-                }
-                while(funnytexts[args[0]]) {
-                    commands.push(funnytexts[args[0]]);
-                    args.shift();
-                }
-
-                let text = args.join(" ");
-                for(let i = 0; i < commands.length; i++) {
-                    text = await commands[i](text, msg.guild);
-                }
-
-                asUser(msg.channel, msg.author, text);
-                msg.delete();
+                funnytext(msg, args);
             break;
             case "help":
                 help(msg, args);
