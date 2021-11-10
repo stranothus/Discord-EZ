@@ -112,7 +112,7 @@ async function messageCreate(msg) {
                 if(!funnytexts[args[0]]) {
                     let keys = Object.keys(funnytexts);
 
-                    commands.push(funnytexts[keys[Math.floor(Math.random(0, keys.length))]]);
+                    commands.push(funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
                 }
                 while(funnytexts[args[0]]) {
                     commands.push(funnytexts[args[0]]);
