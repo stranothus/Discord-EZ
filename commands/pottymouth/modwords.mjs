@@ -5,7 +5,7 @@ async function modwords(msg) {
 
     if(bannedwords.length) {
         if(new RegExp(bannedwords.join("|"), "i").test(msg.content) && !msg.author.bot) {
-            let webhook = (await msg.channel.fetchWebhooks()).filter(webhook => webhook.name === msg.author.username).first() || await msg.channel.createWebhook(msg.author.username);
+            let webhook = (await msg.channel.fetchWebhooks()).filter(webhook => webhook.name === "Discord-EZ-Censor").first() || await msg.channel.createWebhook("Discord-EZ-Censor");
 
             let censored = msg.content;
 
@@ -15,6 +15,7 @@ async function modwords(msg) {
                 webhook.send({
                     "content": `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}`,
                     "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
+                    "username": msg.author.username,
                     "allowedMentions": {
                         "roles": [],
                         "users": [],
@@ -25,6 +26,7 @@ async function modwords(msg) {
                 webhook.send({
                     "content": censored,
                     "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
+                    "username": msg.author.username,
                     "allowedMentions": {
                         "roles": [],
                         "users": [],
