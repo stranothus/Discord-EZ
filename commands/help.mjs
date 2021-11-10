@@ -49,7 +49,7 @@ async function help(msg, args) {
             break;
             case "kaprogram":
                 // tell how =kaprogram works
-                message = `\`${prefix}kauser [program ID]\` makes me respond with the corresponding Khan Academy program information.`;
+                message = `\`${prefix}kaprogram [program ID]\` makes me respond with the corresponding Khan Academy program information.`;
             break;
             case "define":
                 // tell how =define works
