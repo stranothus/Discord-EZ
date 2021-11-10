@@ -9,3 +9,4 @@
 7. Add a command for posting the GitHub
 8. Add a command for posting the invite
 9. Set up webhooks for other services? __investigate__
+10. Upload emoji?
