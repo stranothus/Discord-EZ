@@ -25,10 +25,10 @@ import reactroleone from "../commands/reactroleone/index.mjs";
 import uwu from "../commands/funnytext/uwu.mjs";
 import blarb from "../commands/funnytext/blarb.mjs";
 import reverse from "../commands/funnytext/reverse.mjs";
+import asUser from "../utils/asUser.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
-import { assertReturnOfBuilder } from "@discordjs/builders/dist/interactions/slashCommands/Assertions";
 
 async function messageCreate(msg) {
     if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith("<@!886933964537880617> ")) {
