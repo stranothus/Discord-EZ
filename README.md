@@ -84,6 +84,14 @@ Shows stored warnings/infractions for `[user]`
 
 Lists the text from any PNG files attached
 
+### `uwu [message]`
+
+Makes a message mowore uwu and owo
+
+### `blarb [message]`
+
+BLARbs A mEssAGe
+
 ## Additional features:
 
 ### Censoring

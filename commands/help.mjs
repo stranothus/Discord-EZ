@@ -26,7 +26,9 @@ async function help(msg, args) {
                     \`${prefix}help prefix\`
                     \`${prefix}help warn\`
                     \`${prefix}help infractions\`
-                    \`${prefix}help gettext\``;
+                    \`${prefix}help gettext\`
+                    \`${prefix}help uwu\`
+                    \`${prefix}help blarb\``;
             break;
             case "syntax":
                 message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
@@ -120,7 +122,15 @@ async function help(msg, args) {
             break;
             case "gettext":
                 // tell how =gettext works
-                message = `\`${prefix}gettext\` makes me list the text from any PNG files attached`
+                message = `\`${prefix}gettext\` makes me list the text from any PNG files attached`;
+            break;
+            case "uwu":
+                // tell how =gettext works
+                message = `\`${prefix}uwu [message]\` makes me change a message to have a little more uwu and owo from you and by you`;
+            break;
+            case "blarb":
+                // tell how =gettext works
+                message = `\`${prefix}blarb [message]\` makes me mix up capitalization to "blarb" from you and by you`;
             break;
         }
     } else {
