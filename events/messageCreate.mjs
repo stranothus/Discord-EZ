@@ -28,9 +28,9 @@ import funnytext from "../commands/funnytext/funnntext.mjs";
 import deQuote from "../utils/deQuote.mjs";
 
 async function messageCreate(msg) {
-    if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.startsWith(/<@!?886933964537880617> /)) {
+    if(msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(/^<@!?886933964537880617>\s*/)) {
         var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\])/, "\\$1") + "\\s*)|(<@!?886933964537880617>\\s*)", ""), "").split(" ")[0];
-        var args = msg.content.split(/("[^"]*")|\s+/).slice(1).filter(v => v).map(v => deQuote(v));
+        var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`)).split(/("[^"]*")|\s+/).slice(1).filter(v => v).map(v => deQuote(v));
 
         switch(command.toLowerCase()) {
             case "ping":
