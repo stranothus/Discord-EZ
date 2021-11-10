@@ -1,5 +1,5 @@
 import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
-import webhookSend from "../../utils/webhook.mjs";
+import asUser from "../../utils/asUser.mjs";
 
 async function modwords(msg) {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
@@ -9,17 +9,8 @@ async function modwords(msg) {
             let censored = msg.content;
 
             bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
-            
-            webhookSend(msg.channel, {
-                "content": msg.type === "REPLY" ? `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored,
-                "avatarURL": `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png`,
-                "username": msg.author.username,
-                "allowedMentions": {
-                    "roles": [],
-                    "users": [],
-                    "parse": []
-                }
-            });
+
+            asUser(msg.channel, msg.author, msg.type === "REPLY" ? `*[Replying to <@!${msg.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored);
             
             msg.delete();
         }
