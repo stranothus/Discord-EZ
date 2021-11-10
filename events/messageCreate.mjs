@@ -22,6 +22,7 @@ import infractions from "../commands/mod/infraction.mjs";
 import status from "../commands/status.mjs";
 import gettext from "../commands/gettext.mjs";
 import reactroleone from "../commands/reactroleone/index.mjs";
+import uwu from "../commands/funnytext/uwu.mjs";
 
 // import utils
 import deQuote from "../utils/deQuote.mjs";
@@ -94,6 +95,12 @@ async function messageCreate(msg) {
             break;
             case "gettext":
                 gettext(msg, args);
+            break;
+            case "uwu":
+                uwu(msg, args);
+            break;
+            case "owo":
+                uwu(msg, args);
             break;
             case "help":
                 help(msg, args);
