@@ -121,7 +121,7 @@ async function messageCreate(msg) {
 
                 let text = args.join(" ");
                 for(let i = 0; i < commands.length; i++) {
-                    text = await commands[i](text, guild);
+                    text = await commands[i](text, msg.guild);
                 }
 
                 asUser(msg.channel, msg.author, text);
