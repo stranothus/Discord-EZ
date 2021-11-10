@@ -102,7 +102,7 @@ async function messageCreate(msg) {
             case "funnytext":
                 let funnytexts = {
                     "uwu": uwu,
-                    "owo": owo,
+                    "owo": uwu,
                     "blarb": blarb,
                     "reverse": reverse
                 };
