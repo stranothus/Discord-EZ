@@ -1,4 +1,5 @@
 import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
+import webhookSend from "../../utils/webhook.mjs";
 
 async function modwords(msg) {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
