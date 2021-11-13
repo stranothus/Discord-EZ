@@ -8,7 +8,7 @@ async function guildCreate(guild) {
             "SEND_MESSAGES": false,
             "ADD_REACTIONS": false
         });
-    })
+    });
 
     DB.Guilds.collection("Info").insertOne({
         "id": guild.id,
@@ -17,7 +17,7 @@ async function guildCreate(guild) {
         "members": members.map(v => !v.user.bot ? {
             "id": v.user.id,
             "muted": false,
-            "roles": v.member.roles,
+            "roles": v.member ? v.member.roles : [],
             "infractions": []
         } : false).filter(v => v),
         "reactroles": [],
