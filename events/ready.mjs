@@ -27,6 +27,8 @@ async function ready() {
                         let reactions = index.reacttorole.map(v => v.emoji);
 
                         reactRole(message, roles, reactions);
+                    } else {
+                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "reactroles": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
                 // reinitiate reactroles
@@ -41,6 +43,8 @@ async function ready() {
                         let reactions = index.reacttorole.map(v => v.emoji);
                         
                         reactRoleOne(message, roles, reactions, index.records || []);
+                    } else {
+                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "reactroleones": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
                 // reinitiate polls
@@ -52,6 +56,8 @@ async function ready() {
 
                     if(message) {
                         pollCollect(message, index.reactions);
+                    } else {
+                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "polls": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
 
