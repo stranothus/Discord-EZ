@@ -10,7 +10,9 @@ async function guildMemberAdd(user) {
 
     let wasMember = await DB.Guilds.collection("Info").findOne({ "id": guild.id, "members.id": user.user.id });
 
-    if(!wasMember && !user.user.bot) {
+    if(user.user.bot) return;
+    
+    if(!wasMember) {
         DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$push": { "members": {
             "id": user.user.id,
             "muted": false,
