@@ -86,7 +86,7 @@ Lists the text from any PNG files attached
 
 ### `funnytext [filters]...\* [message]`
 
-Posts a message through a webhook as the user put through one or more filters (uwu, owo, blarb, or reverse)
+Posts a message through a webhook as the user put through one or more filters (uwu, owo, blarb, or, piglatin reverse)
 
 ## Additional features:
 
