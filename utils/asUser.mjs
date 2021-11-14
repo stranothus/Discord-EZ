@@ -1,5 +1,5 @@
 async function asUser(channel, author, content) {
-    let webhook = (await channel.fetchWebhooks()).filter(webhook => webhook.name === "Discord-EZ").first() || await channel.createWebhook("Discord-EZ");
+    let webhook = (await channel.fetchWebhooks()).filter(webhook => webhook.name === client.user.tag).first() || await channel.createWebhook(client.user.tag);
 
     webhook.send({
         "content": content,
