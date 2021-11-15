@@ -6,7 +6,6 @@
 4. Redesign command argument formatting to allow for more complex command options
 5. Create mutli-step command functionality
 6. Think up more fun webhook possibilities
-7. Add a command for posting the GitHub
-8. Add a command for posting the invite
-9. Set up webhooks for other services? __investigate__
-10. Upload emoji?
+7. Set up webhooks for other services? __investigate__
+8. Upload emoji?
+9. Find a way to monetize
