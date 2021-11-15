@@ -27,7 +27,9 @@ async function help(msg, args) {
                     \`${prefix}help warn\`
                     \`${prefix}help infractions\`
                     \`${prefix}help gettext\`
-                    \`${prefix}help funnytext\``;
+                    \`${prefix}help funnytext\`
+                    \`${prefix}help invite\`
+                    \`${prefix}help github\``;
             break;
             case "syntax":
                 message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
@@ -129,6 +131,9 @@ async function help(msg, args) {
             break;
             case "invite":
                 message = `\`${prefix}invite\` makes me give you my invite so you can add me to other servers`
+            break;
+            case "github":
+                message = `\`${prefix}invite\` makes me give you my GitHub repo link`
             break;
         }
     } else {

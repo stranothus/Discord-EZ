@@ -27,6 +27,7 @@ import gettext from "../commands/gettext.mjs";
 import reactroleone from "../commands/reactroleone/index.mjs";
 import funnytext from "../commands/funnytext/funnntext.mjs";
 import invite from "../commands/invite.mjs";
+import github from "../commands/github.mjs";
 
 async function messageCreate(msg) {
     if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
@@ -102,6 +103,9 @@ async function messageCreate(msg) {
             break;
             case "invite":
                 invite(msg, args);
+            break;
+            case "github":
+                github(msg, args);
             break;
             case "help":
                 help(msg, args);

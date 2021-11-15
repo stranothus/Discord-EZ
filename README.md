@@ -92,6 +92,10 @@ Posts a message through a webhook as the user put through one or more filters (u
 
 Sends the bot invite
 
+### `github`
+
+Sends the bot GitHub repo
+
 ## Additional features:
 
 ### Censoring
