@@ -1,3 +1,6 @@
+// import utils
+import deQuote from "../utils/deQuote.mjs";
+
 // import commands
 import clear from "../commands/clear/clear.mjs";
 import clearall from "../commands/clear/clearall.mjs";
@@ -23,9 +26,7 @@ import status from "../commands/status.mjs";
 import gettext from "../commands/gettext.mjs";
 import reactroleone from "../commands/reactroleone/index.mjs";
 import funnytext from "../commands/funnytext/funnntext.mjs";
-
-// import utils
-import deQuote from "../utils/deQuote.mjs";
+import invite from "../commands/invite.mjs";
 
 async function messageCreate(msg) {
     if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
@@ -98,6 +99,9 @@ async function messageCreate(msg) {
             break;
             case "funnytext":
                 funnytext(msg, args);
+            break;
+            case "invite":
+                invite(msg, args);
             break;
             case "help":
                 help(msg, args);

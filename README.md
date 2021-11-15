@@ -88,6 +88,10 @@ Lists the text from any PNG files attached
 
 Posts a message through a webhook as the user put through one or more filters (uwu, owo, blarb, or, piglatin reverse)
 
+### `invite`
+
+Sends the bot invite
+
 ## Additional features:
 
 ### Censoring
@@ -108,4 +112,4 @@ Roles are saved and reassigned if an old member rejoins so they don't have to go
 
 ## Invite
 
-This bot is still in development, so it is not recommended to implement it into any servers :)
+https://discord.com/api/oauth2/authorize?client_id=886933964537880617&permissions=8&scope=bot
