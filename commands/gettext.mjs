@@ -33,10 +33,10 @@ async function gettext(msg, args) {
                 fs.rm(fileName, () => {});
             } else {
                 let embed = new MessageEmbed()
-                .setColor("#FAC000")
-                .setTitle(e.name)
-                .setDescription(data.data.text)
-                .setThumbnail(e.proxyUrl);
+                    .setColor("#FAC000")
+                    .setTitle(e.name)
+                    .setDescription(data.data.text)
+                    .setThumbnail(e.proxyUrl);
         
                 msg.channel.send({ "embeds": [embed] });
             }
