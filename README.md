@@ -82,7 +82,7 @@ Shows stored warnings/infractions for `[user]`
 
 ### `gettext`
 
-Lists the text from any PNG files attached
+Lists the text from any PNG or JPEG files attached
 
 ### `funnytext [filters]...\* [message]`
 

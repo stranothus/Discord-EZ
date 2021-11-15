@@ -123,7 +123,7 @@ async function help(msg, args) {
             break;
             case "gettext":
                 // tell how =gettext works
-                message = `\`${prefix}gettext\` makes me list the text from any PNG files attached`;
+                message = `\`${prefix}gettext\` makes me list the text from any PNG or JPEG files attached`;
             break;
             case "funnytext":
                 // tell how =gettext works
