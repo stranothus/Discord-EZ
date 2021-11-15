@@ -96,6 +96,10 @@ Sends the bot invite
 
 Sends the bot GitHub repo
 
+### `avatar [user]*`
+
+Sends a larger picture of the user or sender's avatar
+
 ## Additional features:
 
 ### Censoring
