@@ -9,7 +9,7 @@ async function ready() {
 
     // get all guild ids
     const guilds = client.guilds.cache.map(guild => guild.id);
-    
+    console.log(guilds.length);
     guilds.forEach(guildID => {
         DB.Guilds.collection("Info").findOne({ "id": guildID }, async function(err, result) {
             if(err) console.error(err);
