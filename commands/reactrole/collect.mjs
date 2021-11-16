@@ -12,7 +12,7 @@ function reactRole(msg, roles, reactions) {
                 if(role) {
                     member.roles.add(role);
                 } else {
-                    msg.guild.owner.send("Someone tried to react to get " + roles[reactions.indexOf(reaction._emoji.name)] + " but it looks like that role has been edited or deleted :(")
+                    (await msg.guild.fetchOwner()).send("Someone tried to react to get " + roles[reactions.indexOf(reaction._emoji.name)] + " but it looks like that role has been edited or deleted :(")
                 }
             }
         });
@@ -25,7 +25,7 @@ function reactRole(msg, roles, reactions) {
                 if(role) {
                     member.roles.remove(role);
                 } else {
-                    msg.guild.owner.send("Someone tried to react to remove " + roles[reactions.indexOf(reaction._emoji.name)] + " but it looks like that role has been edited or deleted :(")
+                    (await msg.guild.fetchOwner()).send("Someone tried to react to remove " + roles[reactions.indexOf(reaction._emoji.name)] + " but it looks like that role has been edited or deleted :(")
                 }
             }
         });
