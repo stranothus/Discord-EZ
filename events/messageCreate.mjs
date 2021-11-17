@@ -19,6 +19,7 @@ import earlyunmute from "../commands/mod/unmute.mjs";
 import modwords from "../commands/pottymouth/modwords.mjs";
 import addword from "../commands/pottymouth/addword.mjs";
 import removeword from "../commands/pottymouth/removeword.mjs";
+import checkwords from "../commands/pottymouth/checkwords.mjs";
 import prefix from "../commands/prefix.mjs";
 import warn from "../commands/mod/warn.mjs";
 import infractions from "../commands/mod/infraction.mjs";
@@ -84,6 +85,9 @@ async function messageCreate(msg) {
             break;
             case "removeword":
                 removeword(msg, args);
+            break;
+            case "checkwords":
+                checkwords(msg, args);
             break;
             case "prefix":
                 prefix(msg, args);

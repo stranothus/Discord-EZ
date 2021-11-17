@@ -11,3 +11,4 @@
 9. Find a way to monetize
 10. Update muted role to apply to newly created categories and channels
 11. Save react roles by ID, not name
+12. Add additional encryption commands

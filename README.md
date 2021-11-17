@@ -68,6 +68,10 @@ Adds a word to a list of banned words
 
 Removes a word from a list of banned words
 
+### `checkwords`
+
+Sends a list of banned words
+
 ### `prefix [new prefix]*`
 
 States prefix or sets a new one

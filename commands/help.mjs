@@ -111,6 +111,10 @@ async function help(msg, args) {
                 // tell how =unmute works
                 message = `\`${prefix}removeword [word]\` make me remove a word from a list of censored words`;
             break;
+            case "checkwords":
+                // tell how =unmute works
+                message = `\`${prefix}checkwords\` I'll send a list of censored words. Make sure to use this in a staff only channel!`;
+            break;
             case "prefix":
                 // tell how =prefix works
                 message = `\`${prefix}prefix [new prefix]\*\` I'll state my prefix or set it to a new one!`;
