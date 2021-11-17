@@ -1,4 +1,5 @@
 import censor from "../../utils/censor.mjs";
+import asUser from "../../utils/asUser.mjs";
 
 async function binary(msg, args) {
     let text = args.join(" ");
@@ -9,7 +10,7 @@ async function binary(msg, args) {
         text = await censor(text.split(" ").map(v => String.fromCharCode(parseInt(v, 2))).join(""), msg.guild);
     }
 
-    msg.channel.send(text);
+    asUser(msg.channel, msg.author, text);
     msg.delete();
 }
 
