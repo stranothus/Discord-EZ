@@ -9,6 +9,5 @@
 7. Set up webhooks for other services? __investigate__
 8. Upload emoji?
 9. Find a way to monetize
-10. Update muted role to apply to newly created categories and channels
-11. Save react roles by ID, not name
-12. Add additional encryption commands
+10. Save react roles by ID, not name
+11. Add additional encryption commands

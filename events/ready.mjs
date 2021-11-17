@@ -3,20 +3,18 @@ import reactRole    from "../commands/reactrole/collect.mjs";
 import pollCollect  from "../commands/poll/collect.mjs";
 import unmute       from "../commands/mute/unmute.mjs";
 import reactRoleOne from "../commands/reactroleone/collect.mjs";
+import muterole from "../utils/mutrole.mjs";
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
 
-    // get all guild ids
-    const guilds = client.guilds.cache.map(guild => guild.id);
+    const guilds = client.guilds.cache;
 
-    guilds.forEach(guildID => {
-        DB.Guilds.collection("Info").findOne({ "id": guildID }, async function(err, result) {
+    guilds.forEach(guild => {
+        DB.Guilds.collection("Info").findOne({ "id": guild.id }, async function(err, result) {
             if(err) console.error(err);
 
             if(result) {
-                let guild = client.guilds.cache.get(guildID);
-
                 // reinitiate reactroles
                 for(let i = 0; i < result.reactroles.length; i++) {
                     let index = result.reactroles[i];
@@ -61,7 +59,7 @@ async function ready() {
                 }
 
                 // reinitite muted timers
-                let mutedRole = result.moderation.muteRole;
+                let mutedRole = await muterole(guild);
                 for(let i = 0; i < result.members.length; i++) {
                     let index = result.members[i];
                     if(index.muted) {

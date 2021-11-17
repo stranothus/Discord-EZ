@@ -1,5 +1,7 @@
+import muterole from "../utils/mutrole.mjs";
+
 async function channelCreate(channel) {
-    let muteRole = channel.guild.roles.cache.find(x => /muted/i.test(x.name)) || await channel.guild.roles.create({ name: "Muted", permissions: [] });
+    let muteRole = await muterole(channel.guild);
 
     channel.permissionOverwrites.create(muteRole, {
         "SEND_MESSAGES": false,

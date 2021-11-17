@@ -1,5 +1,6 @@
 import isAdmin from "../../utils/isAdmin.mjs";
 import unmute from "./unmute.mjs";
+import muterole from "../../utils/mutrole.mjs";
 
 async function mute(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
@@ -20,8 +21,8 @@ async function mute(msg, args) {
         msg.channel.send("This command only works on current server members");
         return;
     }
-    let guild = await DB.Guilds.collection("Info").findOne({ id: msg.guild.id });
-    let mutedRole = guild.moderation.muteRole;
+
+    let mutedRole = await muterole(msg.guild);
     muted.roles.add(mutedRole);
 
     msg.channel.send(`<@!${userId}> has been muted for ${time} (${reason})`);
