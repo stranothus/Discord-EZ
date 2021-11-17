@@ -33,6 +33,7 @@ import avatar from "../commands/avatar.mjs";
 import binary from "../commands/encrypt/binary.mjs";
 
 async function messageCreate(msg) {
+    if(!msg.guild) return;
     if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
         var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "").split(" ")[0];
         var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`), "").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));

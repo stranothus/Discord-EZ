@@ -1,6 +1,7 @@
 import asUser from "../utils/asUser.mjs";
 
 async function messageDelete(msg) {
+    if(!msg.guild) return;
     let guild = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id }));
     let bannedwords = guild.bannedwords;
     let prefix = guild.prefix;
