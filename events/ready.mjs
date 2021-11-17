@@ -22,18 +22,10 @@ async function ready() {
                     let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
                     if(message) {
-                        let roles = index.reacttorole.map(v => v.role);
-                        let ids = await Promise.all(roles.map(async v => {
-                            return (await guild.roles.cache.find(e => e.name == v)).id;
-                        }));
+                        let ids = index.reacttorole.map(v => v.id);
                         let reactions = index.reacttorole.map(v => v.emoji);
 
                         reactRole(message, ids, reactions);
-
-                        DB.Guilds.collection("Info").updateOne({ id: guild.id, "reactroles": { "$elemMatch": { "messageID": message.id }}}, { "$set": { "reactroles.$.reacttorole": index.reacttorole.map((e, i, a) => ({
-                            "emoji": e.emoji,
-                            "id": ids[i]
-                        })) }}, console.log);
                     } else {
                         DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "reactroles": { "messageID": index.messageID }}}, (err, result) => {});
                     }
@@ -45,10 +37,7 @@ async function ready() {
                     let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
                     if(message) {
-                        let roles = index.reacttorole.map(v => v.role);
-                        let ids = await Promise.all(roles.map(async v => {
-                            return (await guild.roles.cache.find(e => e.name == v)).id;
-                        }));
+                        let ids = index.reacttorole.map(v => v.id);
                         let reactions = index.reacttorole.map(v => v.emoji);
                         
                         reactRoleOne(message, ids, reactions, index.records || []);
