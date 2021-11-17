@@ -12,7 +12,7 @@ async function guildCreate(guild) {
             "SEND_MESSAGES_IN_THREADS": false,
             "CREATE_PUBLIC_THREADS": false,
             "CREATE_PRIVATE_THREADS": false
-            });
+        });
     });
 
     DB.Guilds.collection("Info").insertOne({

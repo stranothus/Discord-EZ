@@ -75,13 +75,17 @@ async function ready() {
                     }
                 }
                 guild.channels.cache.forEach(channel => {
-                    channel.permissionOverwrites.create(mutedRole, {
-                        "SEND_MESSAGES": false,
-                        "ADD_REACTIONS": false,
-                        "SEND_MESSAGES_IN_THREADS": false,
-                        "CREATE_PUBLIC_THREADS": false,
-                        "CREATE_PRIVATE_THREADS": false
-                    });
+                    if(channel.permissionOverwrites) {
+                        channel.permissionOverwrites.create(mutedRole, {
+                            "SEND_MESSAGES": false,
+                            "ADD_REACTIONS": false,
+                            "SEND_MESSAGES_IN_THREADS": false,
+                            "CREATE_PUBLIC_THREADS": false,
+                            "CREATE_PRIVATE_THREADS": false
+                        });
+                    } else {
+                        console.log(channel);
+                    }
                 });
             } else {
                 // if the guild has been added while the bot was offline, go through server setup
