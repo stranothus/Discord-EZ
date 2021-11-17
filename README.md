@@ -100,6 +100,10 @@ Sends the bot GitHub repo
 
 Sends a larger picture of the user or sender's avatar
 
+### `binary [text]*`
+
+Converts to or from binary
+
 ## Additional features:
 
 ### Censoring

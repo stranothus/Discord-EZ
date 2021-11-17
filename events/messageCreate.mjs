@@ -29,6 +29,7 @@ import funnytext from "../commands/funnytext/funnntext.mjs";
 import invite from "../commands/invite.mjs";
 import github from "../commands/github.mjs";
 import avatar from "../commands/avatar.mjs";
+import binary from "../commands/encrypt/binary.mjs";
 
 async function messageCreate(msg) {
     if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
@@ -110,6 +111,9 @@ async function messageCreate(msg) {
             break;
             case "avatar":
                 avatar(msg, args);
+            break;
+            case "binary":
+                binary(msg, args);
             break;
             case "help":
                 help(msg, args);

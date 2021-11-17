@@ -30,7 +30,8 @@ async function help(msg, args) {
                     \`${prefix}help funnytext\`
                     \`${prefix}help invite\`
                     \`${prefix}help github\`
-                    \`${prefix}help avatar\``;
+                    \`${prefix}help avatar\`
+                    \`${prefix}help binary\``;
             break;
             case "syntax":
                 message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
@@ -138,6 +139,9 @@ async function help(msg, args) {
             break;
             case "avatar":
                 message = `\`${prefix}avatar [user]\*\` I'll send a larger picture of your avatar or the user mentioned in the command`
+            break;
+            case "binary":
+                message = `\`${prefix}binary [text]\*\` I'll convert to or from binary`
             break;
         }
     } else {
