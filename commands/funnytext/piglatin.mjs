@@ -10,7 +10,7 @@ async function piglatin(text, guild) {
         return base;
     }).join(" ");
 
-    return text;
+    return await censor(text, guild);
 }
 
 export default piglatin;
