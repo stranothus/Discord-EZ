@@ -1,3 +1,10 @@
+/**
+ * Gets the time since a date
+ * 
+ * @param {object} timePosted - from the dateToObj function
+ * 
+ * @returns {string} timeSince - the time since the timePosted
+ */
 function timeSince(timePosted) {
     var dateNow = new Date();
     
