@@ -1,5 +1,4 @@
 async function guildCreate(guild) {
-    console.log(guild);
     // go through server setup
     let members = await guild.members.fetch();
     let muteRole = guild.roles.cache.find(x => /muted/i.test(x.name)) || await guild.roles.create({ name: "Muted", permissions: [] });
@@ -7,8 +6,11 @@ async function guildCreate(guild) {
     guild.channels.cache.forEach(channel => {
         channel.permissionOverwrites.create(muteRole, {
             "SEND_MESSAGES": false,
-            "ADD_REACTIONS": false
-        });
+            "ADD_REACTIONS": false,
+            "SEND_MESSAGES_IN_THREADS": false,
+            "CREATE_PUBLIC_THREADS": false,
+            "CREATE_PRIVATE_THREADS": false
+            });
     });
 
     DB.Guilds.collection("Info").insertOne({

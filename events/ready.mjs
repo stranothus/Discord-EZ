@@ -15,10 +15,11 @@ async function ready() {
             if(err) console.error(err);
 
             if(result) {
+                let guild = client.guilds.cache.get(guildID);
+
                 // reinitiate reactroles
                 for(let i = 0; i < result.reactroles.length; i++) {
                     let index = result.reactroles[i];
-                    let guild = client.guilds.cache.get(guildID);
                     let channel = guild.channels.cache.get(index.channelID);
                     let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
@@ -34,7 +35,6 @@ async function ready() {
                 // reinitiate reactroles
                 for(let i = 0; i < result.reactroleones.length; i++) {
                     let index = result.reactroleones[i];
-                    let guild = client.guilds.cache.get(guildID);
                     let channel = guild.channels.cache.get(index.channelID);
                     let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
@@ -50,7 +50,6 @@ async function ready() {
                 // reinitiate polls
                 for(let i = 0; i < result.polls.length; i++) {
                     let index = result.polls[i];
-                    let guild = client.guilds.cache.get(guildID);
                     let channel = guild.channels.cache.get(index.channelID);
                     let message = await channel.messages.fetch(index.messageID).catch(err => { return false; });
 
@@ -66,7 +65,6 @@ async function ready() {
                 for(let i = 0; i < result.members.length; i++) {
                     let index = result.members[i];
                     if(index.muted) {
-                        let guild = client.guilds.cache.get(guildID);
                         let mutedUser = guild.members.resolve(index.id);
                         
                         if(!mutedUser) {
@@ -78,6 +76,15 @@ async function ready() {
                         unmute(mutedUser, mutedRole, timeMuted, guild);
                     }
                 }
+                guild.channels.cache.forEach(channel => {
+                    channel.permissionOverwrites.create(mutedRole, {
+                        "SEND_MESSAGES": false,
+                        "ADD_REACTIONS": false,
+                        "SEND_MESSAGES_IN_THREADS": false,
+                        "CREATE_PUBLIC_THREADS": false,
+                        "CREATE_PRIVATE_THREADS": false
+                    });
+                });
             } else {
                 // if the guild has been added while the bot was offline, go through server setup
                 let guild = client.guilds.cache.get(guildID);
