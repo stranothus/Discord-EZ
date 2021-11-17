@@ -1,6 +1,6 @@
 import Collection from "@discordjs/collection";
 
-function reactRoleOne(msg, roles, reactions, records) {
+function reactRoleOne(msg, ids, reactions, records) {
     if(msg.guild) {
         let collect = msg.createReactionCollector({ "dispose": true });
 
@@ -11,10 +11,16 @@ function reactRoleOne(msg, roles, reactions, records) {
                     reaction.users.remove(user);
                 } else {
                     let member = await msg.guild.members.fetch(user.id);
-                    let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
-    
-                    member.roles.add(role);
+                    let id = ids[reactions.indexOf(reaction._emoji.name)];
+                    let role = await member.guild.roles.fetch(id);
+                    
+                    if(role) {
+                        member.roles.add(role);
+                    } else {
+                        (await msg.guild.fetchOwner()).send("Someone tried to react to get " + id + " but it looks like that role has been edited or deleted :(")
+                    }
                 }
+
                 records[user.id] = records[user.id] ? records[user.id] + 1 : 1; // otherwise, set reactions to 1
             }
         });
@@ -23,9 +29,14 @@ function reactRoleOne(msg, roles, reactions, records) {
             // if there are any reaction
             if(!user.bot && records[user.id]) {
                 let member = await msg.guild.members.fetch(user.id);
-                let role = member.guild.roles.cache.find(role => role.name === roles[reactions.indexOf(reaction._emoji.name)]);
-
-                member.roles.remove(role);
+                let id = ids[reactions.indexOf(reaction._emoji.name)];
+                let role = await member.guild.roles.fetch(id);
+                
+                if(role) {
+                    member.roles.remove(role);
+                } else {
+                    (await msg.guild.fetchOwner()).send("Someone tried to react to remove " + id + " but it looks like that role has been edited or deleted :(")
+                }
 
                 records[user.id]--;
             }

@@ -21,19 +21,22 @@ async function reactroleone(msg, args) {
         .map((v, i, a) => ((i % 2) ? undefined : {
             content: format ? format.replace(/{role}/g, "<@&" + v + ">").replace(/{emoji}/g, a[i + 1]) : `To get <@&${v}>, react with ${a[i + 1]}`,
             emoji: a[i + 1],
-            role: v
+            role: v,
+            id: undefined
         }))
         .filter(v => v);
 
     let content = msgs.map(v => v.content);
     let emojis = msgs.map(v => v.emoji);
     let roles = msgs.map(v => v.role);
+    let ids = msgs.map(v => v.id);
     
     let stuff = await Promise.all(roles.map(async (v, i) => {
         let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
 
         content[i] = format ? format.replace(/{role}/g, `<@&${role.id}>`).replace(/{emoji}/g, emojis[i]) : `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
-        roles[i] = role;
+        ids[i] = role.id;
+        msgs[i].id = role.id
 
         return role;
     }));
@@ -44,7 +47,7 @@ async function reactroleone(msg, args) {
         messageID: msg.id,
         channelID: msg.channel.id,
         reacttorole: msgs.map(v => ({
-            role: v.role,
+            id: v.id,
             emoji: v.emoji
         })),
         reactions: {},
@@ -60,10 +63,9 @@ async function reactroleone(msg, args) {
         channel.send("Something went wrong. Please make sure you are using valid emojis");
     }) : ""));
 
-    roles = msgs.map(v => v.role);
     let reactions = msgs.map(v => v.emoji);
 
-    reactRoleOne(msg, roles, emojis, {});
+    reactRoleOne(msg, ids, emojis, {});
 }
 
 export default reactroleone;
