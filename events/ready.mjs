@@ -75,7 +75,7 @@ async function ready() {
                     }
                 }
                 guild.channels.cache.forEach(channel => {
-                    if(channel.permissionOverwrites) {
+                    if(channel.type === "GUILD_TEXT" || channel.type === "GUILD_VOICE") {
                         channel.permissionOverwrites.create(mutedRole, {
                             "SEND_MESSAGES": false,
                             "ADD_REACTIONS": false,
@@ -83,8 +83,6 @@ async function ready() {
                             "CREATE_PUBLIC_THREADS": false,
                             "CREATE_PRIVATE_THREADS": false
                         });
-                    } else {
-                        console.log(channel);
                     }
                 });
             } else {
