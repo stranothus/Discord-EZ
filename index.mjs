@@ -18,6 +18,7 @@ import guildMemberUpdate from "./events/guildMemberUpdate.mjs";
 import messageDelete from "./events/messageDelete.mjs";
 import messageCreate from "./events/messageCreate.mjs";
 import channelCreate from "./events/channelCreate.mjs";
+import threadCreate from "./events/threadCreate.mjs";
 
 // initiate process.env
 dotenv.config();
@@ -71,6 +72,7 @@ client.on("guildMemberUpdate", guildMemberUpdate); // handle user updates
 client.on("channelCreate", channelCreate); // guild startup
 client.on("messageDelete", messageDelete); // handle ghost pings
 client.on("messageCreate", messageCreate); // commands
+client.on("threadCreate", threadCreate); // commands
 
 DBConnected.then(() => {
     // start bot
