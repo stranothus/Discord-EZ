@@ -3,6 +3,7 @@ import uwu from "./uwu.mjs";
 import blarb from "./blarb.mjs";
 import reverse from "./reverse.mjs";
 import piglatin from "./piglatin.mjs";
+import shakespeare from "./shakespeare.mjs";
 
 async function funnytext(msg, args) {
     let funnytexts = {
@@ -10,7 +11,8 @@ async function funnytext(msg, args) {
         "owo": uwu,
         "blarb": blarb,
         "reverse": reverse,
-        "piglatin": piglatin
+        "piglatin": piglatin,
+        "shakespeare": shakespeare
     };
     
     let commands = [];

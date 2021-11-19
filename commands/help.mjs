@@ -206,7 +206,7 @@ async function help(msg, args) {
             break;
             case "funnytext":
                 // tell how =gettext works
-                message = `\`${prefix}funnytext [filters]...\* [message]\` makes me post a message from you made a little more fun. Use \`uwu\`, \`owo\`, \`blarb\`, \`piglatin\`, or \`reverse\` or you can use multiple! Find out what each one does and use several for your own combination`;
+                message = `\`${prefix}funnytext [filters]...\* [message]\` makes me post a message from you made a little more fun. Use \`uwu\`, \`owo\`, \`blarb\`, \`piglatin\`, \`shakespeare\`, or \`reverse\` or you can use multiple! Find out what each one does and use several for your own combination`;
             break;
             case "invite":
                 message = `\`${prefix}invite\` makes me give you my invite so you can add me to other servers`
