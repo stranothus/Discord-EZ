@@ -1,37 +1,110 @@
 import { MessageEmbed } from "discord.js";
 
+/*
+Commands:
+
+    Misc:
+        ping
+        poll
+        gettext
+        avatar
+
+    KA:
+        kauser
+        kaprogram
+    
+    Linguistics:
+        define
+        pronounce
+        translate
+
+    Roles:
+        reactrole
+        reactroleone
+    
+    Deleting messages:
+        diebot
+        clear
+        clearall
+
+    Moderation:
+        mute
+        unmute
+        addword
+        removeword
+        checkwords
+        warn
+        infractions
+
+    Webhooks:
+        funnnytext
+        binary
+
+    Settings:
+        prefix
+    
+    About:
+        invite
+        github
+*/
+
 async function help(msg, args) {
     let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
     let message = "";
     if(args.length) {
         switch(args[0]) {
-            case "commands":
-                message = `You can use my commands to do powerful things. Read up about each one below!\n
+            case "misc":
+                message = `Here are some of my miscellaneous commands for various tasks or fun\n
                     \`${prefix}help ping\`
+                    \`${prefix}help poll\`
+                    \`${prefix}help gettext\`
+                    \`${prefix}help avatar\``;
+            break;
+            case "ka":
+                message = `Here are some of my commands for checking out Khan Academy information\n
                     \`${prefix}help kauser\`
-                    \`${prefix}help kaprogram\`
+                    \`${prefix}help kaprogram\``;
+            break;
+            case "linguistics":
+                message = `Here are some of my linguistic commands\n
                     \`${prefix}help define\`
                     \`${prefix}help pronounce\`
-                    \`${prefix}help translate\`
+                    \`${prefix}help translate\``;
+            break;
+            case "roles":
+                message = `Here are some of my commands for dealing with roles\n
                     \`${prefix}help reactrole\`
-                    \`${prefix}help reactroleone\`
-                    \`${prefix}help poll\`
+                    \`${prefix}help reactroleone\``;
+            break;
+            case "pruning":
+                message = `Here are some of my commands for pruning messages\n
                     \`${prefix}help diebot\`
                     \`${prefix}help clear\`
-                    \`${prefix}help clearall\`
+                    \`${prefix}help clearall\``;
+            break;
+            case "moderation":
+                message = `Here are some of my commands for moderating your server\n
                     \`${prefix}help mute\`
                     \`${prefix}help unmute\`
                     \`${prefix}help addword\`
                     \`${prefix}help removeword\`
-                    \`${prefix}help prefix\`
+                    \`${prefix}help checkwords\`
                     \`${prefix}help warn\`
-                    \`${prefix}help infractions\`
-                    \`${prefix}help gettext\`
+                    \`${prefix}help infractions\``;
+            break;
+            case "webhooks":
+                message = `Here are some of my commands for webhook fun\n
                     \`${prefix}help funnytext\`
-                    \`${prefix}help invite\`
-                    \`${prefix}help github\`
-                    \`${prefix}help avatar\`
                     \`${prefix}help binary\``;
+            break;
+            case "settings":
+                message = `Here are some of my commands for server bot settings\n
+                    \`${prefix}help prefix\``;
+            break;
+            case "about":
+                message = `Here are some of my commands for learning more about me <3\n
+                    \`${prefix}help invite\`
+                    \`${prefix}help github\``;
             break;
             case "syntax":
                 message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
@@ -149,8 +222,16 @@ async function help(msg, args) {
             break;
         }
     } else {
-        message = `Hey there, Discord user! I'm Discord-EZ, a general purpose bot to help with moderation, basic tasks, and fun! Use a command below to learn more about me!
-            \`${prefix}help commands\`
+        message = `Hey there, Discord user! I'm Discord-EZ, a general purpose bot to help with moderation, basic tasks, and fun! Select help with one of my modules below
+            \`${prefix}help misc\`
+            \`${prefix}help ka\`
+            \`${prefix}help linguistics\`
+            \`${prefix}help roles\`
+            \`${prefix}help pruning\`
+            \`${prefix}help moderation\`
+            \`${prefix}help webhooks\`
+            \`${prefix}help settings\`
+            \`${prefix}help about\`
             \`${prefix}help syntax\``;
     }
 
