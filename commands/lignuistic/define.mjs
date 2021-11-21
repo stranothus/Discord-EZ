@@ -12,7 +12,7 @@ async function define(msg, args) {
     let endpoint = `${DictAPI}/${args[0]}`;
     let data = await getJSON(endpoint);
 
-    if(!data[0].meanings) {
+    if(!data[0]) {
         msg.channel.send("The word definition could not be found. Please double check your query");
         return;
     }
