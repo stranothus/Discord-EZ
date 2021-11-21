@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 
 async function help(msg, args) {
-    let prefix = msg.guild ? (await DB.Guilds.collection("In(fo").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
+    let prefix = msg.guild ? (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
     if(args.length) {
         switch(args[0]) {
             case "misc":
