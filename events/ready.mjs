@@ -87,9 +87,9 @@ async function ready() {
                 });
             } else {
                 // if the guild has been added while the bot was offline, go through server setup
-                let guild = client.guilds.cache.get(guildID);
+                let g = client.guilds.cache.get(guild.id);
 
-                guildCreate(guild);
+                guildCreate(g);
             }
         });
     });
