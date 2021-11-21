@@ -32,7 +32,7 @@ async function kauser(msg, args) {
         return;
     }
 
-    let joinedObj = dateToObj(data.dateJoined ? new Date(data.dateJoined) : new Date());
+    let joinedObj = dateToObj(data.joined ? new Date(data.joined) : new Date());
     let sinceJoined = timeSince(joinedObj) || "Secret";
 
     let embed = new MessageEmbed()
