@@ -54,66 +54,245 @@ async function help(msg, args) {
     if(args.length) {
         switch(args[0]) {
             case "misc":
-                message = `Here are some of my miscellaneous commands for various tasks or fun\n
-                    \`${prefix}help ping\`
-                    \`${prefix}help poll\`
-                    \`${prefix}help gettext\`
-                    \`${prefix}help avatar\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Miscellaneous commands**")
+                    .setDescription("Here are some of my miscellaneous commands for various tasks or fun")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Ping",
+                            value: `\`${prefix}help ping\``
+                        },
+                        {
+                            name: "Hold a poll",
+                            value: `\`${prefix}help poll\``
+                        },
+                        {
+                            name: "Get text from image",
+                            value: `\`${prefix}help gettext\``
+                        },
+                        {
+                            name: "Get user avatar",
+                            value: `\`${prefix}help avatar\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "ka":
-                message = `Here are some of my commands for checking out Khan Academy information\n
-                    \`${prefix}help kauser\`
-                    \`${prefix}help kaprogram\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Khan Academy commands**")
+                    .setDescription("Here are some of my commands for checking out Khan Academy information")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Khan Academy user",
+                            value: `\`${prefix}help kauser\``
+                        },
+                        {
+                            name: "Khan Academy program",
+                            value: `\`${prefix}help kaprogram\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "linguistics":
-                message = `Here are some of my linguistic commands\n
-                    \`${prefix}help define\`
-                    \`${prefix}help pronounce\`
-                    \`${prefix}help translate\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Linguistic commands**")
+                    .setDescription("Here are some of my linguistic commands")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Define a word",
+                            value: `\`${prefix}help define\``
+                        },
+                        {
+                            name: "Pronounce a word",
+                            value: `\`${prefix}help pronounce\``
+                        },
+                        {
+                            name: "Translate from a language to another",
+                            value: `\`${prefix}help translate\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "roles":
-                message = `Here are some of my commands for dealing with roles\n
-                    \`${prefix}help reactrole\`
-                    \`${prefix}help reactroleone\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Role commands**")
+                    .setDescription("Here are my commands for setting user roles")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "React role",
+                            value: `\`${prefix}help reactrole\``
+                        },
+                        {
+                            name: "React role limited",
+                            value: `\`${prefix}help reactroleone\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "pruning":
-                message = `Here are some of my commands for pruning messages\n
-                    \`${prefix}help diebot\`
-                    \`${prefix}help clear\`
-                    \`${prefix}help clearall\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Pruning commands**")
+                    .setDescription("Here are some of my commands for pruning messages")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Clear bot messages",
+                            value: `\`${prefix}help diebot\``
+                        },
+                        {
+                            name: "Clear chat messages",
+                            value: `\`${prefix}help clear\``
+                        },
+                        {
+                            name: "Clear channel",
+                            value: `\`${prefix}help clear\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "moderation":
-                message = `Here are some of my commands for moderating your server\n
-                    \`${prefix}help mute\`
-                    \`${prefix}help unmute\`
-                    \`${prefix}help addword\`
-                    \`${prefix}help removeword\`
-                    \`${prefix}help checkwords\`
-                    \`${prefix}help warn\`
-                    \`${prefix}help infractions\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Moderation commands**")
+                    .setDescription("Here are some of my commands for moderating your server")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Mute a user",
+                            value: `\`${prefix}help mute\``
+                        },
+                        {
+                            name: "Unmute a user",
+                            value: `\`${prefix}help unmute\``
+                        },
+                        {
+                            name: "Add a word to censor",
+                            value: `\`${prefix}help addword\``
+                        },
+                        {
+                            name: "Remove a word to censor",
+                            value: `\`${prefix}help removeword\``
+                        },
+                        {
+                            name: "Check censored words",
+                            value: `\`${prefix}help checkwords\``
+                        },
+                        {
+                            name: "Warn a user",
+                            value: `\`${prefix}help warn\``
+                        },
+                        {
+                            name: "View user warnings",
+                            value: `\`${prefix}help infractions\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "webhooks":
-                message = `Here are some of my commands for webhook fun\n
-                    \`${prefix}help funnytext\`
-                    \`${prefix}help binary\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Webhook commands**")
+                    .setDescription("Here are some of my commands for webhook fun")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Filter text",
+                            value: `\`${prefix}help funnytext\``
+                        },
+                        {
+                            name: "Binary text",
+                            value: `\`${prefix}help binary\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
+
             break;
             case "settings":
-                message = `Here are some of my commands for server bot settings\n
-                    \`${prefix}help prefix\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Setting commands**")
+                    .setDescription("Here are some of my commands for server bot settings")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "Set or check prefix",
+                            value: `\`${prefix}help prefix\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
+
             break;
             case "about":
-                message = `Here are some of my commands for learning more about me <3\n
-                    \`${prefix}help invite\`
-                    \`${prefix}help github\``;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**About commands**")
+                    .setDescription("Here are some of my commands for learning more about me <3")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "My invite",
+                            value: `\`${prefix}help invite\``
+                        },
+                        {
+                            name: "My GitHub repo",
+                            value: `\`${prefix}help github\``
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
+
             break;
             case "syntax":
-                message = `Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax.
-                    [user] - Ping a user or use their ID.
-                    [role] - Ping a role or use its ID. If it says [role name], you can use the name of the role instead.
-                    [number] - You need to use a number.
-                    [emoji] - You need to use an emoji.
-                    [time] - You need to use a number followed by a time unit like seconds or minutes.
-                    other - Arguments are separated by spaces. If you need an argument with spaces, surround it in quotations marks like "argument with spaces".`;
+                var embed = new MessageEmbed()
+                    .setColor("#C0FA00")
+                    .setTitle("**Syntax**")
+                    .setDescription("Using my commands is easy, really! I can't speak very good Enlgish though, so you'll need to help me by using the right command formatting, sometimes called syntax")
+                    .setThumbnail(client.user.avatarURL(true))
+                    .addFields(
+                        {
+                            name: "[user]",
+                            value: `User ID or mention`
+                        },
+                        {
+                            name: "[role]",
+                            value: `Role mention`
+                        },
+                        {
+                            name: "[number]",
+                            value: `A number`
+                        },
+                        {
+                            name: "[emoji]",
+                            value: `An emoji`
+                        },
+                        {
+                            name: "[time]",
+                            value: `Unit of time`
+                        },
+                        {
+                            name: "other",
+                            value: `Text`
+                        }
+                    );
+                
+                msg.channel.send({ "embeds": [embed] });
             break;
             case "ping":
                 // tell how =ping works
@@ -222,25 +401,56 @@ async function help(msg, args) {
             break;
         }
     } else {
-        message = `Hey there, Discord user! I'm Discord-EZ, a general purpose bot to help with moderation, basic tasks, and fun! Select help with one of my modules below
-            \`${prefix}help misc\`
-            \`${prefix}help ka\`
-            \`${prefix}help linguistics\`
-            \`${prefix}help roles\`
-            \`${prefix}help pruning\`
-            \`${prefix}help moderation\`
-            \`${prefix}help webhooks\`
-            \`${prefix}help settings\`
-            \`${prefix}help about\`
-            \`${prefix}help syntax\``;
+        var embed = new MessageEmbed()
+            .setColor("#C0FA00")
+            .setTitle("**My commands**")
+            .setDescription("Hey there, Discord user! I'm Discord-EZ, a general purpose bot to help with moderation, basic tasks, and fun! Select help with one of my modules below")
+            .setThumbnail(client.user.avatarURL(true))
+            .addFields(
+                {
+                    name: "Syntax guide",
+                    value: `\`${prefix}help syntax\``
+                },
+                {
+                    name: "Moderation",
+                    value: `\`${prefix}help moderation\``
+                },
+                {
+                    name: "Webhooks",
+                    value: `\`${prefix}help webhooks\``
+                },
+                {
+                    name: "Linguistics",
+                    value: `\`${prefix}help linguistics\``
+                },
+                {
+                    name: "Khan Academy",
+                    value: `\`${prefix}help ka\``
+                },
+                {
+                    name: "Roles",
+                    value: `\`${prefix}help roles\``
+                },
+                {
+                    name: "Message pruning",
+                    value: `\`${prefix}help pruning\``
+                },
+                {
+                    name: "Server settings",
+                    value: `\`${prefix}help settings\``
+                },
+                {
+                    name: "Miscellaneous",
+                    value: `\`${prefix}help misc\``
+                },
+                {
+                    name: "About the bot",
+                    value: `\`${prefix}help about\``
+                }
+            );
+        
+        msg.channel.send({ "embeds": [embed] });
     }
-
-    var embed = new MessageEmbed()
-        .setColor("#C0FA00")
-        .setTitle("**" + (args[0] || "My commands") + "**")
-        .setDescription(message);
-
-    msg.channel.send({ "embeds": [embed] });
 }
 
 export default help;
