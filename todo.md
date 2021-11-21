@@ -11,4 +11,4 @@
 9. Find a way to monetize
 10. Add additional encryption commands
 11. Owner only commands
-12. Make some commands work in DMs
+12. Make piglatin filter better

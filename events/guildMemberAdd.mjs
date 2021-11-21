@@ -3,6 +3,7 @@ import unmute from "../commands/mute/unmute.mjs";
 async function guildMemberAdd(user) {
     let guild = user.guild;
     let welcome = guild.channels.cache.find(v => /welcome/i.test(v.name));
+    if(!welcome) return;
     let rules = guild.channels.cache.find(v => /rules/i.test(v.name));
     let roles = guild.channels.cache.find(v => /roles/i.test(v.name));
 
