@@ -4,6 +4,7 @@ import blarb from "./blarb.mjs";
 import reverse from "./reverse.mjs";
 import piglatin from "./piglatin.mjs";
 import shakespeare from "./shakespeare.mjs";
+import lego from "./lego.mjs";
 
 async function funnytext(msg, args) {
     let funnytexts = {
@@ -12,7 +13,8 @@ async function funnytext(msg, args) {
         "blarb": blarb,
         "reverse": reverse,
         "piglatin": piglatin,
-        "shakespeare": shakespeare
+        "shakespeare": shakespeare,
+        "lego": lego
     };
     
     let commands = [];
@@ -23,7 +25,7 @@ async function funnytext(msg, args) {
         commands.push(funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
     }
     while(funnytexts[args[0]]) {
-        commands.push(funnytexts[args[0]]);
+        commands.push(funnytexts[args[0].toLowerCase()]);
         args.shift();
     }
 
