@@ -1,55 +1,7 @@
 import { MessageEmbed } from "discord.js";
 
-/*
-Commands:
-
-    Misc:
-        ping
-        poll
-        gettext
-        avatar
-
-    KA:
-        kauser
-        kaprogram
-    
-    Linguistics:
-        define
-        pronounce
-        translate
-
-    Roles:
-        reactrole
-        reactroleone
-    
-    Deleting messages:
-        diebot
-        clear
-        clearall
-
-    Moderation:
-        mute
-        unmute
-        addword
-        removeword
-        checkwords
-        warn
-        infractions
-
-    Webhooks:
-        funnnytext
-        binary
-
-    Settings:
-        prefix
-    
-    About:
-        invite
-        github
-*/
-
 async function help(msg, args) {
-    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+    let prefix = msg.guild ? (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
     let message = "";
     if(args.length) {
         switch(args[0]) {

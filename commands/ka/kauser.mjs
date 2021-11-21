@@ -4,7 +4,7 @@ import dateToObj from "./../../utils/dateToObj.js";
 import timeSince from "./../../utils/timeSince.js";
 
 async function kauser(msg, args) {
-    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+    let prefix = msg.guild ? (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
 
     if(!args[0]) {
         msg.channel.send("Use `" + prefix + "help kauser` to learn how to use this command");

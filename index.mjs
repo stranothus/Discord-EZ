@@ -55,6 +55,9 @@ global.client = new Client({
         "GUILD_MEMBERS",
         "DIRECT_MESSAGES",
         "GUILD_PRESENCES"
+    ],
+    partials: [
+        "CHANNEL"
     ]
 });
 

@@ -1,7 +1,7 @@
 import ytsr from "ytsr";
 
 async function pronounce(msg, args) {
-    let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
+    let prefix = msg.guild ? (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
 
     if(!args[0]) {
         msg.channel.send("Use `" + prefix + "help pronounce` to learn how to use this command");

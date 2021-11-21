@@ -33,8 +33,50 @@ import avatar from "../commands/avatar.mjs";
 import binary from "../commands/encrypt/binary.mjs";
 
 async function messageCreate(msg) {
-    if(!msg.guild) return;
-    if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
+    if(!msg.guild) {
+        if(msg.author.bot) return;
+        var args = msg.content.split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
+        var command = args[0];
+        args.splice(0, 1);
+
+        switch(command.toLowerCase()) {
+            case "ping":
+                ping(msg, args);
+            break;
+            case "kauser":
+                kauser(msg, args);
+            break;
+            case "kaprogram":
+                kaprogram(msg, args);
+            break;
+            case "define":
+                define(msg, args);
+            break;
+            case "pronounce":
+                pronounce(msg, args);
+            break;
+            case "translate":
+                translate(msg, args);
+            break;
+            case "status":
+                status(msg, args);
+            break;
+            case "gettext":
+                gettext(msg, args);
+            break;
+            case "invite":
+                invite(msg, args);
+            break;
+            case "github":
+                github(msg, args);
+            break;
+            case "help":
+                help(msg, args);
+            break;
+            default:
+                msg.channel.send("You can check my commands using =help");
+        }
+    } else if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
         var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "").split(" ")[0];
         var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`), "").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
 
