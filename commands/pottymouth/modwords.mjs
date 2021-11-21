@@ -10,7 +10,7 @@ async function modwords(msg) {
 
             bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
 
-            let repliedTo = await msg.channel.messages.fetch(msg.reference.messageId);
+            let repliedTo = msg.reference ? await msg.channel.messages.fetch(msg.reference.messageId) : null;
 
             asUser(msg.channel, msg.author, msg.type === "REPLY" ? `*[Replying to <@!${repliedTo.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored);
             
