@@ -4,7 +4,7 @@ async function channelCreate(channel) {
     let muteRole = await muterole(channel.guild);
 
     if(channel.type === "GUILD_TEXT" || channel.type === "GUILD_VOICE") {
-        channel.permissionOverwrites.create(mutedRole, {
+        channel.permissionOverwrites.create(muteRole, {
             "SEND_MESSAGES": false,
             "ADD_REACTIONS": false,
             "SEND_MESSAGES_IN_THREADS": false,
