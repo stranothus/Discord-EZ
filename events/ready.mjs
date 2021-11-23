@@ -4,13 +4,48 @@ import pollCollect  from "../commands/poll/collect.mjs";
 import unmute       from "../commands/mute/unmute.mjs";
 import reactRoleOne from "../commands/reactroleone/collect.mjs";
 import muterole from "../utils/mutrole.mjs";
+import clearMjs from "../commands/clear/clear.mjs";
+import discord from "discord.js";
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
 
+    client.commands = new discord.Collection();
+
+    client.commands.set(clearMjs.data.name, clearMjs);
+
+    const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+
+    try {
+        await rest.put(
+            Routes.applicationCommands(client.user.id),
+            { body: [
+                clearMjs.data.toJSON()
+            ] }
+        );
+    } catch (error) {
+        console.error(error);
+    }
+
     const guilds = client.guilds.cache;
 
-    guilds.forEach(guild => {
+    guilds.forEach(async guild => {
+        try {
+            await rest.put(
+                Routes.applicationGuildCommands(client.user.id, guild.id),
+                { body: [
+                    clearMjs.data.toJSON()
+                ] }
+            );
+        } catch (error) {
+            console.error(error);
+        }
+
         DB.Guilds.collection("Info").findOne({ "id": guild.id }, async function(err, result) {
             if(err) console.error(err);
 
