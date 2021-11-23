@@ -1,3 +1,4 @@
+import { SlashCommandBuilder } from "@discordjs/builders";
 import isAdmin from "../../utils/isAdmin.mjs";
 
 function clear(msg, args) {
@@ -25,4 +26,11 @@ function clear(msg, args) {
     });
 }
 
-export default clear;
+export default {
+    data: new SlashCommandBuilder()
+        .setName("clear")
+        .setDescription("Clears a specified number of messages or all messages from the channel it's used in"),
+    execute(interaction) {
+        interaction.reply("Working on it!")
+    }
+};
