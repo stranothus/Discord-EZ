@@ -22,18 +22,12 @@ export default {
     
             // Logging the number of messages deleted on both the channel and console.
             if(messagesDeleted) {
-                interaction.reply("Deletion of messages successful. Total messages deleted: " + messagesDeleted).then(msg => {
-                    setTimeout(() => {
-                        if(msg) {
-                            msg.delete();
-                        }
-                    }, 5000);
-                });
+                interaction.reply({ content: "Deletion of messages successful. Total messages deleted: " + messagesDeleted, ephemeral: true });
             } else {
-                interaction.reply("Deletion of messages unsuccessful");
+                interaction.reply({ content: "Deletion of messages unsuccessful", ephemeral: true });
             }
         }).catch(err => {
-            interaction.reply("Deletion of messages unsuccessful");
+            interaction.reply({ content: "Deletion of messages unsuccessful", ephemeral: true });
         });
     },
     executeText: function(msg, args) {
