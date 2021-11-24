@@ -112,7 +112,7 @@ async function messageCreate(msg) {
                 diebot(msg, args);
             break;
             case "clear":
-                clear(msg, args);
+                clear.executeText(msg, args);
             break;
             case "clearall":
                 clearall(msg, args);
