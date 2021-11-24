@@ -22,6 +22,7 @@ export default {
         .addStringOption(option => option
             .setName("text")
             .setDescription("text to convert")
+            .setRequired(true)
         ),
     description: `binary [text]\*\` I'll convert to or from binary`,
     category: "webhooks",
