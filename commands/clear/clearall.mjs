@@ -1,13 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import isAdmin from "../../utils/isAdmin.mjs";
 
-function clearall(msg, args) {
-    if(!isAdmin(msg)) return;
-
-    msg.channel.clone();
-    msg.channel.delete();
-}
-
 export default {
     data: new SlashCommandBuilder()
         .setName("clearall")
