@@ -1,5 +1,5 @@
 import translatte from "translatte";
-
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 export default {
     data: new SlashCommandBuilder()
