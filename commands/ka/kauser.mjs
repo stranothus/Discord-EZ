@@ -57,6 +57,7 @@ export default {
         .addStringOption(option => option
             .setName("identifier")
             .setDescription("the username or kaid of the user to get info on")
+            .setRequired(true)
         ),
     description: `kauser [username or kaid]\` makes me respond with the corresponding Khan Academy user information.`,
     category: "ka",
