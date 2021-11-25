@@ -14,7 +14,7 @@ export default {
     category: "moderation",
     DMs: false,
     execute: async function(interaction) {
-        if(!isAdmin(msg)) return;
+        if(!isAdmin(interaction)) return;
         
         let user = interaction.options.getUser("user");
         let guild = await DB.Guilds.collection("Info").findOne({ id: interaction.guild.id });

@@ -15,6 +15,8 @@ export default {
     DMs: false,
     execute: async function(interaction) {
         let user = interaction.option.getUser("user");
+
+        if(!isAdmin(interaction)) return;
     
         interaction.reply("**Infractions for <@!" + user.id + ">**\n\n`" + (await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id})).members.filter(v => v.id === user.id)[0].infractions.join("`\n`") + "`");
     },
