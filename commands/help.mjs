@@ -267,7 +267,7 @@ async function help(msg, args) {
             break;
             case "translate":
                 // tell how =translate works
-                msg.channel.send(`\`${prefix}translate [word(s)] [to]\* [from]\*\` makes me translate your word(s) into English. You can optionally specify a language. Make sure to wrap phrases in quotation marks or I'll only translate the first word.`);
+                msg.channel.send(`\`${prefix}translate [word(s)] [to]\* [from]\*\` makes me translate your word(s) into English. You can optionally specify a language.`);
             break;
             case "reactrole":
                 // tell how =reactrole works
