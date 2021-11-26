@@ -16,11 +16,11 @@
 # Register slash commands plan:
 
 1. Convert all commands into proper exports. They should have
-    1. A data property for the slash command
-    2. An execute property for the slash command
-    3. A description property for help
-    4. A category for help
-    5. Their current functionality for standard text commands
+    1. [x] A data property for the slash command
+    2. [x] An execute property for the slash command 
+    3. [x] A description property for help
+    4. [x] A category for help
+    5. [x] Their current functionality for standard text commands
 2. Get all commands
     - These need to be loaded from ./commands and look for files and sub-directories
     - They need to be found to load help from description, register from data, collected from execute for calling, and collected from standard for text calling
