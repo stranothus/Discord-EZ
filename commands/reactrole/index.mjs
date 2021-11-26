@@ -16,7 +16,7 @@ export default {
     category: "roles",
     DMs: false,
     execute: async function(interaction) {
-        if(!isAdmin(msg)) return;
+        if(!isAdmin(interaction)) return;
 
         let content = interaction.options.getString("content").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
         let format = content.length % 2 ? content[content.length - 1] : false;
