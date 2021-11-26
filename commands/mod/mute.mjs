@@ -1,5 +1,5 @@
 import isAdmin from "../../utils/isAdmin.mjs";
-import unmute from "./unmute.mjs";
+import unmute from "../../unmute.mjs";
 import muterole from "../../utils/mutrole.mjs";
 import { SlashCommandBuilder } from "@discordjs/builders";
 

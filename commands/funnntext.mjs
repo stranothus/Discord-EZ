@@ -1,10 +1,10 @@
-import asUser from "../../utils/asUser.mjs";
-import uwu from "./uwu.mjs";
-import blarb from "./blarb.mjs";
-import reverse from "./reverse.mjs";
-import piglatin from "./piglatin.mjs";
-import shakespeare from "./shakespeare.mjs";
-import lego from "./lego.mjs";
+import asUser from "../utils/asUser.mjs";
+import uwu from "../utils/funnytext/uwu.mjs";
+import blarb from "../utils/funnytext/blarb.mjs";
+import reverse from "../utils/funnytext/reverse.mjs";
+import piglatin from "../utils/funnytext/piglatin.mjs";
+import shakespeare from "../utils/funnytext/shakespeare.mjs";
+import lego from "../utils/funnytext/lego.mjs";
 import { SlashCommandBuilder } from "@discordjs/builders";
 
 export default {

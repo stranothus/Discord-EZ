@@ -16,7 +16,7 @@ import translate from "../commands/lignuistic/translate.mjs";
 import poll from "../commands/poll/index.mjs";
 import mute from "../commands/mute/mute.mjs";
 import earlyunmute from "../commands/mod/unmute.mjs";
-import modwords from "../commands/pottymouth/modwords.mjs";
+import modwords from "../utils/modwords.mjs";
 import addword from "../commands/pottymouth/addword.mjs";
 import removeword from "../commands/pottymouth/removeword.mjs";
 import checkwords from "../commands/pottymouth/checkwords.mjs";
