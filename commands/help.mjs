@@ -28,7 +28,7 @@ export default {
         let command = interaction.options.getString("command");
 
         if(command) {
-            let index = commands.findIndex(v => v.name === command);
+            let index = commands.findIndex(v => v.data.name === command);
 
             if(index + 1) {
                 interaction.reply("\`" + prefix + commands[i].description);
@@ -43,7 +43,7 @@ export default {
                         .setThumbnail(client.user.avatarURL(true))
                         .addFields(category.map(v => ({
                             name: "Command",
-                            value: v.name
+                            value: v.data.name
                         })));
                     
                     interaction.reply({ "embeds": [embed] });
@@ -108,7 +108,7 @@ export default {
         let command = args[0];
         
         if(command) {
-            let index = commands.findIndex(v => v.name === command);
+            let index = commands.findIndex(v => v.data.name === command);
 
             if(index + 1) {
                 interaction.reply("\`" + prefix + commands[i].description);
@@ -123,7 +123,7 @@ export default {
                         .setThumbnail(client.user.avatarURL(true))
                         .addFields(category.map(v => ({
                             name: "Command",
-                            value: v.name
+                            value: v.data.name
                         })));
                     
                     msg.channel.send({ "embeds": [embed] });
