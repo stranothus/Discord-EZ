@@ -14,7 +14,7 @@ export default {
     category: "moderation",
     DMs: false,
     execute: async function(interaction) {
-        let user = interaction.option.getUser("user");
+        let user = interaction.options.getUser("user");
 
         if(!isAdmin(interaction)) return;
     

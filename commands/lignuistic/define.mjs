@@ -12,7 +12,7 @@ export default {
             .setRequired(true)
         ),
     description: `define [word]\` makes me give a definition or set of definitions for a word.`,
-    category: "lingusitics",
+    category: "linguistics",
     DMs: true,
     execute: async function(interaction) {
         let endpoint = `${DictAPI}/${interaction.options.getString("word")}`;

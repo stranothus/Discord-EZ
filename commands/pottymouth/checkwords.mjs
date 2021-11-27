@@ -18,7 +18,7 @@ export default {
     category: "moderation",
     DMs: false,
     execute: async function(interaction) {
-        let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": interactions.guild.id })).bannedwords;
+        let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id })).bannedwords;
     
         if(bannedwords.length) {
             interaction.reply({ content: "Banned words: ||" + bannedwords.join(", ") + "||", ephemeral: true });
