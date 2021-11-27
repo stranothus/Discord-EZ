@@ -4,12 +4,12 @@ import dirFlat from "../utils/dirFlat.mjs";
 import modwords from "../utils/modwords.mjs";
 
 const commands = Promise.all(dirFlat("./commands").map(async v => {
-    let imported = await import("./commands/" + v);
+    let imported = await import("../" + v);
 
     return {
         command: v.replace(/\.[^\.]+$/, ""),
         file: v,
-        ...imported
+        ...imported.default
     };
 }));
 

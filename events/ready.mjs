@@ -4,7 +4,6 @@ import pollCollect  from "../utils/poll.mjs";
 import unmute       from "../utils/unmute.mjs";
 import reactRoleOne from "../utils/reactroleone.mjs";
 import muterole from "../utils/mutrole.mjs";
-import clearMjs from "../commands/clear/clear.mjs";
 import discord from "discord.js";
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
@@ -14,25 +13,23 @@ import dirFlat from "../utils/dirFlat.mjs";
 dotenv.config();
 
 const commands = Promise.all(dirFlat("./commands").map(async v => {
-    let imported = await import("./commands/" + v);
+    let imported = await import("../" + v);
 
     return {
         command: v.replace(/\.[^\.]+$/, ""),
         file: v,
-        ...imported
+        ...imported.default
     };
 }));
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
 
-    await commands;
-
     console.log("Commands loaded");
 
     client.commands = new discord.Collection();
 
-    commands.forEach(command => client.commands.set(command.data.name, command));
+    (await commands).forEach(command => client.commands.set(command.data.name, command));
 
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
     
@@ -40,7 +37,7 @@ async function ready() {
         await rest.put(
             Routes.applicationCommands(client.user.id),
             { body: [
-                ...commands.map(v => v.data.toJSON())
+                ...(await commands).map(v => v.data.toJSON())
             ] }
         );
     } catch (error) {
@@ -50,17 +47,6 @@ async function ready() {
     const guilds = client.guilds.cache;
 
     guilds.forEach(async guild => {
-        try {
-            await rest.put(
-                Routes.applicationGuildCommands(client.user.id, guild.id),
-                { body: [
-                    ...commands.map(v => v.data.toJSON())
-                ] }
-            );
-        } catch (error) {
-            console.error(error);
-        }
-
         DB.Guilds.collection("Info").findOne({ "id": guild.id }, async function(err, result) {
             if(err) console.error(err);
 
