@@ -8,7 +8,7 @@ async function modwords(msg) {
         if(new RegExp(bannedwords.join("|"), "i").test(msg.content) && !msg.author.bot) {
             let censored = msg.content;
 
-            bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
+            bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword + ")", "gi"), $1 => ($1[0] + new Array($1.length).join("\\*"))));
 
             let repliedTo = msg.reference ? await msg.channel.messages.fetch(msg.reference.messageId) : null;
 
