@@ -128,4 +128,4 @@ Roles are saved and reassigned if an old member rejoins so they don't have to go
 
 ## Invite
 
-https://discord.com/api/oauth2/authorize?client_id=886933964537880617&permissions=8&scope=bot
+https://discord.com/oauth2/authorize?client_id=886933964537880617&permissions=8&scope=bot%20applications.commands
