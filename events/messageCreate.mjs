@@ -1,7 +1,7 @@
 // import utils
 import deQuote from "../utils/deQuote.mjs";
 import dirFlat from "../utils/dirFlat.mjs";
-import modwords from "../uitls/modwords.mjs";
+import modwords from "../utils/modwords.mjs";
 
 const commands = Promise.all(dirFlat("./commands").map(async v => {
     let imported = await import("./commands/" + v);
