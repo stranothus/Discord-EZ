@@ -1,5 +1,5 @@
 import { hyperlink, hideLinkEmbed } from '@discordjs/builders';
-import asUser from "../../utils/asUser.mjs";
+import asUser from "../utils/asUser.mjs";
 
 async function modwords(msg) {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
