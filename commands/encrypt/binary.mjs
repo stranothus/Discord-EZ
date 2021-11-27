@@ -20,10 +20,10 @@ export default {
         if(text.replace(/0|1|\s/g, "")) {
             text = text.split("").map(v => "0" + v.charCodeAt(0).toString(2)).join(" ");
         } else {
-            text = await censor(text.split(" ").map(v => String.fromCharCode(parseInt(v, 2))).join(""), msg.guild);
+            text = await censor(text.split(" ").map(v => String.fromCharCode(parseInt(v, 2))).join(""), interaction.guild);
         }
     
-        asUser(interaction.channel, interaction.author, text);
+        asUser(interaction.channel, interaction.member.user, text);
         
         interaction.reply({ content: "Message sent", ephemeral: true });
     },
