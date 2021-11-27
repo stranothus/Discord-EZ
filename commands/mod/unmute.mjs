@@ -17,6 +17,7 @@ export default {
         if(!isAdmin(interaction)) return;
         
         let user = interaction.options.getUser("user");
+            user = interaction.guild.members.cache.find(v => v.user.id == user.id);
         let guild = await DB.Guilds.collection("Info").findOne({ id: interaction.guild.id });
         let mutedRole = guild.moderation.muteRole;
     

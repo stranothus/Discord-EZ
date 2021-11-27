@@ -1,5 +1,5 @@
 import isAdmin from "../../utils/isAdmin.mjs";
-import unmute from "../../unmute.mjs";
+import unmute from "../../utils/unmute.mjs";
 import muterole from "../../utils/mutrole.mjs";
 import { SlashCommandBuilder } from "@discordjs/builders";
 
@@ -26,9 +26,10 @@ export default {
     category: "moderation",
     DMs: false,
     execute: async function(interaction) {
-        if(!isAdmin(msg)) return;
+        if(!isAdmin(interaction)) return;
     
         let user = interaction.options.getUser("user");
+            user = interaction.guild.members.cache.find(v => v.user.id == user.id);
         let time = interaction.options.getString("time") || "1week";
         let reason = interaction.options.getString("reason") || "Because I can";
     
