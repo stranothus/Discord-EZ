@@ -9,23 +9,38 @@ import discord from "discord.js";
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import dotenv from "dotenv";
+import dirFlat from "../utils/dirFlat.mjs";
 
 dotenv.config();
+
+const commands = Promise.all(dirFlat("./commands").map(async v => {
+    let imported = await import("./commands/" + v);
+
+    return {
+        command: v.replace(/\.[^\.]+$/, ""),
+        file: v,
+        ...imported
+    };
+}));
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
 
+    await commands;
+
+    console.log("Commands loaded");
+
     client.commands = new discord.Collection();
 
-    client.commands.set(clearMjs.data.name, clearMjs);
+    commands.forEach(command => client.commands.set(command.data.name, command));
 
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-
+    
     try {
         await rest.put(
             Routes.applicationCommands(client.user.id),
             { body: [
-                clearMjs.data.toJSON()
+                ...commands.map(v => v.data.toJSON())
             ] }
         );
     } catch (error) {
@@ -39,7 +54,7 @@ async function ready() {
             await rest.put(
                 Routes.applicationGuildCommands(client.user.id, guild.id),
                 { body: [
-                    clearMjs.data.toJSON()
+                    ...commands.map(v => v.data.toJSON())
                 ] }
             );
         } catch (error) {
