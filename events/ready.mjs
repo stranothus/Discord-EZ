@@ -1,16 +1,52 @@
 import guildCreate  from "./guildCreate.mjs";
-import reactRole    from "../commands/reactrole/collect.mjs";
-import pollCollect  from "../commands/poll/collect.mjs";
-import unmute       from "../commands/mute/unmute.mjs";
-import reactRoleOne from "../commands/reactroleone/collect.mjs";
+import reactRole    from "../utils/reactrole.mjs";
+import pollCollect  from "../utils/poll.mjs";
+import unmute       from "../utils/unmute.mjs";
+import reactRoleOne from "../utils/reactroleone.mjs";
 import muterole from "../utils/mutrole.mjs";
+import discord from "discord.js";
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import dotenv from "dotenv";
+import dirFlat from "../utils/dirFlat.mjs";
+
+dotenv.config();
+
+const commands = Promise.all(dirFlat("./commands").map(async v => {
+    let imported = await import("../" + v);
+
+    return {
+        command: v.replace(/\.[^\.]+$/, ""),
+        file: v,
+        ...imported.default
+    };
+}));
 
 async function ready() {
 	console.log(`Logged in as ${client.user.tag}!`);
 
+    console.log("Commands loaded");
+
+    client.commands = new discord.Collection();
+
+    (await commands).forEach(command => client.commands.set(command.data.name, command));
+
+    const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+    
+    try {
+        await rest.put(
+            Routes.applicationCommands(client.user.id),
+            { body: [
+                ...(await commands).map(v => v.data.toJSON())
+            ] }
+        );
+    } catch (error) {
+        console.error(error);
+    }
+
     const guilds = client.guilds.cache;
 
-    guilds.forEach(guild => {
+    guilds.forEach(async guild => {
         DB.Guilds.collection("Info").findOne({ "id": guild.id }, async function(err, result) {
             if(err) console.error(err);
 

@@ -1,4 +1,4 @@
-import unmute from "../commands/mute/unmute.mjs";
+import unmute from "../utils/unmute.mjs";
 
 async function guildMemberAdd(user) {
     let guild = user.guild;
