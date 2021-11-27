@@ -23,7 +23,7 @@ export default {
     category: false,
     DMs: true,
     execute: function(interaction) {
-        if(interaction.author.id !== "653742791838662687") {
+        if(interaction.member.id !== "653742791838662687") {
             interaction.reply({ content: "Only my master can use this command", ephemeral: true });
             return;
         }
