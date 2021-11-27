@@ -20,7 +20,8 @@ async function messageCreate(msg) {
         var command = args[0].toLowerCase();
         args.splice(0, 1);
 
-        let index = commands.findIndex(v => v.data.name === command);
+        let index = (await commands).findIndex(v => v.data.name === command);
+            index = (await commands)[index];
 
         if(!index) {
             msg.channel.send("You can check my commands with \`help\`");
@@ -36,7 +37,8 @@ async function messageCreate(msg) {
         var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "").split(" ")[0].toLowerCase();
         var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`), "").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
 
-        let index = commands.findIndex(v => v.data.name === command);
+        let index = (await commands).findIndex(v => v.data.name === command);
+            index = (await commands)[index];
 
         if(!index) {
             msg.channel.send("You can check my commands with \`help\`");
