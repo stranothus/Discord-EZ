@@ -51,7 +51,7 @@ export default {
     
         let text = interaction.options.getString("text");
         for(let i = 0; i < commands.length; i++) {
-            text = await commands[i](text, msg.guild);
+            text = await commands[i](text, interaction.guild);
         }
     
         asUser(interaction.channel, interaction.member.user, text);
