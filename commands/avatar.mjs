@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { MessageEmbed } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -15,7 +16,11 @@ export default {
     execute: function(interaction) {
         let user = interaction.options.getUser("user") || interaction.member.user;
     
-        interaction.reply({ content: user.avatarURL(true), ephemeral: false });
+        interaction.reply({ embeds: [
+            new MessageEmbed()
+                .setTitle(user.username + "'s Avatar")
+                .setImage(user.avatarURL(true))
+        ], ephemeral: false });
     },
     executeText: function(msg, args) {
         let user = args.length ? /\d{17,19}/.test(args[0]) ? msg.guild.members.cache.find(v => v.user.id == args[0].match(/\d{17,19}/)[0]).user : undefined : msg.author;
@@ -25,6 +30,10 @@ export default {
             return;
         }
     
-        msg.channel.send(user.avatarURL(true));
+        msg.channel.send({ embeds: [
+            new MessageEmbed()
+                .setTitle(user.username + "'s Avatar")
+                .setImage(user.avatarURL(true))
+        ]});
     }
 };
