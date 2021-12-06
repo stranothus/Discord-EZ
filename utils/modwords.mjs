@@ -5,7 +5,7 @@ async function modwords(msg) {
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).bannedwords;
 
     if(bannedwords.length) {
-        if(new RegExp(bannedwords.join("|"), "i").test(msg.content) && !msg.author.bot) {
+        if(new RegExp(bannedwords.join("|").replace(/\*/g, "\*"), "i").test(msg.content) && !msg.author.bot) {
             let censored = msg.content;
 
             bannedwords.forEach(bannedword => censored = censored.replace(new RegExp("(" + bannedword.replace(/\*/g, "\*") + ")", "gi"), $1 => ($1[0] + new Array($1.length).join("\\*"))));
