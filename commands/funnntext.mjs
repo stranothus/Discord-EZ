@@ -8,7 +8,7 @@ const filters = await Promise.all(dirFlat("./utils/funnytext").map(async v => {
     return {
         filter: v.replace(/\.[^\.]+\/([^\.]+)\.[^\.]+$/, "$1"),
         file: v,
-        ...imported.default
+        execute: imported.default
     };
 }));
 
@@ -36,34 +36,24 @@ export default {
     category: "webhooks",
     DMs: false,
     execute: async function(interaction) {
-        let funnytexts = {
-            "uwu": uwu,
-            "owo": uwu,
-            "blarb": blarb,
-            "reverse": reverse,
-            "piglatin": piglatin,
-            "shakespeare": shakespeare,
-            "lego": lego
-        };
-        
-        let filters = interaction.options.getString("filters");
+        let Filters = interaction.options.getString("filters");
         let commands = [];
     
-        if(!filters) {
+        if(!Filters) {
             let keys = Object.keys(funnytexts);
     
-            commands.push(funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
+            commands.push(filters[keys[Math.floor(Math.random() * keys.length)]]);
         } else {
-            filters = filters.split(/(?:,\s*)|(\s+)/);
+            Filters = Filters.split(/(?:,\s*)|(\s+)/);
 
-            for(let i = 0; i < filters.length; i++) {
-                commands.push(funnytexts[filters[i].toLowerCase()] || funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
+            for(let i = 0; i < Filters.length; i++) {
+                commands.push(filters.filter(v => v.filter === Filters[i].toLowerCase())[0] || filters[keys[Math.floor(Math.random() * keys.length)]]);
             }
         }
     
         let text = interaction.options.getString("text");
         for(let i = 0; i < commands.length; i++) {
-            text = await commands[i](text, interaction.guild);
+            text = await commands[i].execute(text, interaction.guild);
         }
     
         asUser(interaction.channel, interaction.member.user, text);
@@ -71,31 +61,21 @@ export default {
         interaction.reply({ content: "Message sent", ephemeral: true});
     },
     executeText: async function(msg, args) {
-        let funnytexts = {
-            "uwu": uwu,
-            "owo": uwu,
-            "blarb": blarb,
-            "reverse": reverse,
-            "piglatin": piglatin,
-            "shakespeare": shakespeare,
-            "lego": lego
-        };
-        
         let commands = [];
     
         if(!funnytexts[args[0]]) {
             let keys = Object.keys(funnytexts);
     
-            commands.push(funnytexts[keys[Math.floor(Math.random() * keys.length)]]);
+            commands.push(filters[keys[Math.floor(Math.random() * keys.length)]]);
         }
         while(funnytexts[args[0]]) {
-            commands.push(funnytexts[args[0].toLowerCase()]);
+            commands.push(filters.filter(v => v.filter === Filters[i].toLowerCase())[0] || filters[keys[Math.floor(Math.random() * keys.length)]]);
             args.shift();
         }
     
         let text = args.join(" ");
         for(let i = 0; i < commands.length; i++) {
-            text = await commands[i](text, msg.guild);
+            text = await commands[i].execute(text, msg.guild);
         }
     
         asUser(msg.channel, msg.author, text);
