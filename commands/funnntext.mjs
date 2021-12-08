@@ -1,21 +1,33 @@
-import asUser from "../utils/asUser.mjs";
-import uwu from "../utils/funnytext/uwu.mjs";
-import blarb from "../utils/funnytext/blarb.mjs";
-import reverse from "../utils/funnytext/reverse.mjs";
-import piglatin from "../utils/funnytext/piglatin.mjs";
-import shakespeare from "../utils/funnytext/shakespeare.mjs";
-import lego from "../utils/funnytext/lego.mjs";
 import { SlashCommandBuilder } from "@discordjs/builders";
+import asUser from "../utils/asUser.mjs";
+import dirFlat from "../utils/dirFlat.mjs";
+
+const filters = await Promise.all(dirFlat("./utils/funnytext").map(async v => {
+    let imported = await import("../" + v);
+
+    return {
+        filter: v.replace(/\.[^\.]+\/([^\.]+)\.[^\.]+$/, "$1"),
+        file: v,
+        ...imported.default
+    };
+}));
 
 export default {
     data: new SlashCommandBuilder()
         .setName("funnytext")
         .setDescription("Send a message put through one or more filters as you")
-        .addStringOption(option => option
-            .setName("filters")
-            .setDescription("uwu, owo, blarb, piglatin, shakespeare, lego, or reverse")
-            .setRequired(false)
-        )
+        .addStringOption(option => {
+            option = option
+                .setName("filters")
+                .setDescription("uwu, owo, blarb, piglatin, shakespeare, lego, or reverse")
+                .setRequired(false);
+
+            filters.forEach(v => {
+                option = option.addChoice(v.filter, v.filter);
+            });
+
+            return option;
+        })
         .addStringOption(option => option
             .setName("text")
             .setDescription("the text to filter and send")
