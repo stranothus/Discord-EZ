@@ -31,7 +31,7 @@ export default {
             let index = (await commands).findIndex(v => v.data.name === command);
 
             if(index + 1) {
-                interaction.reply("\`" + prefix + (await commands)[i].description);
+                interaction.reply("\`" + prefix + (await commands)[index].description);
             } else {
                 let category = (await commands).filter(v => v.category === command);
 
@@ -111,7 +111,7 @@ export default {
             let index = (await commands).findIndex(v => v.data.name === command);
 
             if(index + 1) {
-                interaction.reply("\`" + prefix + (await commands)[i].description);
+                interaction.reply("\`" + prefix + (await commands)[index].description);
             } else {
                 let category = (await commands).filter(v => v.category === command);
 
