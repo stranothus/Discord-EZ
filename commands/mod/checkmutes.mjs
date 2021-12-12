@@ -19,7 +19,7 @@ export default {
 
         let reply = new MessageEmbed()
             .setName("**Muted members**")
-            .setDescription(officialMutes.map(v => `<@!${v.id}> is muted for ${Math.floor((v.muted - Date.now()) / 1000)} seconds`).join("\n") + "\n" + unofficialMutes.map(v => `<@!${v.user.id} was muted by someone else`).join("\n"));
+            .setDescription(officialMutes.map(v => `<@!${v.id}> is muted for ${Math.floor((v.muted - Date.now()) / 1000)} seconds for ${(v.infractions.reverse().filter(v => v.includes("Muted for"))[0] || "\"No reason\"").replace(/^Muted for/i, "")}`).join("\n") + "\n" + unofficialMutes.map(v => `<@!${v.user.id} was muted by someone else`).join("\n"));
     
         interaction.reply({ embeds: [ reply ]});
     },
@@ -33,7 +33,7 @@ export default {
         
         let reply = new MessageEmbed()
             .setTitle("**Muted members**")
-            .setDescription(officialMutes.map(v => `<@!${v.id}> is muted for ${Math.floor((v.muted - Date.now()) / 1000)} seconds`).join("\n") + "\n" + unofficialMutes.map(v => `<@!${v.user.id}> was muted by someone else`).join("\n"));
+            .setDescription(officialMutes.map(v => `<@!${v.id}> is muted for ${Math.floor((v.muted - Date.now()) / 1000)} seconds for ${(v.infractions.reverse().filter(v => v.includes("Muted for"))[0] || "\"No reason\"").replace(/^Muted for/i, "")}`).join("\n") + "\n" + unofficialMutes.map(v => `<@!${v.user.id}> was muted by someone else`).join("\n"));
     
         msg.channel.send({ embeds: [ reply ]});
     }

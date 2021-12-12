@@ -66,6 +66,7 @@ export default {
         let unmuteTime = timeTotal + timeNow;
     
         DB.Guilds.collection("Info").updateOne({ "id": interaction.guild.id, "members.id": user.id }, { "$set": { "members.$.muted": unmuteTime }}, (err, results) => {});
+        DB.Guilds.collection("Info").updateOne({ "id": interaction.guild.id, "members.id": user.id }, { "$push": { "members.$.infractions": "Muted for \"" + reason + "\"" }}, (err, results) => {});
     
         unmute(user, mutedRole, timeTotal, interaction.guild);
     },
@@ -122,6 +123,7 @@ export default {
         let unmuteTime = timeTotal + timeNow;
     
         DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "members.id": userId }, { "$set": { "members.$.muted": unmuteTime }}, (err, results) => {});
+        DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id, "members.id": userId }, { "$push": { "members.$.infractions": "Muted for \"" + reason + "\"" }}, (err, results) => {});
     
         unmute(muted, mutedRole, timeTotal, msg.guild);
     }
