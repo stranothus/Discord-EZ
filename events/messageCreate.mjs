@@ -2,6 +2,7 @@
 import deQuote from "../utils/deQuote.mjs";
 import dirFlat from "../utils/dirFlat.mjs";
 import modwords from "../utils/modwords.mjs";
+import { Permissions } from "discord.js";
 
 const commands = Promise.all(dirFlat("./commands").map(async v => {
     let imported = await import("../" + v);
@@ -34,6 +35,8 @@ async function messageCreate(msg) {
             msg.channel.send("You can only use this command in servers");
         }
     } else if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
+        if(!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+
         var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "").split(" ")[0].toLowerCase();
         var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`), "").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
 

@@ -1,4 +1,8 @@
+import { Permissions } from "discord.js";
+
 function interactionCreate(interaction) {
+    if(!interaction.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+
 	if (!interaction.isCommand()) return;
 
 	const command = client.commands.get(interaction.commandName);

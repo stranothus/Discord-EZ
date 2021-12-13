@@ -1,6 +1,9 @@
+import { Permissions } from "discord.js";
 import muterole from "../utils/mutrole.mjs";
 
 async function channelCreate(channel) {
+    if(!channel.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return;
+
     let muteRole = await muterole(channel.guild);
 
     if(channel.type === "GUILD_TEXT" || channel.type === "GUILD_VOICE") {

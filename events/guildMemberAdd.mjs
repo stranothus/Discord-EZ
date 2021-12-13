@@ -1,3 +1,4 @@
+import { Permissions } from "discord.js";
 import unmute from "../utils/unmute.mjs";
 
 async function guildMemberAdd(user) {
@@ -20,6 +21,8 @@ async function guildMemberAdd(user) {
             "roles": user.member ? user.member.roles || [] : []
         }}}, () => {});
     } else {
+        if(!user.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return;
+
         let DBUser = wasMember.members.filter(e => e.id === user.user.id)[0];
         let roles = DBUser.roles;
 

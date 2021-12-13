@@ -1,6 +1,9 @@
 import muterole from "../utils/mutrole.mjs";
+import { Permissions } from "discord.js";
 
 async function guildCreate(guild) {
+    if(!guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return;
+    
     // go through server setup
     let members = await guild.members.fetch();
     let muteRole = await guild.roles.create({ name: "Muted", permissions: [] });

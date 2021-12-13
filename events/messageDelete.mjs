@@ -1,7 +1,10 @@
+import { Permissions } from "discord.js";
 import asUser from "../utils/asUser.mjs";
 
 async function messageDelete(msg) {
     if(!msg.guild) return;
+    if(!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_WEBHOOKS)) return;
+    
     let guild = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id }));
     let bannedwords = guild.bannedwords;
     let prefix = guild.prefix;

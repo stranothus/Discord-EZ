@@ -9,6 +9,7 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import dotenv from "dotenv";
 import dirFlat from "../utils/dirFlat.mjs";
+import { Permissions } from "discord.js";
 
 dotenv.config();
 
@@ -49,6 +50,8 @@ async function ready() {
     guilds.forEach(async guild => {
         DB.Guilds.collection("Info").findOne({ "id": guild.id }, async function(err, result) {
             if(err) console.error(err);
+            if(!guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+
 
             if(result) {
                 // reinitiate reactroles
