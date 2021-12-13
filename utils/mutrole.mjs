@@ -4,7 +4,7 @@ async function muterole(guild) {
     
     if(!role) {
         role = await guild.roles.create({ name: "Muted", permissions: [] });
-        DB.Guilds.collection("Info").findOne({ "id": guild.id }, { "moderation": { "mutedRole": role.id}});
+        DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "moderation": { "mutedRole": role.id}});
     }
 
     return role;
