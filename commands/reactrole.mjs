@@ -45,7 +45,7 @@ export default {
         let ids = msgs.map(v => v.id);
         
         let stuff = await Promise.all(roles.map(async (v, i) => {
-            let role = msg.guild.roles.cache.find(x => x.name === v) || await msg.guild.roles.create({ name: v });
+            let role = msg.guild.roles.cache.find(x => x.name === v || x.id === v.replace(/\D/g, "")) || await msg.guild.roles.create({ name: v });
     
             content[i] = format ? format.replace(/{role}/g, `<@&${role.id}>`).replace(/{emoji}/g, emojis[i]) : `To get <@&${role.id}>, ` + `react with ${emojis[i]}`;
             ids[i] = role.id;
