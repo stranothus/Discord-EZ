@@ -66,7 +66,7 @@ async function ready() {
 
                         reactRole(message, ids, reactions);
                     } else {
-                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "reactroles": { "messageID": index.messageID }}}, (err, result) => {});
+                        DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$pull": { "reactroles": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
                 // reinitiate reactroles
@@ -81,7 +81,7 @@ async function ready() {
                         
                         reactRoleOne(message, ids, reactions, index.records || []);
                     } else {
-                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "reactroleones": { "messageID": index.messageID }}}, (err, result) => {});
+                        DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$pull": { "reactroleones": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
                 // reinitiate polls
@@ -93,7 +93,7 @@ async function ready() {
                     if(message) {
                         pollCollect(message, index.reactions);
                     } else {
-                        DB.Guilds.collection("Info").updateOne({ "id": guildID }, { "$pull": { "polls": { "messageID": index.messageID }}}, (err, result) => {});
+                        DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$pull": { "polls": { "messageID": index.messageID }}}, (err, result) => {});
                     }
                 }
 
