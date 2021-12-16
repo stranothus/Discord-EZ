@@ -1,5 +1,5 @@
 async function muterole(guild) {
-    let id = (await DB.Guilds.collection("Info").findOne({ "id": guild.id })).moderation.mutedRole;
+    let id = (await DB.Guilds.collection("Info").findOne({ "id": guild.id })).moderation.muteRole;
     let role = await guild.roles.fetch(id);
     
     if(!role) {
