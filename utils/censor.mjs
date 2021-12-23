@@ -9,6 +9,7 @@
  * @returns {Promise<string>} censored - the censored text
  */
 async function censor(text, guild) {
+    if(!text) return text;
     let bannedwords = (await DB.Guilds.collection("Info").findOne({ "id": guild.id })).bannedwords;
     bannedwords.forEach(bannedword => text = text.replace(new RegExp("(" + bannedword.replace(/\*/g, "\\*") + ")", "gi"), $1 => new Array($1.length + 1).join("\\*")));
 
