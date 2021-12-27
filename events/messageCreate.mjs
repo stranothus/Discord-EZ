@@ -50,6 +50,7 @@ async function messageCreate(msg) {
 
         index.executeText(msg, args);
     } else {
+        if(!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
         modwords(msg);
     }
 }
