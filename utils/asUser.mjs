@@ -1,3 +1,5 @@
+import { Permissions } from "discord.js";
+
 /**
  * Sends a message as a user through a webhook
  * 
@@ -11,6 +13,7 @@
  * @returns {void}
  */
 async function asUser(channel, author, content) {
+    if(!(channel.guild || channel.parent.guild).me.permissions.has(Permissions.FLAGS.MANAGE_WEBHOOKS)) return;
     if(channel.type === "GUILD_PUBLIC_THREAD" || channel.type === "GUILD_PRIVATE_THREAD") {
         let webhook = (await channel.parent.fetchWebhooks()).filter(webhook => webhook.name === client.user.tag).first() || await channel.parent.createWebhook(client.user.tag);
 
