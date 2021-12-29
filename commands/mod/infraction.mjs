@@ -18,8 +18,8 @@ export default {
 
         if(!isAdmin(interaction)) return;
 
-        const members = await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id});
-        const member = members.filter(v => v.id === user.id)[0];
+        const guild = await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id });
+        const member = guild.members.filter(v => v.id === user.id)[0];
         const infractions = member.infractions;
 
         if(infractions) {
@@ -45,8 +45,8 @@ export default {
             return;
         }
     
-        const members = await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id});
-        const member = members.filter(v => v.id === user.id)[0];
+        const guild = await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id });
+        const member = guild.members.filter(v => v.id === user.id)[0];
         const infractions = member.infractions;
 
         if(infractions) {
