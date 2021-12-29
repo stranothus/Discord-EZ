@@ -17,8 +17,16 @@ export default {
         let user = interaction.options.getUser("user");
 
         if(!isAdmin(interaction)) return;
-    
-        interaction.reply("**Infractions for <@!" + user.id + ">**\n\n`" + (await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id})).members.filter(v => v.id === user.id)[0].infractions.join("`\n`") + "`");
+
+        const members = await DB.Guilds.collection("Info").findOne({ "id": interaction.guild.id});
+        const member = members.filter(v => v.id === user.id)[0];
+        const infractions = member.infractions;
+
+        if(infractions) {
+            interaction.reply("**Infractions for <@!" + user.id + ">**\n\n`" + infractions.join("`\n`") + "`");
+        } else {
+            interaction.reply("No infractions for <@!" + user.id + ">");
+        }
     },
     executeText: async function(msg, args) {
         let prefix = (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix;
@@ -37,6 +45,14 @@ export default {
             return;
         }
     
-        msg.channel.send("**Infractions for <@!" + user.user.id + ">**\n\n`" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id})).members.filter(v => v.id === user.user.id)[0].infractions.join("`\n`") + "`");
+        const members = await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id});
+        const member = members.filter(v => v.id === user.id)[0];
+        const infractions = member.infractions;
+
+        if(infractions) {
+            msg.channel.send("**Infractions for <@!" + user.id + ">**\n\n`" + infractions.join("`\n`") + "`");
+        } else {
+            msg.channel.send("No infractions for <@!" + user.id + ">");
+        }
     }
 };
