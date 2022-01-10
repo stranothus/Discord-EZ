@@ -7,7 +7,7 @@ function pollCollect(msg, reactions) {
 
         collect.on("collect", async (reaction, user) => {
             if(user.id !== msg.author.id) {
-                if(reactions[user.id]) {
+                if(reactions[user.id] || reaction.count < 2) {
                     reaction.users.remove(user);
                 }
                 reactions[user.id] = reactions[user.id] ? reactions[user.id] + 1 : 1; // otherwise, set reactions to 1
