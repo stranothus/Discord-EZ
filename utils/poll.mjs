@@ -29,10 +29,10 @@ function pollCollect(msg, reactions) {
             changed = false;
 
             const totalReactions = msg.reactions.cache.reduce((a, b) => a + b.count - 1, 0);
-            let lastIndex = msg.content.lastIndexOf(/\n*Results\:/i);
+            let lastIndex = msg.content.lastIndexOf("Results:");
             if(lastIndex < 0) lastIndex = 0;
 
-            msg.edit(`${msg.content.substring(0, lastIndex || msg.content.length)}\nResults: ${msg.reactions.cache.map(v => {
+            msg.edit(`${msg.content.substring(0, lastIndex || msg.content.length)}Results: ${msg.reactions.cache.map(v => {
                 const realCount = v.count - 1;
                 const ratio = realCount / totalReactions;
                 const max = 20;

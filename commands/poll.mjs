@@ -39,7 +39,7 @@ export default {
         let emojis = msgs.map(v => v.emoji);
         let options = msgs.map(v => v.role);
     
-        msg = await msg.channel.send(content.join("\n"));
+        msg = await msg.channel.send(content.join("\n") + "\nResults:");
     
         DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$push": { "polls": {
             messageID: msg.id,
