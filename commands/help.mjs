@@ -111,7 +111,7 @@ export default {
             let index = (await commands).findIndex(v => v.data.name === command);
 
             if(index + 1) {
-                interaction.reply("\`" + prefix + (await commands)[index].description);
+                msg.channel.send("\`" + prefix + (await commands)[index].description);
             } else {
                 let category = (await commands).filter(v => v.category === command);
 
