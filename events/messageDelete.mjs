@@ -1,4 +1,5 @@
 import { Permissions } from "discord.js";
+import { hideLinkEmbed } from "@discordjs/builders";
 import asUser from "../utils/asUser.mjs";
 
 async function messageDelete(msg) {
