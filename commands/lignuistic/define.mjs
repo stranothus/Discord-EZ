@@ -18,7 +18,7 @@ export default {
         let endpoint = `${DictAPI}/${interaction.options.getString("word")}`;
         let data = await getJSON(endpoint);
     
-        if(!data[0]) {
+        if(!data || !data.length) {
             interaction.reply({ content: "The word definition could not be found. Please double check your query", ephemeral: true });
             return;
         }
