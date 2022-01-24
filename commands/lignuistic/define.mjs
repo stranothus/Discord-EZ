@@ -15,11 +15,16 @@ export default {
     category: "linguistics",
     DMs: true,
     execute: async function(interaction) {
+        interaction.deferReply();
+
         let endpoint = `${DictAPI}/${interaction.options.getString("word")}`;
         let data = await getJSON(endpoint);
     
         if(!data || !data.length) {
-            interaction.reply({ content: "The word definition could not be found. Please double check your query", ephemeral: true });
+            if(interaction & interaction.editReply) {
+                interaction.editReply({ content: "The word definition could not be found. Please double check your query", ephemeral: true });
+            }
+            
             return;
         }
     
@@ -42,7 +47,7 @@ export default {
             .setTitle("**" + data[0].word.toUpperCase() + "**")
             .setDescription(message);
     
-        interaction.reply({ embeds: [embed]});
+        interaction.editReply({ embeds: [embed]});
     },
     executeText: async function(msg, args) {
         let prefix = msg.guild ? (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix : "{prefix}";
@@ -55,7 +60,7 @@ export default {
         let endpoint = `${DictAPI}/${args[0]}`;
         let data = await getJSON(endpoint);
     
-        if(!data[0]) {
+        if(!data || !data.length) {
             msg.channel.send("The word definition could not be found. Please double check your query");
             return;
         }
