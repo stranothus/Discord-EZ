@@ -64,12 +64,12 @@ export default {
         let commands = [];
     
         if(!funnytexts[args[0]]) {
-            let keys = Object.keys(funnytexts);
+            let keys = Object.keys(filters);
     
             commands.push(filters[keys[Math.floor(Math.random() * keys.length)]]);
         }
         while(funnytexts[args[0]]) {
-            commands.push(filters.filter(v => v.filter === Filters[i].toLowerCase())[0] || filters[keys[Math.floor(Math.random() * keys.length)]]);
+            commands.push(filters.filter(v => v.filter === args[i].toLowerCase())[0] || filters[keys[Math.floor(Math.random() * keys.length)]]);
             args.shift();
         }
     
