@@ -62,14 +62,14 @@ export default {
     },
     executeText: async function(msg, args) {
         let commands = [];
-    
-        if(!filters[args[0]]) {
+
+        if(!filters.filter(v => v.filter === args[0]).length) {
             let keys = Object.keys(filters);
     
             commands.push(filters[keys[Math.floor(Math.random() * keys.length)]]);
         }
-        while(filters[args[0]]) {
-            commands.push(filters.filter(v => v.filter === args[i].toLowerCase())[0] || filters[keys[Math.floor(Math.random() * keys.length)]]);
+        while(filters.filter(v => v.filter === args[0]).length) {
+            commands.push(filters.filter(v => v.filter === args[0])[0]);
             args.shift();
         }
     
