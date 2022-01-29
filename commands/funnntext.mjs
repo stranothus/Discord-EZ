@@ -56,7 +56,7 @@ export default {
             text = await commands[i].execute(text, interaction.guild);
         }
     
-        asUser(interaction.channel, interaction.member.user, text);
+        asUser(interaction.channel, interaction.member.user, text, true);
 
         interaction.reply({ content: "Message sent", ephemeral: true});
     },
@@ -78,7 +78,7 @@ export default {
             text = await commands[i].execute(text, msg.guild);
         }
     
-        asUser(msg.channel, msg.author, text);
+        asUser(msg.channel, msg.author, text, true);
         msg.delete();
     }
 };

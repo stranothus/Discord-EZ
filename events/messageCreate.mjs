@@ -50,7 +50,7 @@ async function messageCreate(msg) {
 
         index.executeText(msg, args);
     } else {
-        if(!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+        if(!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR) || (msg.content.match(/^(edit|delete):?/i) && msg.reference)) return;
         modwords(msg);
     }
 }
