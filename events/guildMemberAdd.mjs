@@ -3,12 +3,15 @@ import unmute from "../utils/unmute.mjs";
 
 async function guildMemberAdd(user) {
     let guild = user.guild;
-    let welcome = guild.channels.cache.find(v => /welcome/i.test(v.name));
-    if(!welcome) return;
-    let rules = guild.channels.cache.find(v => /rules/i.test(v.name));
-    let roles = guild.channels.cache.find(v => /roles/i.test(v.name));
+    
+    if((await DB.Guilds.collection("Info").findOne({ "id": guild.id })).welcome && !user.user.bot) {
+        let welcome = guild.channels.cache.find(v => /welcome/i.test(v.name));
+        if(!welcome) return;
+        let rules = guild.channels.cache.find(v => /rules/i.test(v.name));
+        let roles = guild.channels.cache.find(v => /roles/i.test(v.name));
 
-    welcome.send(`Welcome, <@!${user.user.id}>!${rules ? ` Make sure to read the rules in <#${rules.id}>` : ""}${rules && roles ? " and" : rules ? "!" : ""}${roles ? ` and grab some roles  <#${roles.id}>!` : ""}`);
+        welcome.send(`Welcome, <@!${user.user.id}>!${rules ? ` Make sure to read the rules in <#${rules.id}>` : ""}${rules && roles ? " and" : rules ? "!" : ""}${roles ? ` and grab some roles  <#${roles.id}>!` : ""}`);
+    }
 
     let wasMember = await DB.Guilds.collection("Info").findOne({ "id": guild.id, "members.id": user.user.id });
 
