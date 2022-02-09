@@ -15,7 +15,7 @@ export default {
     category: "linguistics",
     DMs: true,
     execute: async function(interaction) {
-        interaction.deferReply();
+        await interaction.deferReply();
 
         let endpoint = `${DictAPI}/${interaction.options.getString("word")}`;
         let data = await getJSON(endpoint);
