@@ -15,7 +15,7 @@ async function messageDelete(msg) {
 
         let repliedTo = msg.reference ? await msg.channel.messages.fetch(msg.reference.messageId) : null;
 
-        asUser(msg.channel, msg.author, msg.type === "REPLY" ? `*[Replying to <@!${repliedTo.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${msg.content}` : msg.content);
+        asUser(msg.channel, msg.author, msg.type === "REPLY" ? `*[Replying to <@!${repliedTo.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${msg.content}` : msg.content, false, msg.attachments);
     }
 }
 
