@@ -5,10 +5,10 @@ import censor from "./censor.mjs";
  * Sends a message as a user through a webhook
  * 
  * @typedef {import("discord.js")} TextChannel
- * @typedef {import("discord.js")} User
+ * @typedef {import("discord.js")} Member
  * 
  * @param {TextChannel} channel - the channel to message
- * @param {User} author - the user to message as
+ * @param {Member} author - the user to message as
  * @param {string} content - the content to send
  * 
  * @returns {void}

@@ -12,7 +12,7 @@ async function modwords(msg) {
 
             let repliedTo = msg.reference ? await msg.channel.messages.fetch(msg.reference.messageId) : null;
 
-            asUser(msg.channel, msg.author, msg.type === "REPLY" ? `*[Replying to <@!${repliedTo.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored, true, msg.attachments);
+            asUser(msg.channel, msg.member, msg.type === "REPLY" ? `*[Replying to <@!${repliedTo.author.id}>'s [Message](${hideLinkEmbed(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.reference.messageId}`)})]* - ${censored}` : censored, true, msg.attachments);
             
             msg.delete();
         }
