@@ -76,8 +76,8 @@ async function asUser(channel, author, content, edit, files) {
 
         const censored =  await webhook.send({
             "content": content,
-            "avatarURL": `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.png`,
-            "username": author.username,
+            "avatarURL": `https://cdn.discordapp.com/avatars/${author.id || author.user.id}/${author.avatar || author.user.avatar}.png`,
+            "username": author.displayName || author.username,
             "allowedMentions": {
                 "roles": [],
                 "users": [],
@@ -110,8 +110,8 @@ async function asUser(channel, author, content, edit, files) {
                 case "edit": 
                     await webhook.editMessage(censored.id, {
                         "content": await censor(msg.content.replace(/^edit:/, ""), msg.guild),
-                        "avatarURL": `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.png`,
-                        "username": author.username,
+                        "avatarURL": `https://cdn.discordapp.com/avatars/${author.id || author.user.id}/${author.avatar || author.user.avatar}.png`,
+                        "username": author.displayName || author.username,
                         "allowedMentions": {
                             "roles": [],
                             "users": [],
