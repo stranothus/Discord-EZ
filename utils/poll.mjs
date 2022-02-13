@@ -38,11 +38,12 @@ function pollCollect(msg, reactions) {
                 const max = 20;
                 const bar = Math.floor(ratio * max);
                 const percent = Math.floor(ratio * 100);
+                const emojiText = v._emoji.id ? `<${v._emoji.animated ? "a" : ""}:${v._emoji.name}:${v._emoji.id}>` : v._emoji.name
 
                 if(bar) {
-                    return `\n${v._emoji.name} - ${"\u2588".repeat(bar)} ${percent}%`;
+                    return `\n${emojiText} - ${"\u2588".repeat(bar)} ${percent}%`;
                 } else {
-                    return `\n${v._emoji.name} - 0%`;
+                    return `\n${emojiText} - 0%`;
                 }
 
             })}`);
