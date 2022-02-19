@@ -33,7 +33,8 @@ export default {
                 emoji: a[i + 1],
                 option: v
             }))
-            .filter(v => v);
+            .filter(v => v)
+            .slice(0, 20);
     
         let content = msgs.map(v => v.content);
         let emojis = msgs.map(v => v.emoji);
@@ -49,12 +50,14 @@ export default {
             if(err) console.error(err);
         });
         
-        emojis.forEach(v => (msg ? msg.react(v).catch(err => {
+        await Promise.all(emojis.map(async v => (msg ? await msg.react(v) : ""))).catch(async err => {
             let channel = msg.channel;
-            msg.delete();
+            await msg.delete();
+
+            console.log(err);
     
-            channel.send("Something went wrong. Please make sure you are using valid emojis");
-        }) : ""));
+            await channel.send("Something went wrong. Please make sure you are using valid emojis");
+        });
     
         pollCollect(msg, {});
     }

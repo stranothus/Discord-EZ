@@ -86,8 +86,6 @@ async function asUser(channel, author, content, edit, files) {
             "files": files
         });
 
-        console.log(files);
-
         if(!edit) return;
 
         const collector = new MessageCollector(channel, {
