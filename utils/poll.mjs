@@ -36,8 +36,8 @@ function pollCollect(msg, reactions) {
                 const realCount = v.count - 1;
                 const ratio = realCount / totalReactions;
                 const max = 20;
-                const bar = Math.floor(ratio * max);
-                const percent = Math.floor(ratio * 100);
+                const bar = Math.round(ratio * max);
+                const percent = Math.round(ratio * 100);
                 const emojiText = v._emoji.id ? `<${v._emoji.animated ? "a" : ""}:${v._emoji.name}:${v._emoji.id}>` : v._emoji.name
 
                 if(bar) {
