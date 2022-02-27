@@ -1,4 +1,3 @@
-import { Permissions } from "discord.js";
 import isAdmin from "../utils/isAdmin.mjs";
 import { SlashCommandBuilder } from "@discordjs/builders";
 
@@ -19,17 +18,17 @@ export default {
     
         if(!isAdmin(interaction)) return;
     
-        DB.Guilds.collection("Info").updateOne({ "id": interaction.guild.id }, { "$set": { "welcome": welcome }}, () => {});
+        await DB.Guilds.collection("Info").updateOne({ "id": interaction.guild.id }, { "$set": { "welcome": welcome }}, () => {});
 
-        interaction.reply(`Welcome messages have been set to ${welcome ? "on" : "off"}`);
+        await interaction.reply(`Welcome messages have been set to ${welcome ? "on" : "off"}`);
     },
     executeText: async function(msg, args) {
         const welcome = args[0] === "true";
     
         if(!isAdmin(msg)) return;
     
-        DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$set": { "welcome": welcome }}, () => {});
+        await DB.Guilds.collection("Info").updateOne({ "id": msg.guild.id }, { "$set": { "welcome": welcome }}, () => {});
 
-        msg.channel.send(`Welcome messages have been set to ${welcome ? "on" : "off"}`);
+        await msg.channel.send(`Welcome messages have been set to ${welcome ? "on" : "off"}`);
     }
 };

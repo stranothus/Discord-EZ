@@ -3,8 +3,9 @@ import unmute from "../utils/unmute.mjs";
 
 async function guildMemberAdd(user) {
     let guild = user.guild;
+    const guildDB = await DB.Guilds.collection("Info").findOne({ "id": guild.id });
     
-    if((await DB.Guilds.collection("Info").findOne({ "id": guild.id })).welcome && !user.user.bot) {
+    if(guildDB.welcome && !user.user.bot) {
         let welcome = guild.channels.cache.find(v => /welcome/i.test(v.name));
         if(!welcome) return;
         let rules = guild.channels.cache.find(v => /rules/i.test(v.name));
@@ -21,10 +22,10 @@ async function guildMemberAdd(user) {
         DB.Guilds.collection("Info").updateOne({ "id": guild.id }, { "$push": { "members": {
             "id": user.user.id,
             "muted": false,
-            "roles": user.member ? user.member.roles || [] : []
+            "roles": user.member && guildDB.persistroles ? user.member.roles || [] : []
         }}}, () => {});
     } else {
-        if(!user.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return;
+        if(!user.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES) || !guildDB.persistroles) return;
 
         let DBUser = wasMember.members.filter(e => e.id === user.user.id)[0];
         let roles = DBUser.roles;
