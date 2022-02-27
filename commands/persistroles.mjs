@@ -14,7 +14,7 @@ export default {
     category: "settings",
     DMs: false,
     execute: async function(interaction) {
-        const persist = interaction.options.getBoolean("welcome");
+        const persist = interaction.options.getBoolean("persistroles");
     
         if(!isAdmin(interaction)) return;
     
