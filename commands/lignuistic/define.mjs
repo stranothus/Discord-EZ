@@ -38,7 +38,7 @@ export default {
             for(let e = 0; e < index.definitions.length; e++) {
                 let endex = index.definitions[e];
     
-                message += `${endex.definition}\n"${endex.example}"\n\n`;
+                message += `${endex.definition}${endex.example ? `\n"${endex.example}"` : ""}\n\n`;
             }
         }
     
@@ -75,7 +75,7 @@ export default {
             for(let e = 0; e < index.definitions.length; e++) {
                 let endex = index.definitions[e];
     
-                message += `${endex.definition}\n"${endex.example}"\n\n`;
+                message += `${endex.definition}${endex.example ? `\n"${endex.example}"` : ""}\n\n`;
             }
         }
     
