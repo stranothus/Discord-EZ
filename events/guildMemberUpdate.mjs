@@ -1,5 +1,5 @@
 async function guildMemberUpdate(old, current) {
-    const guildDB = await DB.Guilds.collection("Info").findOne({ "id": guild.id });
+    const guildDB = await DB.Guilds.collection("Info").findOne({ "id": current.guild.id });
 
     if(!guildDB.persistroles) return;
     
