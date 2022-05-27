@@ -17,8 +17,11 @@ const commands = Promise.all(dirFlat("./commands").map(async v => {
 async function messageCreate(msg) {
     if(!msg.guild) {
         if(msg.author.bot) return;
-        var args = msg.content.split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
-        var command = args[0].toLowerCase();
+        var args = msg?.content?.split(/("[^"]*")|\s+/)?.filter(v => v)?.map(v => deQuote(v));
+        var command = args[0]?.toLowerCase();
+
+        if(!command) return;
+
         args.splice(0, 1);
 
         let index = (await commands).findIndex(v => v.data.name === command);
@@ -37,7 +40,10 @@ async function messageCreate(msg) {
     } else if((msg.content.startsWith((await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix) || msg.content.match(new RegExp("^<@!?" + client.user + ">\\s*"))) && !msg.author.bot) {
         if(!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
 
-        var command = msg.content.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "").split(" ")[0].toLowerCase();
+        var command = msg?.content?.replace(new RegExp("^(" + (await DB.Guilds.collection("Info").findOne({ "id": msg.guild.id })).prefix.replace(/(\\|\/|\.|\^|\$|\(|\)|\[|\]|\?)/, "\\$1") + "\\s*)|(<@!?" + client.user + ">\\s*)", ""), "")?.split(" ")?.[0]?.toLowerCase();
+        
+        if(!command) return;
+
         var args = msg.content.replace(new RegExp(`[\\s\\S]*?${command}\\s*`), "").split(/("[^"]*")|\s+/).filter(v => v).map(v => deQuote(v));
 
         let index = (await commands).findIndex(v => v.data.name === command);
